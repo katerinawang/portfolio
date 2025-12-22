@@ -3,68 +3,77 @@ body {
     background-color: #B0E0E6;
     height: 100vh;
     overflow-y: hidden;
+    margin: 0;
+    padding: 0;
 }
+
 .main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     width: 100vw;
     height: 100vh;
     animation: fadeInAnimation 2s ease-in-out;
 }
-.left {
+
+.p1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    width: 50vw;
-    height: 90vh;
+    align-items: center;
+    width: 80vw;
+    height: 100vh;
     padding: 5vh 5vw;
 }
 
-#intro h2 {
+.p1 img {
+    width: auto;
+    height: auto;
+    max-height: 30vh;
+    border: 3px dashed #fff;
+    border-radius: 68% 32% 33% 67% / 67% 63% 37% 33%;
+}
+
+#intro h1 {
     font-family: "Pacifico", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 10vh;
-    text-align: right;
+    font-size: 5rem;
+    text-align: center;
     color: transparent;
     background: linear-gradient(150deg, #E07A9F, #7F4B93);
     background-clip: text;
     -webkit-background-clip: text;
     opacity: 0.3;
-    margin-bottom: -5vh;
+    margin-top: -1rem;
 }
 
-#intro h1 {
-    font-family: "DM Serif Text", serif;
-    font-weight: 400;
-    font-size: 8vh;
-    color: #00274D;
-    font-style: normal;
-}
-#intro h3 {
+#intro h2 {
     font-family: "Fira Sans Condensed", serif;
     font-weight: 300;
     font-size: 4vh;
-    height: 1vh;
+    min-height: 2vh;
+    font-style: italic;
     color: #30577D;
-    font-style: normal;
-    text-align: right;
+    text-align: center;
 }
-.right {
+
+#links {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50vw;
-    height: 90vh;
-    padding: 5vh 5vw;
+    flex-direction: row;
+    margin-top: 1rem;
+    gap: 1rem;
 }
-.right img {
-    width: auto;
-    height: auto;
-    max-width: 50vw;
-    max-height: 70vh;
+
+#links a {
+    font-size: 2rem;
+    color: #A6B5CD;
+}
+#links i:hover {
+    color: #BDC0D0;
+}
+#links a:visited {
+    color: #A6B5CD;
 }
 
 @keyframes fadeInAnimation {
