@@ -40,6 +40,6 @@ body{
     position: relative;
 }
 #greeting::after{
-    content: url("../img/001-confetti.png");
+    content: url("001-confetti.png");
     padding: 0 10px;
 }

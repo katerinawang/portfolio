@@ -1,4 +1,5 @@
-let p1, p2, gameBoard, scoreBoard, signs, turn, ctrl, players, msg, winCode, score, gameOver, wins, info, wrapper, win1, win2, score1, score2, score3, ties, tieSound, winSound;
+let p1, p2, gameBoard, scoreBoard, signs, turn, ctrl, players, msg, winCode, score, gameOver, wins, info, wrapper, win1,
+    win2, score1, score2, score3, ties, tieSound, winSound;
 window.onload = function (){
     wrapper = document.getElementById("container");
     scoreBoard = document.getElementById("score-board");

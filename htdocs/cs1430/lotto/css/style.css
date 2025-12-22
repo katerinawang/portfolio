@@ -39,7 +39,7 @@ body{
 #desc h1::before, #desc h1::after{
     content: "";
     display: inline-block;
-    background: url("../img/001-dollar-symbol.png") no-repeat;
+    background: url("001-dollar-symbol.png") no-repeat;
     width: 30px;
     height: 30px;
     margin: 0 20px;
