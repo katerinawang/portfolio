@@ -26,13 +26,28 @@ body {
     padding: 5vh 5vw;
     gap: 0.5rem;
 }
+#avatar {
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+}
 
-.p1 img {
-    width: auto;
-    height: auto;
-    max-height: 30vh;
-    border: 3px dashed #fff;
-    border-radius: 68% 32% 33% 67% / 67% 63% 37% 33%;
+#avatar img {
+    width: 100%;
+    height: 100%;
+}
+#avatar::before{
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 5px dashed #fff;
+    animation: rotateBorder 30s linear infinite;
+    pointer-events: none;
+}
+#avatar:hover::before {
+    animation: borderShape 0.5s ease-in;
+    border-radius: 73% 27% 70% 30% / 27% 72% 28% 73%;
 }
 
 #intro h1 {
@@ -74,11 +89,17 @@ body {
     font-size: 2rem;
     color: #A6B5CD;
 }
+
 #links i:hover {
     color: #BDC0D0;
 }
+
 #links a:visited {
     color: #A6B5CD;
+}
+
+#links .label {
+    display: none;
 }
 
 @keyframes fadeInAnimation {
@@ -89,5 +110,25 @@ body {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes borderShape {
+    0% {
+        border-radius: 50%;
+    }
+
+    100% {
+        border-radius: 73% 27% 70% 30% / 27% 72% 28% 73%;
+    }
+}
+
+@keyframes rotateBorder {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Katerina Wang Personal Portfolio</title>
-    <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://kit.fontawesome.com/96490f744a.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <main class="main">
     <section class="p1">
-      <img src="../img/avatar.gif" alt="avatar">
+      <div id="avatar">
+        <img src="../img/avatar.gif" alt="avatar">
+      </div>
       <div id="intro">
         <h1>Katerina Wang</h1>
         <div id="typed-desc">
@@ -21,12 +21,23 @@
         <div><span id="typed"></span></div>
       </div>
       <div id="links">
-        <a href="https://github.com/katerinawang" target="_blank"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/katerinawang" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="/cs1430"><i class="fa-solid fa-laptop-code"></i></a>
+        <a class="chip" data-expand="right"  href="https://github.com/katerinawang" target="_blank">
+          <i class="fa-brands fa-github"></i>
+          <span class="label">GitHub</span>
+        </a>
+        <a class="chip" data-expand="both"  href="https://www.linkedin.com/in/katerinawang" target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+          <span class="label">LinkedIn</span>
+        </a>
+        <a class="chip" data-expand="left"  href="/cs1430">
+          <i class="fa-solid fa-laptop-code"></i>
+          <span class="label">Web Projects</span>
+        </a>
       </div>
     </section>
 </main>
+<script src="js/script.js"></script>
+<script src="https://kit.fontawesome.com/96490f744a.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 </body>
 </html>

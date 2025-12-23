@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "pluralize": "^8.0.0",
-    "typed.js": "^2.1.0"
+    "pluralize": "^8.0.0"
   }
 }
