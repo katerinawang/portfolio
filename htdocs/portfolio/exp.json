@@ -1,0 +1,22 @@
+{
+  "exp": [
+    {
+      "from": "Aug 2025",
+      "to": "Present",
+      "title": "Teaching Assistant",
+      "org": "University of Utah, Kahlert School of Computing",
+      "desc": "Creating playful and interactive web experiences with hand-drawn aesthetics. Focus on user experience and creative animations.",
+      "duties": [
+        "Reviewed and evaluated 20+ student code submissions weekly, providing feedback on clean code principles and design patterns.",
+        "Evaluated 20+ code submissions weekly, providing feedback on clean code principles and design patterns.",
+        "Led weekly lab sessions and supported students during office hours and on Piazza.",
+        "Delivered efficient, rubric-aligned grading with minimal regrade requests."
+      ],
+      "tags": [
+        "C#",
+        "Blazor",
+        "Multi-threading"
+      ]
+    }
+  ]
+}

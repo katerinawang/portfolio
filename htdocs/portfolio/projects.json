@@ -1,0 +1,14 @@
+{
+  "projects": [
+    {
+      "imgSrc": "../img/website-img.png",
+      "alt": "project thumbnail",
+      "title": "Website Projects",
+      "description": "Website projects created for class cs1430.",
+      "link": "/cs1430",
+      "linkText": "Check",
+      "month": "Dec.",
+      "year": "2023"
+    }
+  ]
+}

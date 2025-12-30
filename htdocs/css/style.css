@@ -1,10 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gugi&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
+
+:root {
+    --shadow: #535353;
+    --paper: #fffdf8;
+    --accent: #ff9f68;
+    --accent-2: #6ec6ca;
+    --highlight: #ffd166;
+    --title-color: #519f78;
+    --dot-color: #eeaeca;
+    --date-color: #F1D3E0;
+    --inner-border: 3px dashed rgba(0, 0, 0, 0.15);
+    --bx-shadow: 3px 3px 0 rgba(0, 0, 0, 0.06);
+    --h1: "Caveat";
+    --h2: "Gugi";
+    --h3: "Tomorrow";
+    --p: "Ubuntu Sans";
+}
+
 body {
-    background-color: #B0E0E6;
-    height: 100vh;
-    overflow-y: hidden;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    background-color: #fefefe;
+    background-image: linear-gradient(90deg, transparent 79px, rgba(0, 0, 0, 0.1) 79px, rgba(0, 0, 0, 0.1) 81px, transparent 81px),
+    linear-gradient(#eee 0.1em, transparent 0.1em);
+    background-size: 100% 1.5em;
+    background-position: 0 0.5em;
+    position: relative;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 3rem;
+    margin-bottom: -4rem;
+    gap: 5rem;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 250ms ease;
+}
+
+nav.scrolled {
+    background: var(--paper);
+    border-bottom: 3px solid var(--shadow);
+    padding-top: 0.5rem;
+    transition: all 250ms ease;
+}
+
+nav button {
+    min-width: 10rem;
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0.5rem 2rem;
+    font-family: var(--h3), sans-serif;
+    font-size: 1.5rem;
+    color: var(--shadow);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav button:hover {
+    color: #000;
+    transition: transform 400ms cubic-bezier(0.48, 0, 0.12, 1),
+    color 200ms ease;
+}
+
+nav button::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transform: translateX(-120%);
+    transition: transform 400ms cubic-bezier(0.48, 0, 0.12, 1),
+    opacity 200ms ease;
+}
+
+nav button::after {
+    content: "<";
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    transform: translateX(120%);
+    transition: transform 400ms cubic-bezier(0.48, 0, 0.12, 1),
+    opacity 200ms ease;
+}
+
+nav button:hover::before,
+nav button:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .main {
@@ -26,32 +117,36 @@ body {
     padding: 5vh 5vw;
     gap: 0.5rem;
 }
+
 #avatar {
     position: relative;
     width: 10rem;
     height: 10rem;
+    background: var(--paper);
 }
 
 #avatar img {
     width: 100%;
     height: 100%;
 }
-#avatar::before{
+
+#avatar::before {
     content: "";
     position: absolute;
     inset: -5px;
     border-radius: 50%;
-    border: 5px dashed #fff;
+    border: var(--inner-border);
     animation: rotateBorder 30s linear infinite;
     pointer-events: none;
 }
+
 #avatar:hover::before {
     animation: borderShape 0.5s ease-in;
     border-radius: 73% 27% 70% 30% / 27% 72% 28% 73%;
 }
 
 #intro h1 {
-    font-family: "Caveat", cursive;
+    font-family: var(--h1), cursive;
     font-weight: 200;
     font-style: normal;
     font-size: 6rem;
@@ -70,19 +165,83 @@ body {
 }
 
 #typed-desc span, #typed, .typed-cursor {
-    font-family: "Ubuntu Sans", sans-serif;
+    font-family: var(--p), sans-serif;
     font-weight: 200;
     font-size: 2rem;
     min-height: 2vh;
     font-style: italic;
-    color: #30577D;
+    color: var(--shadow);
 }
 
 #links {
     display: flex;
     flex-direction: row;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     gap: 1rem;
+}
+
+#links button {
+    position: relative;
+    overflow: hidden;
+    font-family: var(--h3), sans-serif;
+    height: 3rem;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 30px;
+
+    background: var(--accent-2);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: all 0.2s cubic-bezier(0.48, 0, 0.12, 1);
+}
+
+#links button:hover {
+    box-shadow: var(--bx-shadow);
+}
+
+/* Center BOTH icon + text absolutely so the swap is perfect */
+#links button i,
+#links button span:last-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    transition: transform 650ms cubic-bezier(0.48, 0, 0.12, 1),
+    opacity 350ms ease,
+    color 350ms ease;
+}
+
+/* Icon state */
+#links button i {
+    font-size: 2rem;
+    opacity: 1;
+    color: var(--shadow);
+}
+
+/* Text starts below center */
+#links button span:last-child {
+    color: var(--shadow);
+    opacity: 0;
+    transform: translate(-50%, 140%);
+    white-space: nowrap;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+#links button:hover span:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition-delay: 120ms;
+    text-shadow: var(--bx-shadow);
+}
+
+#links button:hover i {
+    opacity: 0;
+    transform: translate(-50%, -140%);
+    color: var(--shadow);
 }
 
 #links a {
@@ -102,6 +261,354 @@ body {
     display: none;
 }
 
+/*==== Projects Page =====*/
+#projects-box {
+    margin: 15rem auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    padding-bottom: 3rem;
+}
+
+#projects-box:has(> .proj-card:only-child) {
+    width: 25%;
+}
+
+/* 2 items: two fixed columns, centered */
+#projects-box:has(> .proj-card:nth-child(2):last-child) {
+    width: 60%;
+}
+
+.proj-card {
+    background: var(--paper);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.proj-card::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: var(--inner-border);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.proj-card:hover {
+    box-shadow: var(--bx-shadow);
+}
+
+.content-box {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.proj-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--shadow);
+    display: block;
+    margin: 1rem 0.5rem;
+    font-family: var(--h3), sans-serif;
+    letter-spacing: -0.5px;
+    position: relative;
+    display: inline-block;
+}
+
+.proj-title::after {
+    position: absolute;
+    display: block;
+    content: attr(data-text);
+    border-radius: 2px;
+    bottom: 0;
+}
+
+.proj-img {
+    display: block;
+    width: 90%;
+    height: 200px;
+    object-fit: cover;
+    margin: 1rem 0.5rem 1.5rem 0.5rem;
+    box-shadow: var(--bx-shadow);
+}
+
+.proj-desc {
+    color: var(--shadow);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-family: var(--p), sans-serif;
+    border-left: 5px solid var(--accent);
+    padding-left: 15px;
+    margin-left: 5px;
+    text-align: left;
+}
+
+/* Doodle link with squiggly underline */
+.proj-link {
+    color: var(--shadow);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 5px 10px;
+    font-family: var(--h3), sans-serif;
+    background: var(--highlight);
+    border: 1px solid var(--shadow);
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.proj-link:hover {
+    background: var(--shadow);
+    color: var(--highlight);
+    box-shadow: var(--bx-shadow);
+}
+
+/* Doodle-style date box */
+.date-box {
+    position: absolute;
+    top: -25px;
+    right: -30px;
+    text-align: center;
+    padding: 5px 10px;
+    background: var(--date-color);
+    border-radius: 12px;
+    transform: rotate(5deg);
+    z-index: 2;
+}
+
+.proj-month {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--shadow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: var(--h3), sans-serif;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.proj-year {
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--shadow);
+    margin-top: 2px;
+    font-family: var(--h3), sans-serif;
+    position: relative;
+}
+
+.proj-date::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    background: repeating-linear-gradient(
+            to right,
+            var(--shadow) 0px,
+            var(--shadow) 3px,
+            transparent 3px,
+            transparent 6px
+    );
+}
+
+/*==== Experience Page =====*/
+
+.timeline-box {
+    margin: 15rem auto;
+    width: 70%;
+    max-width: 900px;
+    position: relative;
+}
+
+
+.timeline-box::before {
+    content: "";
+    position: absolute;
+    left: 70px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+            to bottom,
+            var(--shadow),
+            var(--shadow) 6px,
+            transparent 6px,
+            transparent 12px
+    );
+    opacity: 0.35;
+    margin-bottom: 2rem;
+}
+
+/* ===== Timeline container ===== */
+.timeline {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+/* ===== Date ===== */
+.timeline-date {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-right: 2rem;
+    margin-top: 1rem;
+    font-family: var(--p), sans-serif;
+    color: var(--shadow);
+}
+
+.timeline-date::after {
+    display: block;
+    position: relative;
+    content: "";
+    background: var(--dot-color);
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    top: -27px;
+    left: 31px;
+}
+
+.date-from,
+.date-to {
+    text-align: right;
+    display: block;
+    width: 5rem;
+    font-size: 0.95rem;
+    transform: rotate(-1deg);
+}
+
+.date-to {
+    opacity: 0.6;
+}
+
+/* ===== Timeline Card ===== */
+.timeline-card {
+    background: var(--paper);
+    padding: 1.5rem 1.75rem;
+    border-radius: 20px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Wobbly outline effect */
+.timeline-card::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: var(--inner-border);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* Hover = playful bounce */
+.timeline-card:hover {
+    box-shadow: var(--bx-shadow);
+}
+
+/* ===== Card Text ===== */
+.occupation {
+    font-family: var(--h3), sans-serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.company {
+    font-weight: 400;
+    font-style: italic;
+    font-family: var(--h2), cursive;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+}
+
+.description {
+    font-size: 0.95rem;
+    font-family: var(--p), cursive;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.duties {
+    font-family: var(--p), cursive;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.duties li {
+    margin-bottom: 0.5rem;
+}
+
+.duties li::marker {
+    content: "# ";
+    font-size: 1rem;
+    color: #9f9f9f;
+}
+
+/* ===== Tags ===== */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.75rem;
+    border: 1px solid var(--shadow);
+    border-radius: 999px;
+    background: var(--highlight);
+    font-family: var(--h3), cursive;
+    transform: rotate(-1deg);
+}
+
+/* Random rotation feel */
+.tag:nth-child(2n) {
+    transform: rotate(1.5deg);
+    background: var(--accent-2);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 700px) {
+    .timeline {
+        grid-template-columns: 1fr;
+        padding-left: 2rem;
+    }
+
+    .timeline::before {
+        left: 10px;
+    }
+
+    .timeline-date {
+        text-align: left;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-device-width: 480px) {
+    #projects-box {
+        grid-template-columns: 1fr;
+        width: 50%;
+    }
+}
+
+/*==== Animations =====*/
 @keyframes fadeInAnimation {
     0% {
         opacity: 0;
