@@ -18,9 +18,9 @@ nav?.addEventListener("click", async (e) => {
     if (btn.id === "home") {
         await renderHome();
     } else if (btn.id === "projects") {
-        renderProjects();
+        await renderProjects();
     } else if (btn.id === "experience") {
-        renderExperience();
+        await renderExperience();
     }
 });
 
@@ -32,6 +32,7 @@ async function renderHome() {
     const content = htmlToFragment(raw);
 
     main.replaceChildren(content);
+    playMainAnimation();
 
     // re-run page-specific JS
     initHomeEffects();
@@ -82,6 +83,7 @@ async function renderProjects() {
         const content = htmlToFragment(projectsHTML);
         main.replaceChildren(content);
 
+        playMainAnimation();
         initProjectLightbox();
         initVideoLightbox();
 
@@ -144,6 +146,7 @@ async function renderExperience() {
         // Convert to DOM elements and replace content
         const content = htmlToFragment(expHTML);
         main.replaceChildren(content);
+        playMainAnimation();
 
         const start = {r: 238, g: 174, b: 202};
         const end = {r: 148, g: 187, b: 233};
@@ -175,7 +178,7 @@ function initHomeEffects() {
         loopCount: Infinity,
     });
 
-    if (!swiper|| typeof Swiper === "undefined") return;
+    if (!swiper || typeof Swiper === "undefined") return;
     if (swiperInstance) swiperInstance.destroy();
     swiperInstance = new Swiper(".marquee", {
         slidesPerView: 'auto',
@@ -239,6 +242,15 @@ function initVideoLightbox() {
         closeOnOutsideClick: true,
         touchNavigation: true,
     });
+}
+
+function playMainAnimation() {
+    main.classList.remove("fade-in");
+
+    // force reflow so the browser notices the change
+    void main.offsetWidth;
+
+    main.classList.add("fade-in");
 }
 
 function initProjectLightbox() {

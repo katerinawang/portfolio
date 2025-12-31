@@ -111,7 +111,10 @@ nav button:hover::after {
     height: auto;
     max-height: 90vh;
     margin-top: 8rem;
-    animation: fadeInAnimation 2s ease-in-out;
+}
+
+.main.fade-in {
+  animation: fadeInAnimation 0.5s ease-in-out;
 }
 
 #p1 {
@@ -361,7 +364,6 @@ nav button:hover::after {
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--shadow);
-    display: block;
     margin: 1rem 0.5rem;
     font-family: var(--h3), sans-serif;
     letter-spacing: -0.5px;
