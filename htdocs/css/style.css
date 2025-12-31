@@ -202,7 +202,6 @@ nav button:hover::after {
     box-shadow: var(--bx-shadow);
 }
 
-/* Center BOTH icon + text absolutely so the swap is perfect */
 #links button i,
 #links button span:last-child {
     position: absolute;
@@ -215,14 +214,12 @@ nav button:hover::after {
     color 350ms ease;
 }
 
-/* Icon state */
 #links button i {
     font-size: 2rem;
     opacity: 1;
     color: var(--shadow);
 }
 
-/* Text starts below center */
 #links button span:last-child {
     color: var(--shadow);
     opacity: 0;
@@ -337,7 +334,7 @@ nav button:hover::after {
     object-position: center;
     aspect-ratio: 16 / 9;
     margin: 1rem 0.5rem 1.5rem 0.5rem;
-    box-shadow: 0px 0px 26px 5px rgba(55,55,55,0.2);
+    box-shadow: 0px 0px 26px 5px rgba(55, 55, 55, 0.2);
     transform: scale(1);
     transition: transform 200ms ease;
     cursor: zoom-in;
@@ -354,7 +351,6 @@ nav button:hover::after {
     text-align: left;
 }
 
-/* Doodle link with squiggly underline */
 .proj-link {
     color: var(--shadow);
     text-decoration: none;
@@ -378,7 +374,6 @@ nav button:hover::after {
     box-shadow: var(--bx-shadow);
 }
 
-/* Doodle-style date box */
 .date-box {
     position: absolute;
     top: -25px;
@@ -429,7 +424,6 @@ nav button:hover::after {
 }
 
 /*==== Experience Page =====*/
-
 .timeline-box {
     margin: 15rem auto;
     width: 70%;
@@ -510,17 +504,15 @@ nav button:hover::after {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Wobbly outline effect */
-.timeline-card::after {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    border: var(--inner-border);
-    border-radius: 20px;
-    pointer-events: none;
-}
+/*.timeline-card::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    inset: 5px;*/
+/*    border: var(--inner-border);*/
+/*    border-radius: 20px;*/
+/*    pointer-events: none;*/
+/*}*/
 
-/* Hover = playful bounce */
 .timeline-card:hover {
     box-shadow: var(--bx-shadow);
 }
@@ -581,7 +573,6 @@ nav button:hover::after {
     transform: rotate(-1deg);
 }
 
-/* Random rotation feel */
 .tag:nth-child(2n) {
     transform: rotate(1.5deg);
     background: var(--accent-2);
@@ -610,13 +601,30 @@ nav button:hover::after {
     .proj-card {
         width: 100%;
     }
+
+    .timeline-date {
+        width: 0;
+        align-items: start;
+    }
+
+    .timeline-box::before {
+        left: 0;
+    }
+
+    .timeline-date::after {
+        left: -39px;
+    }
+
+    .date-from, .date-to {
+        text-align: left;
+    }
 }
 
 @media (max-device-width: 480px) {
     .p1 {
         justify-content: start;
         width: 100vw;
-        margin-top: 5rem;
+        margin-top: 15rem;
     }
 
     #projects-box {
