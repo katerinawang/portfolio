@@ -10,20 +10,23 @@
     --dot-color: #eeaeca;
     --date-color: #F1D3E0;
     --inner-border: 3px dashed rgba(0, 0, 0, 0.15);
-    --bx-shadow: 3px 3px 0 rgba(0, 0, 0, 0.06);
+    --bx-shadow-1: 3px 3px 0 rgba(0, 0, 0, 0.06);
+    --bx-shadow-2: 0px 0px 26px 5px rgba(55, 55, 55, 0.2);
     --h1: "Caveat";
     --h2: "Gugi";
     --h3: "Tomorrow";
     --p: "Ubuntu Sans";
+    --vertical-line: linear-gradient(90deg, transparent 79px, rgba(0, 0, 0, 0.1) 79px, rgba(0, 0, 0, 0.1) 81px, transparent 81px);
+    --horizontal-lines: linear-gradient(#eee 0.1em, transparent 0.1em);
 }
 
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    max-height: 100vh;
+    height: auto;
     background-color: #fefefe;
-    background-image: linear-gradient(90deg, transparent 79px, rgba(0, 0, 0, 0.1) 79px, rgba(0, 0, 0, 0.1) 81px, transparent 81px),
-    linear-gradient(#eee 0.1em, transparent 0.1em);
+    background-image: var(--horizontal-lines);
     background-size: 100% 1.5em;
     background-position: 0 0.5em;
     position: relative;
@@ -43,6 +46,8 @@ nav {
     width: 100%;
     z-index: 1000;
     transition: all 250ms ease;
+    height: auto;
+    max-height: 10vh;
 }
 
 nav.scrolled {
@@ -103,17 +108,19 @@ nav button:hover::after {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: auto;
+    max-height: 80vh;
+    margin-top: 8rem;
     animation: fadeInAnimation 2s ease-in-out;
 }
 
-.p1 {
+#p1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 80vw;
-    height: 100vh;
+    height: auto;
     padding: 5vh 5vw;
     gap: 0.5rem;
 }
@@ -138,12 +145,13 @@ nav button:hover::after {
     border: var(--inner-border);
     animation: rotateBorder 30s linear infinite;
     pointer-events: none;
+    transition: all 0.5s ease-in;
 }
 
 #avatar:hover::before {
     animation: borderShape 0.5s ease-in;
     border-radius: 73% 27% 70% 30% / 27% 72% 28% 73%;
-    box-shadow: var(--bx-shadow);
+    box-shadow: var(--bx-shadow-1);
 }
 
 #intro h1 {
@@ -199,7 +207,7 @@ nav button:hover::after {
 }
 
 #links button:hover {
-    box-shadow: var(--bx-shadow);
+    box-shadow: var(--bx-shadow-1);
 }
 
 #links button i,
@@ -233,7 +241,7 @@ nav button:hover::after {
     opacity: 1;
     transform: translate(-50%, -50%);
     transition-delay: 120ms;
-    text-shadow: var(--bx-shadow);
+    text-shadow: var(--bx-shadow-1);
 }
 
 #links button:hover i {
@@ -258,10 +266,36 @@ nav button:hover::after {
 #links .label {
     display: none;
 }
+.marquee {
+    overflow: hidden;
+    width: 100vw;
+    margin: 5rem;
+}
+.marquee .swiper-wrapper {
+    transition-timing-function: linear !important;
+}
+.swiper-slide {
+    width: 15rem !important;
+}
 
+/*.swiper-slide span {*/
+/*    font-family: var(--h3), cursive;*/
+/*    font-size: 3rem;*/
+/*    opacity: 0.5;*/
+/*    font-weight: 300;*/
+/*}*/
+
+.swiper-slide i {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+.swiper-slide img {
+    width: 3rem;
+    opacity: 0.5;
+}
 /*==== Projects Page =====*/
 #projects-box {
-    margin: 15rem auto;
+    margin: 5rem auto;
     width: 80%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -293,7 +327,7 @@ nav button:hover::after {
 }
 
 .proj-card:hover {
-    box-shadow: var(--bx-shadow);
+    box-shadow: var(--bx-shadow-2);
 }
 
 .content-box {
@@ -334,7 +368,6 @@ nav button:hover::after {
     object-position: center;
     aspect-ratio: 16 / 9;
     margin: 1rem 0.5rem 1.5rem 0.5rem;
-    box-shadow: 0px 0px 26px 5px rgba(55, 55, 55, 0.2);
     transform: scale(1);
     transition: transform 200ms ease;
     cursor: zoom-in;
@@ -371,7 +404,7 @@ nav button:hover::after {
 .proj-link:hover {
     background: var(--shadow);
     color: var(--highlight);
-    box-shadow: var(--bx-shadow);
+    box-shadow: var(--bx-shadow-1);
 }
 
 .date-box {
@@ -425,7 +458,7 @@ nav button:hover::after {
 
 /*==== Experience Page =====*/
 .timeline-box {
-    margin: 15rem auto;
+    margin: 5rem auto;
     width: 70%;
     max-width: 900px;
     position: relative;
@@ -504,17 +537,17 @@ nav button:hover::after {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/*.timeline-card::after {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    inset: 5px;*/
-/*    border: var(--inner-border);*/
-/*    border-radius: 20px;*/
-/*    pointer-events: none;*/
-/*}*/
+.timeline-card::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: var(--inner-border);
+    border-radius: 20px;
+    pointer-events: none;
+}
 
 .timeline-card:hover {
-    box-shadow: var(--bx-shadow);
+    box-shadow: var(--bx-shadow-2);
 }
 
 /* ===== Card Text ===== */
@@ -578,6 +611,21 @@ nav button:hover::after {
     background: var(--accent-2);
 }
 
+footer {
+    font-family: var(--p), cursive;
+    border-top: 2px solid var(--shadow);
+    height: auto;
+    max-height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+    padding: 0.5rem;
+    align-items: center;
+    color: #2f2f2f;
+    opacity: 0.7;
+}
+
 /* ===== Responsive ===== */
 @media (max-device-width: 1200px) {
     .timeline {
@@ -621,7 +669,7 @@ nav button:hover::after {
 }
 
 @media (max-device-width: 480px) {
-    .p1 {
+    #p1 {
         justify-content: start;
         width: 100vw;
         margin-top: 15rem;

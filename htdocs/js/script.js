@@ -1,6 +1,7 @@
 let typedInstance = null;
 let projectLightbox = null;
 let videoLightbox = null;
+let swiperInstance = null;
 
 const main = document.querySelector("main");
 const nav = document.querySelector("nav");
@@ -8,46 +9,6 @@ const nav = document.querySelector("nav");
 window.addEventListener("scroll", () => {
     nav.classList.toggle("scrolled", window.scrollY > 0);
 });
-//
-// // ---------- Image Viewer (click image to close) ----------
-// let viewer = document.querySelector(".img-viewer");
-// if (!viewer) {
-//   viewer = document.createElement("div");
-//   viewer.className = "img-viewer";
-//   viewer.innerHTML = `<img class="img-viewer__img" alt="">`;
-//   document.body.appendChild(viewer);
-// }
-//
-// const viewerImg = viewer.querySelector(".img-viewer__img");
-//
-// function openViewer(src, alt = "") {
-//   viewerImg.src = src;
-//   viewerImg.alt = alt;
-//   viewer.classList.add("open");
-// }
-//
-// function closeViewer() {
-//   viewer.classList.remove("open");
-//   setTimeout(() => {
-//     viewerImg.src = "";
-//   }, 200);
-// }
-//
-// document.addEventListener("click", (e) => {
-//   const img = e.target.closest(".proj-img");
-//   if (!img) return;
-//   openViewer(img.currentSrc || img.src, img.alt || "");
-// });
-//
-// viewerImg.addEventListener("click", closeViewer);
-//
-// document.addEventListener("keydown", (e) => {
-//   if (e.key === "Escape") closeViewer();
-// });
-//
-// viewer.addEventListener("click", (e) => {
-//   if (e.target === viewer) closeViewer(); // click outside the image
-// });
 
 // ---------- Routing (single click handler = resilient) ----------
 nav?.addEventListener("click", async (e) => {
@@ -102,8 +63,7 @@ async function renderProjects() {
             if (project.linkText === "Video") {
                 projectsHTML += `<a href="${project.link}" class="proj-link glightbox-video" data-type="video">${project.linkText}</a>`;
 
-            }
-            else {
+            } else {
                 projectsHTML += `<a href="${project.link}" class="proj-link" target="_blank">${project.linkText}</a>`;
             }
 
@@ -200,11 +160,13 @@ function initHomeEffects() {
     // Re-init Typed ONLY if elements exist
     const typedEl = document.querySelector("#typed");
     const stringsEl = document.querySelector("#typed-desc");
+    const swiper = document.querySelector(".marquee");
 
     if (!typedEl || !stringsEl || typeof Typed === "undefined") return;
 
     // If previously had one, kill it first
     if (typedInstance) typedInstance.destroy();
+
 
     typedInstance = new Typed("#typed", {
         stringsElement: "#typed-desc",
@@ -212,12 +174,30 @@ function initHomeEffects() {
         loop: true,
         loopCount: Infinity,
     });
+
+    if (!swiper|| typeof Swiper === "undefined") return;
+    if (swiperInstance) swiperInstance.destroy();
+    swiperInstance = new Swiper(".marquee", {
+        slidesPerView: 'auto',
+        // spaceBetween: 5,
+        loop: true,
+        speed: 5000,
+        allowTouchMove: false,
+        autoplay: {
+            delay: 0,
+            disableOnInteraction: false
+        }
+    });
 }
 
 function destroyHomeEffects() {
     if (typedInstance) {
         typedInstance.destroy();
         typedInstance = null;
+    }
+    if (swiperInstance) {
+        swiperInstance.destroy();
+        swiperInstance = null;
     }
 }
 
