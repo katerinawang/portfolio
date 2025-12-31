@@ -143,6 +143,7 @@ nav button:hover::after {
 #avatar:hover::before {
     animation: borderShape 0.5s ease-in;
     border-radius: 73% 27% 70% 30% / 27% 72% 28% 73%;
+    box-shadow: var(--bx-shadow);
 }
 
 #intro h1 {
@@ -267,17 +268,8 @@ nav button:hover::after {
     width: 80%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+    gap: 5rem;
     padding-bottom: 3rem;
-}
-
-#projects-box:has(> .proj-card:only-child) {
-    width: 25%;
-}
-
-/* 2 items: two fixed columns, centered */
-#projects-box:has(> .proj-card:nth-child(2):last-child) {
-    width: 60%;
 }
 
 .proj-card {
@@ -290,6 +282,8 @@ nav button:hover::after {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 1rem;
+    width: 100%;
 }
 
 .proj-card::after {
@@ -306,9 +300,13 @@ nav button:hover::after {
 }
 
 .content-box {
+    display: flex;
+    flex-direction: column;
     position: relative;
     z-index: 1;
-    text-align: center;
+    align-items: center;
+    margin: 0.5rem;
+    height: 100%;
 }
 
 .proj-title {
@@ -336,19 +334,23 @@ nav button:hover::after {
     width: 90%;
     height: 200px;
     object-fit: cover;
+    object-position: center;
+    aspect-ratio: 16 / 9;
     margin: 1rem 0.5rem 1.5rem 0.5rem;
     box-shadow: var(--bx-shadow);
+    transform: scale(1);
+    transition: transform 200ms ease;
+    cursor: zoom-in;
+    border: 5px solid #fff;
 }
 
 .proj-desc {
     color: var(--shadow);
     line-height: 1.7;
-    margin-bottom: 20px;
     font-size: 1rem;
     font-family: var(--p), sans-serif;
     border-left: 5px solid var(--accent);
-    padding-left: 15px;
-    margin-left: 5px;
+    padding-left: 1rem;
     text-align: left;
 }
 
@@ -367,6 +369,7 @@ nav button:hover::after {
     border: 1px solid var(--shadow);
     border-radius: 10px;
     margin-bottom: 5px;
+    margin-top: auto;
 }
 
 .proj-link:hover {
@@ -585,7 +588,7 @@ nav button:hover::after {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 700px) {
+@media (max-device-width: 1200px) {
     .timeline {
         grid-template-columns: 1fr;
         padding-left: 2rem;
@@ -599,12 +602,29 @@ nav button:hover::after {
         text-align: left;
         margin-bottom: 0.5rem;
     }
+
+    #projects-box {
+        width: 70%;
+    }
+
+    .proj-card {
+        width: 100%;
+    }
 }
 
 @media (max-device-width: 480px) {
+    .p1 {
+        justify-content: start;
+        width: 100vw;
+        margin-top: 5rem;
+    }
+
     #projects-box {
-        grid-template-columns: 1fr;
-        width: 50%;
+        width: 60%;
+    }
+
+    .proj-card {
+        width: 80%;
     }
 }
 

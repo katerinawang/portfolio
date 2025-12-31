@@ -1,4 +1,6 @@
 let typedInstance = null;
+let projectLightbox = null;
+let videoLightbox = null;
 
 const main = document.querySelector("main");
 const nav = document.querySelector("nav");
@@ -6,6 +8,46 @@ const nav = document.querySelector("nav");
 window.addEventListener("scroll", () => {
     nav.classList.toggle("scrolled", window.scrollY > 0);
 });
+//
+// // ---------- Image Viewer (click image to close) ----------
+// let viewer = document.querySelector(".img-viewer");
+// if (!viewer) {
+//   viewer = document.createElement("div");
+//   viewer.className = "img-viewer";
+//   viewer.innerHTML = `<img class="img-viewer__img" alt="">`;
+//   document.body.appendChild(viewer);
+// }
+//
+// const viewerImg = viewer.querySelector(".img-viewer__img");
+//
+// function openViewer(src, alt = "") {
+//   viewerImg.src = src;
+//   viewerImg.alt = alt;
+//   viewer.classList.add("open");
+// }
+//
+// function closeViewer() {
+//   viewer.classList.remove("open");
+//   setTimeout(() => {
+//     viewerImg.src = "";
+//   }, 200);
+// }
+//
+// document.addEventListener("click", (e) => {
+//   const img = e.target.closest(".proj-img");
+//   if (!img) return;
+//   openViewer(img.currentSrc || img.src, img.alt || "");
+// });
+//
+// viewerImg.addEventListener("click", closeViewer);
+//
+// document.addEventListener("keydown", (e) => {
+//   if (e.key === "Escape") closeViewer();
+// });
+//
+// viewer.addEventListener("click", (e) => {
+//   if (e.target === viewer) closeViewer(); // click outside the image
+// });
 
 // ---------- Routing (single click handler = resilient) ----------
 nav?.addEventListener("click", async (e) => {
@@ -50,18 +92,28 @@ async function renderProjects() {
         data.projects.forEach(project => {
             projectsHTML += `
         <div class="proj-card">
-          <img class="proj-img" src="${project.imgSrc}" alt="${project.alt}">
+          <a class="glightbox" href="${project.imgSrc}" data-gallery="projects" data-type="image">
+            <img class="proj-img" src="${project.imgSrc}" alt="${project.alt}">
+          </a>
           <div class="content-box">
             <span class="proj-title" data-text="${project.title}">${project.title}</span>
             <p class="proj-desc">${project.description}</p>
-            <a href="${project.link}" class="proj-link">${project.linkText}</a>
-          </div>
-          <div class="date-box">
-            <span class="proj-month">${project.month}</span>
-            <span class="proj-year">${project.year}</span>
-          </div>
-        </div>
       `;
+            if (project.linkText === "Video") {
+                projectsHTML += `<a href="${project.link}" class="proj-link glightbox-video" data-type="video">${project.linkText}</a>`;
+
+            }
+            else {
+                projectsHTML += `<a href="${project.link}" class="proj-link" target="_blank">${project.linkText}</a>`;
+            }
+
+            projectsHTML +=
+                `</div>
+                  <div class="date-box">
+                    <span class="proj-month">${project.month}</span>
+                    <span class="proj-year">${project.year}</span>
+                  </div>
+                </div>`;
         });
 
         projectsHTML += '</div>';
@@ -69,6 +121,9 @@ async function renderProjects() {
         // Convert to DOM elements and replace content
         const content = htmlToFragment(projectsHTML);
         main.replaceChildren(content);
+
+        initProjectLightbox();
+        initVideoLightbox();
 
         const start = {r: 238, g: 174, b: 202};
         const end = {r: 148, g: 187, b: 233};
@@ -191,6 +246,43 @@ function changeListItemColor(element, start, end, property) {
         const b = Math.round(start.b + (end.b - start.b) * t);
 
         e.style.setProperty(property, `rgb(${r}, ${g}, ${b})`);
+    });
+}
+
+function initVideoLightbox() {
+    if (videoLightbox) videoLightbox.destroy();
+
+    videoLightbox = GLightbox({
+        selector: '.glightbox-video',
+        autoplayVideos: true,
+        closeButton: false,
+        closeOnOutsideClick: true,
+        touchNavigation: true,
+    });
+}
+
+function initProjectLightbox() {
+    if (projectLightbox) projectLightbox.destroy(); // important for rerenders
+
+    projectLightbox = GLightbox({
+        selector: '.glightbox[data-gallery="projects"]',
+        openEffect: 'zoom',
+        closeEffect: 'zoom',
+        slideEffect: 'slide',
+        touchNavigation: true,
+        loop: false,
+        closeOnOutsideClick: true,
+        closeButton: false,
+        zoomable: false,
+        draggable: false,
+    });
+
+    projectLightbox.on('slide_after_load', ({slideNode}) => {
+        const media = slideNode.querySelector('.gslide-media');
+        if (!media) return;
+
+        media.style.cursor = 'zoom-out';
+        media.onclick = () => projectLightbox.close();
     });
 }
 

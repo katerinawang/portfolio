@@ -1,10 +1,70 @@
 {
   "projects": [
     {
+      "imgSrc": "../img/logic-gate.png",
+      "alt": "Logic Gate Thumbnail",
+      "title": "Logic Gate",
+      "description": "A group educational project aimed at teaching users about logic gates and how signals propagate through basic universal gates via wiring. I implemented the node, wire, and gate models and views using QGraphicsView, and developed a gate options menu that allows users to drag and drop gates from one view to another.",
+      "link": "to be upload",
+      "linkText": "Video",
+      "month": "Dec.",
+      "year": "2025"
+    },
+    {
+      "imgSrc": "../img/get-the-joker.png",
+      "alt": "Get the Joker Thumbnail",
+      "title": "Get the Joker",
+      "description": "An original single-player print-and-play game design project that uses a grid and standard playing cards to create a movement system for both the player and in-game opponents.",
+      "link": "https://www.canva.com/design/DAG4U7Yb7QY/eT9SQNOEjsM_yDcbRLshSg/edit?utm_content=DAG4U7Yb7QY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+      "linkText": "Check",
+      "month": "Nov.",
+      "year": "2025"
+    },
+    {
+      "imgSrc": "../img/sprite-editor.png",
+      "alt": "Sprite Editor Thumbnail",
+      "title": "Sprite Editor",
+      "description": "A group project focused on creating sprites by drawing pixel art on a canvas. I implemented the canvas model and view, frame creation, frame copying and deletion, a timeline for displaying and switching between frames, as well as an eraser tool. I also implemented a bucket fill feature using a DFS algorithm.",
+      "link": "https://youtu.be/zJ9jUnhrFWY",
+      "linkText": "Video",
+      "month": "Oct.",
+      "year": "2025"
+    },
+    {
+      "imgSrc": "../img/simon-game.png",
+      "alt": "Simon Game Thumbnail",
+      "title": "Simon Game",
+      "description": "A simple two-color Simon game in which the player must replay sequences that grow longer with each correct attempt. It also features a fun mode where the buttons switch while flashing, requiring the player to pay extra attention.",
+      "link": "https://youtu.be/V3pPpd_xe68",
+      "linkText": "Video",
+      "month": "Sep.",
+      "year": "2025"
+    },
+    {
+      "imgSrc": "../img/asset-pipeline-level-design.png",
+      "alt": "Level Design Thumbnail",
+      "title": "3D Platformer Level",
+      "description": "Assets pipline and level design for GAME 3010 using Unreal Engine 5, Maya, ZBrush, Substance 3D Painter.",
+      "link": "https://youtu.be/QcthJPmrvZc",
+      "linkText": "Video",
+      "month": "May.",
+      "year": "2025"
+    },
+    {
+      "imgSrc": "../img/snake.png",
+      "alt": "Snake Game Thumbnail",
+      "title": "Snake",
+      "description": "An online multiplayer Snake game developed for CS 3500 using C# and Blazor. We built a real-time client visualization engine that renders game state from JSON and supports 8+ concurrent players. The game also includes a real-time SQL-backed scoreboard that displays live player statistics, updated dynamically using server-sent events.",
+      "link": "https://youtu.be/Vx6_of4tbwA",
+      "linkText": "Video",
+      "month": "Mar.",
+      "year": "2025"
+    },
+    {
       "imgSrc": "../img/website-img.png",
-      "alt": "project thumbnail",
+      "alt": "Website Projects Thumbnail",
       "title": "Website Projects",
-      "description": "Website projects created for class cs1430.",
+      "description": "Website projects created for CS 1430, focusing on pure front-end development using plain HTML, CSS, JavaScript, and Bootstrap.",
       "link": "/cs1430",
       "linkText": "Check",
       "month": "Dec.",
