@@ -15,3 +15,4 @@ Link: https://katerina.wang
 - [Creating Personalised Memoji Gifs in Keynote](https://youtu.be/ayAlAX8ZfH4?si=7QdDFTDMIZMxgrRs)
 - [glightbox](https://github.com/biati-digital/glightbox)
 - [Swiper.js](https://swiperjs.com/)
+- Icons made by [Freepik](https://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/)
