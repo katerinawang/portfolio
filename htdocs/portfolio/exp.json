@@ -1,39 +1,38 @@
 {
   "exp": [
     {
+      "from": "Jan 2026",
+      "to": "Present",
+      "title": "Computer Science and Math Tutor",
+      "org": "STEM Learning Center, Salt Lake Community College",
+      "desc": "Provided tutoring support in computer science and mathematics courses:",
+      "duties": [
+        "Taught computer science concepts using active learning strategies.",
+        "Tutored College Algebra and Calculus I–II.",
+        "Strengthened subject knowledge and communication through teaching."
+      ],
+      "tags": [
+        "Computer Science",
+        "Mathematics",
+        "Tutoring",
+        "Communication"
+      ]
+    },
+    {
       "from": "Aug 2025",
       "to": "Present",
       "title": "Teaching Assistant",
       "org": "University of Utah, Kahlert School of Computing",
       "desc": "Served as a Teaching Assistant for CS 3500 - Software Practice:",
       "duties": [
-        "Reviewed and evaluated 10+ student code submissions weekly, providing feedback on clean code principles and design patterns.",
-        "Evaluated 20+ code submissions weekly, providing feedback on clean code principles and design patterns.",
-        "Led weekly lab sessions and supported students during office hours and on Piazza.",
-        "Delivered efficient, rubric-aligned grading with minimal regrade requests."
+        "Evaluated 20+ weekly submissions with feedback on code quality and design.",
+        "Led labs and assisted with debugging during office hours and on Piazza.",
+        "Provided consistent, rubric-based grading with minimal regrades."
       ],
       "tags": [
         "C#",
         "Blazor",
         "Multi-threading"
-      ]
-    },
-    {
-      "from": "Aug 2016",
-      "to": "Dec 2019",
-      "title": "Website Developer",
-      "org": "Yunchuang Technology, Mianyang, China",
-      "desc": "Managed and maintained web servers and created websites:",
-      "duties": [
-        "Managed centralized LNMP servers supporting 20+ domains, including deployment, security hardening, performance tuning, and server migrations.",
-        "Diagnosed and resolved technical issues through self-directed learning, reducing average resolution time from hours to under 30 minutes."
-      ],
-      "tags": [
-        "LNMP",
-        "Linux",
-        "Nginx",
-        "MySQL",
-        "Server Administration"
       ]
     }
   ]
