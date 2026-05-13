@@ -34,6 +34,26 @@
         "Blazor",
         "Multi-threading"
       ]
+    },
+    {
+      "from": "Aug 2016",
+      "to": "Dec 2019",
+      "title": "Web Administrator",
+      "org": "Yunchuang Technology, Mianyang, China",
+      "desc": "Managed WordPress-based websites and supporting infrastructure:",
+      "duties": [
+        "Built and deployed WordPress sites using templates, with HTML/CSS/JS, plugin and theme customization, including modifying plugin and theme source code to extend functionality and resolve issues.",
+        "Managed LNMP stack for 20+ domains, handling deployment, security hardening, performance tuning, and site migrations."
+      ],
+      "tags": [
+        "WordPress",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "LNMP",
+        "Linux",
+        "Web Administration"
+      ]
     }
   ]
 }
