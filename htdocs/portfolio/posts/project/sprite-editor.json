@@ -1,0 +1,20 @@
+{
+  "id": "sprite-editor",
+  "title": "Sprite Editor",
+  "slug": "sprite-editor",
+  "category": "project",
+  "tags": ["C++", "Qt", "Group Project", "DFS"],
+  "date": "2025-10-01",
+  "summary": "Pixel art sprite editor with frame timeline, bucket fill, and animation support",
+  "thumbnail": "../img/sprite-editor.png",
+  "link": "https://youtu.be/zJ9jUnhrFWY",
+  "linkText": "Video",
+  "content": [
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "A group project focused on creating sprites by drawing pixel art on a canvas. I implemented the canvas model and view, frame creation, frame copying and deletion, a timeline for displaying and switching between frames, as well as an eraser tool. I also implemented a bucket fill feature using a DFS algorithm."
+      }
+    }
+  ]
+}

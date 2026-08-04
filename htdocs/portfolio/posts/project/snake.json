@@ -1,0 +1,20 @@
+{
+  "id": "snake",
+  "title": "Snake",
+  "slug": "snake",
+  "category": "project",
+  "tags": ["C#", "Blazor", "Multiplayer", "SQL", "JSON"],
+  "date": "2025-03-01",
+  "summary": "Online multiplayer Snake game with real-time rendering and SQL-backed scoreboard",
+  "thumbnail": "../img/snake.png",
+  "link": "https://youtu.be/Vx6_of4tbwA",
+  "linkText": "Video",
+  "content": [
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "An online multiplayer Snake game developed for CS 3500 using C# and Blazor. We built a real-time client visualization engine that renders game state from JSON and supports 8+ concurrent players. The game also includes a real-time SQL-backed scoreboard that displays live player statistics, updated dynamically using server-sent events."
+      }
+    }
+  ]
+}

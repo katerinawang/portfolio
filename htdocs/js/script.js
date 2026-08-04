@@ -1,7 +1,5 @@
-let typedInstance = null;
 let projectLightbox = null;
 let videoLightbox = null;
-let swiperInstance = null;
 
 const main = document.querySelector("main");
 const nav = document.querySelector("nav");
@@ -10,199 +8,39 @@ window.addEventListener("scroll", () => {
     nav.classList.toggle("scrolled", window.scrollY > 0);
 });
 
-// ---------- Routing (single click handler = resilient) ----------
-nav?.addEventListener("click", async (e) => {
+// ---------- Routing ----------
+function navigate(hash) {
+    if (location.hash === hash) {
+        handleRoute(hash);
+    } else {
+        location.hash = hash;
+    }
+}
+
+async function handleRoute(hash) {
+    const parts = hash.replace(/^#\/?/, '').split('/');
+    const page = parts[0] || 'home';
+
+    if (page === 'post' && parts[1] && parts[2]) {
+        await renderPost(parts[1], parts[2]);
+    } else if (page === 'projects') {
+        await renderProjects();
+    } else if (page === 'experience') {
+        await renderExperience();
+    } else if (page === 'blog') {
+        await renderBlog();
+    } else {
+        await renderHome();
+    }
+}
+
+window.addEventListener('hashchange', () => handleRoute(location.hash));
+
+nav?.addEventListener("click", (e) => {
     const btn = e.target.closest("button");
     if (!btn) return;
-
-    if (btn.id === "home") {
-        await renderHome();
-    } else if (btn.id === "projects") {
-        await renderProjects();
-    } else if (btn.id === "experience") {
-        await renderExperience();
-    }
+    navigate('#' + btn.id);
 });
-
-// ---------- Render helpers ----------
-async function renderHome() {
-    if (!main) return;
-
-    const raw = await fetchHtmlAsText("./portfolio/home.html");
-    const content = htmlToFragment(raw);
-
-    main.replaceChildren(content);
-    playMainAnimation();
-
-    // re-run page-specific JS
-    initHomeEffects();
-}
-
-async function renderProjects() {
-    if (!main) return;
-    destroyHomeEffects();
-
-    try {
-        // Fetch JSON data
-        const response = await fetch('./portfolio/projects.json');
-        const data = await response.json();
-
-        // Create the projects container HTML
-        let projectsHTML = '<div id="projects-box">';
-
-        // Generate HTML for each project
-        data.projects.forEach(project => {
-            projectsHTML += `
-        <div class="proj-card">
-          <a class="glightbox" href="${project.imgSrc}" data-gallery="projects" data-type="image">
-            <img class="proj-img" src="${project.imgSrc}" alt="${project.alt}">
-          </a>
-          <div class="content-box">
-            <span class="proj-title" data-text="${project.title}">${project.title}</span>
-            <p class="proj-desc">${project.description}</p>
-      `;
-            if (project.linkText === "Video") {
-                projectsHTML += `<a href="${project.link}" class="proj-link glightbox-video" data-type="video">${project.linkText}</a>`;
-
-            } else {
-                projectsHTML += `<a href="${project.link}" class="proj-link" target="_blank">${project.linkText}</a>`;
-            }
-
-            projectsHTML +=
-                `</div>
-                  <div class="date-box">
-                    <span class="proj-month">${project.month}</span>
-                    <span class="proj-year">${project.year}</span>
-                  </div>
-                </div>`;
-        });
-
-        projectsHTML += '</div>';
-
-        // Convert to DOM elements and replace content
-        const content = htmlToFragment(projectsHTML);
-        main.replaceChildren(content);
-
-        playMainAnimation();
-        initProjectLightbox();
-        initVideoLightbox();
-
-        const start = {r: 238, g: 174, b: 202};
-        const end = {r: 148, g: 187, b: 233};
-
-        changeListItemColor(".date-box", start, end, "--date-color");
-
-    } catch (error) {
-        console.error('Error loading projects:', error);
-        main.innerHTML = '<p>Failed to load projects. Please try again later.</p>';
-    }
-}
-
-async function renderExperience() {
-    if (!main) return;
-    destroyHomeEffects();
-
-    try {
-        // Fetch JSON data
-        const response = await fetch('./portfolio/exp.json');
-        const data = await response.json();
-
-        // Create the projects container HTML
-        let expHTML = '<div class="timeline-box">';
-
-        // Generate HTML for each project
-        data.exp.forEach(timeline => {
-            expHTML += `
-              <div class="timeline">
-                <div class="timeline-date">
-                  <span class="date-from">${timeline.from}</span>
-                  <span class="date-to">${timeline.to}</span>
-                </div>
-                <div class="timeline-card">
-                  <h3 class="occupation">${timeline.title}</h3>
-                  <p class="company">${timeline.org}</p>
-                  <p class="description">
-                    ${timeline.desc}
-                  </p>
-            `;
-            if (timeline.duties) {
-                expHTML += `<ul class="duties">`;
-                timeline.duties.forEach(duty => {
-                    expHTML += `<li>${duty}</li>`;
-                });
-                expHTML += `</ul>`;
-            }
-            if (timeline.tags) {
-                expHTML += `<div class="tags">`
-                timeline.tags.forEach(tag => {
-                    expHTML += `<span class="tag">${tag}</span>`;
-                });
-                expHTML += `</div></div></div>`;
-            }
-        });
-
-        expHTML += `</div>`;
-
-        // Convert to DOM elements and replace content
-        const content = htmlToFragment(expHTML);
-        main.replaceChildren(content);
-        playMainAnimation();
-
-        const start = {r: 238, g: 174, b: 202};
-        const end = {r: 148, g: 187, b: 233};
-        changeListItemColor(".timeline", start, end, "--dot-color");
-
-    } catch (error) {
-        console.error('Error loading experience:', error);
-        main.innerHTML = '<p>Failed to load projects. Please try again later.</p>';
-    }
-}
-
-// ---------- Page-specific init / cleanup ----------
-function initHomeEffects() {
-    // Re-init Typed ONLY if elements exist
-    const typedEl = document.querySelector("#typed");
-    const stringsEl = document.querySelector("#typed-desc");
-    const swiper = document.querySelector(".marquee");
-
-    if (!typedEl || !stringsEl || typeof Typed === "undefined") return;
-
-    // If previously had one, kill it first
-    if (typedInstance) typedInstance.destroy();
-
-
-    typedInstance = new Typed("#typed", {
-        stringsElement: "#typed-desc",
-        typeSpeed: 50,
-        loop: true,
-        loopCount: Infinity,
-    });
-
-    if (!swiper || typeof Swiper === "undefined") return;
-    if (swiperInstance) swiperInstance.destroy();
-    swiperInstance = new Swiper(".marquee", {
-        slidesPerView: 'auto',
-        // spaceBetween: 5,
-        loop: true,
-        speed: 5000,
-        allowTouchMove: false,
-        autoplay: {
-            delay: 0,
-            disableOnInteraction: false
-        }
-    });
-}
-
-function destroyHomeEffects() {
-    if (typedInstance) {
-        typedInstance.destroy();
-        typedInstance = null;
-    }
-    if (swiperInstance) {
-        swiperInstance.destroy();
-        swiperInstance = null;
-    }
-}
 
 // ---------- Utilities ----------
 async function fetchHtmlAsText(url) {
@@ -246,15 +84,12 @@ function initVideoLightbox() {
 
 function playMainAnimation() {
     main.classList.remove("fade-in");
-
-    // force reflow so the browser notices the change
     void main.offsetWidth;
-
     main.classList.add("fade-in");
 }
 
 function initProjectLightbox() {
-    if (projectLightbox) projectLightbox.destroy(); // important for rerenders
+    if (projectLightbox) projectLightbox.destroy();
 
     projectLightbox = GLightbox({
         selector: '.glightbox[data-gallery="projects"]',
@@ -279,6 +114,4 @@ function initProjectLightbox() {
 }
 
 // ---------- Initial load ----------
-window.addEventListener("load", async () => {
-    await renderHome();
-});
+window.addEventListener("load", () => handleRoute(location.hash));

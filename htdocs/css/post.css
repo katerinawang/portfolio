@@ -1,0 +1,198 @@
+/*==== Post Page =====*/
+.post-page {
+    width: 70%;
+    max-width: 800px;
+    margin: 3rem auto 5rem auto;
+    padding: 2rem;
+    background: var(--paper);
+    border-radius: 20px;
+    position: relative;
+}
+
+.post-page::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: var(--inner-border);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.post-back {
+    border: none;
+    background: transparent;
+    font-family: var(--h3), sans-serif;
+    font-size: 1rem;
+    color: var(--shadow);
+    cursor: pointer;
+    padding: 0.25rem 0;
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+}
+
+.post-back:hover {
+    opacity: 1;
+}
+
+.post-title {
+    font-family: var(--h3), cursive;
+    font-size: 2rem;
+    font-weight: 600;
+    color: transparent;
+    background: linear-gradient(150deg, #E07A9F, #7F4B93);
+    background-clip: text;
+    -webkit-background-clip: text;
+    line-height: 1.2;
+}
+
+.post-date {
+    font-family: var(--p), sans-serif;
+    font-size: 0.9rem;
+    color: var(--shadow);
+    opacity: 0.6;
+}
+
+.post-tags {
+    margin: 1rem 0;
+}
+
+.post-hero {
+    width: 100%;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 5px solid #fff;
+    box-shadow: var(--bx-shadow-1);
+}
+
+.post-content {
+    font-family: var(--p), sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--shadow);
+}
+
+.post-content p {
+    margin: 1rem 0;
+}
+
+.post-content h2 {
+    font-family: var(--h3), sans-serif;
+    font-size: 1.6rem;
+    margin: 2rem 0 0.75rem 0;
+    color: var(--shadow);
+}
+
+.post-content h3 {
+    font-family: var(--h3), sans-serif;
+    font-size: 1.3rem;
+    margin: 1.5rem 0 0.5rem 0;
+    color: var(--shadow);
+}
+
+.post-content h4 {
+    font-family: var(--h3), sans-serif;
+    font-size: 1.1rem;
+    margin: 1.25rem 0 0.5rem 0;
+    color: var(--shadow);
+}
+
+.post-content ul,
+.post-content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+.post-content li::marker {
+    content: "# ";
+    font-size: 1rem;
+    color: #9f9f9f;
+}
+
+.post-content pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1.25rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 1.5rem 0;
+}
+
+.post-content code {
+    font-family: 'Courier New', monospace;
+}
+
+.post-content blockquote {
+    border-left: 5px solid var(--accent);
+    padding: 0.75rem 1.25rem;
+    margin: 1.5rem 0;
+    background: rgba(255, 159, 104, 0.05);
+    border-radius: 0 10px 10px 0;
+}
+
+.post-content blockquote cite {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-top: 0.5rem;
+}
+
+.post-content hr {
+    border: none;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.post-content hr::before {
+    content: "* * *";
+    color: var(--shadow);
+    opacity: 0.3;
+    letter-spacing: 1rem;
+    font-family: var(--h3), sans-serif;
+}
+
+.post-content figure {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.post-content figure img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 3px solid #fff;
+    box-shadow: var(--bx-shadow-1);
+}
+
+.post-content figcaption {
+    font-size: 0.85rem;
+    color: var(--shadow);
+    opacity: 0.6;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.post-action {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.6rem 2rem;
+    font-family: var(--h3), sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--shadow);
+    background: var(--highlight);
+    border: 1px solid var(--shadow);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.post-action:hover {
+    background: var(--shadow);
+    color: var(--highlight);
+    box-shadow: var(--bx-shadow-1);
+}

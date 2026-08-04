@@ -1,0 +1,161 @@
+/*==== Experience Page =====*/
+.timeline-box {
+    margin: 5rem auto;
+    width: 70%;
+    max-width: 900px;
+    position: relative;
+}
+
+.timeline-box::before {
+    content: "";
+    position: absolute;
+    left: 70px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+            to bottom,
+            var(--shadow),
+            var(--shadow) 6px,
+            transparent 6px,
+            transparent 12px
+    );
+    opacity: 0.35;
+    margin-bottom: 2rem;
+}
+
+.timeline {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-date {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-right: 2rem;
+    margin-top: 1rem;
+    font-family: var(--p), sans-serif;
+    color: var(--shadow);
+}
+
+.timeline-date::after {
+    display: block;
+    position: relative;
+    content: "";
+    background: var(--dot-color);
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    top: -27px;
+    left: 31px;
+}
+
+.date-from,
+.date-to {
+    text-align: right;
+    display: block;
+    width: 5rem;
+    font-size: 0.95rem;
+    transform: rotate(-1deg);
+}
+
+.date-to {
+    opacity: 0.6;
+}
+
+.timeline-card {
+    background: var(--paper);
+    padding: 1.5rem 1.75rem;
+    border-radius: 20px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.timeline-card::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: var(--inner-border);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.timeline-card:hover {
+    box-shadow: var(--bx-shadow-2);
+}
+
+.occupation {
+    font-family: var(--h3), sans-serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.company {
+    font-weight: 400;
+    font-style: italic;
+    font-family: var(--h2), cursive;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+}
+
+.description {
+    font-size: 0.95rem;
+    font-family: var(--p), cursive;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.duties {
+    font-family: var(--p), cursive;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.duties li {
+    margin-bottom: 0.5rem;
+}
+
+.duties li::marker {
+    content: "# ";
+    font-size: 1rem;
+    color: #9f9f9f;
+}
+
+/* -- Experience Responsive -- */
+@media (max-device-width: 1200px) {
+    .timeline {
+        grid-template-columns: 1fr;
+        padding-left: 2rem;
+    }
+
+    .timeline::before {
+        left: 10px;
+    }
+
+    .timeline-date {
+        text-align: left;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-date {
+        width: 0;
+        align-items: start;
+    }
+
+    .timeline-box::before {
+        left: 0;
+    }
+
+    .timeline-date::after {
+        left: -39px;
+    }
+
+    .date-from, .date-to {
+        text-align: left;
+    }
+}

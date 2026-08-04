@@ -1,0 +1,108 @@
+{
+  "posts": [
+    {
+      "id": "logic-gate",
+      "title": "Logic Gate",
+      "slug": "logic-gate",
+      "category": "project",
+      "tags": [
+        "C++",
+        "Qt",
+        "QGraphicsView",
+        "Group Project"
+      ],
+      "date": "2025-12-01",
+      "summary": "Educational logic gate wiring simulator built with Qt and QGraphicsView",
+      "thumbnail": "../img/logic-gate.png"
+    },
+    {
+      "id": "get-the-joker",
+      "title": "Get the Joker",
+      "slug": "get-the-joker",
+      "category": "project",
+      "tags": [
+        "Game Design",
+        "Print-and-Play"
+      ],
+      "date": "2025-11-01",
+      "summary": "Original single-player print-and-play card game with grid-based movement",
+      "thumbnail": "../img/get-the-joker.png"
+    },
+    {
+      "id": "sprite-editor",
+      "title": "Sprite Editor",
+      "slug": "sprite-editor",
+      "category": "project",
+      "tags": [
+        "C++",
+        "Qt",
+        "Group Project",
+        "DFS"
+      ],
+      "date": "2025-10-01",
+      "summary": "Pixel art sprite editor with frame timeline, bucket fill, and animation support",
+      "thumbnail": "../img/sprite-editor.png"
+    },
+    {
+      "id": "simon-game",
+      "title": "Simon Game",
+      "slug": "simon-game",
+      "category": "project",
+      "tags": [
+        "C++",
+        "Qt",
+        "Group Project"
+      ],
+      "date": "2025-09-01",
+      "summary": "Two-color Simon game with a challenging fun mode where buttons switch positions",
+      "thumbnail": "../img/simon-game.png"
+    },
+    {
+      "id": "3d-platformer-level",
+      "title": "3D Platformer Level",
+      "slug": "3d-platformer-level",
+      "category": "project",
+      "tags": [
+        "Unreal Engine 5",
+        "Maya",
+        "ZBrush",
+        "Substance 3D Painter",
+        "Level Design"
+      ],
+      "date": "2025-05-01",
+      "summary": "Asset pipeline and level design for GAME 3010 using UE5 and industry-standard 3D tools",
+      "thumbnail": "../img/asset-pipeline-level-design.png"
+    },
+    {
+      "id": "snake",
+      "title": "Snake",
+      "slug": "snake",
+      "category": "project",
+      "tags": [
+        "C#",
+        "Blazor",
+        "Multiplayer",
+        "SQL",
+        "JSON"
+      ],
+      "date": "2025-03-01",
+      "summary": "Online multiplayer Snake game with real-time rendering and SQL-backed scoreboard",
+      "thumbnail": "../img/snake.png"
+    },
+    {
+      "id": "website-projects",
+      "title": "Website Projects",
+      "slug": "website-projects",
+      "category": "project",
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Bootstrap"
+      ],
+      "date": "2023-12-01",
+      "summary": "Front-end web projects for CS 1430 using plain HTML, CSS, JS, and Bootstrap",
+      "thumbnail": "../img/website-img.png"
+    }
+  ]
+}
