@@ -10,12 +10,16 @@ Link: https://katerina.wang
 ### Version History
 
 #### `2026.08` — Blog & Admin System *(vibe coded with Claude)*
+
 - Added blog page with timeline layout, tag filtering, and search
 - Added individual post pages with Editor.js block rendering
 - Built admin tool for writing/editing posts with live preview
-  - Save and delete posts directly to filesystem via Node.js API server
-  - Auto-updates `index.json` on save/delete
-- Hash-based routing (`#home`, `#blog`, `#post/...`) for session persistence
+   - Save and delete posts directly to filesystem via Node.js API server
+   - Auto-updates `index.json` on save/delete
+   - Auto-deletes orphaned media files when images are removed from posts
+- Path-based routing (`/projects`, `/post/...`) using History API with SPA fallback
+- Inline video playback via GLightbox integration
+- Grouped post action buttons with centered layout
 - Refactored JS and CSS into per-page modules (`home.js/css`, `blog.js/css`, etc.)
 - Blog entry hover effect with shifted text shadow
 - Full date display on individual post pages
