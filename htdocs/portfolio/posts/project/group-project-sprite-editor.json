@@ -1,0 +1,240 @@
+{
+  "id": "sprite-editor",
+  "title": "[Group Project] - Sprite Editor",
+  "slug": "group-project-sprite-editor",
+  "category": "project",
+  "tags": [
+    "C++",
+    "Qt",
+    "Group Project",
+    "DFS"
+  ],
+  "date": "2025-11-13",
+  "summary": "Pixel art sprite editor with frame timeline, bucket fill, and animation support",
+  "thumbnail": "../img/sprite-editor.png",
+  "content": [
+    {
+      "id": "_MsntrO1xB",
+      "type": "paragraph",
+      "data": {
+        "text": "A 32×32 pixel art sprite editor with frame-based animation, built as a group project for CS 3505 (Software Practice II) at the University of Utah with 6 contributors. I authored 54 of 116 commits (~47%) and was the primary developer for the drawing engine, frame management system, and application architecture — contributing roughly 55–65% of the final source code across the model and view layers."
+      }
+    },
+    {
+      "id": "se-contributions",
+      "type": "header",
+      "data": {
+        "text": "My Contributions",
+        "level": 3
+      }
+    },
+    {
+      "id": "se-canvas-h",
+      "type": "header",
+      "data": {
+        "text": "Canvas &amp; Drawing Engine (EditView)",
+        "level": 4
+      }
+    },
+    {
+      "id": "se-canvas-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Built the entire <b>pixel editing canvas</b> — a 640×640 widget rendering a 32×32 sprite at 20× zoom with coordinate mapping between screen pixels and sprite pixels",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented mouse event handling for <b>hover highlighting</b>, click-to-paint, and drag-to-draw with a layered <b>paintEvent</b> pipeline: checkerboard transparency background → frame image → painted pixels → hover highlight → grid overlay",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented <b>bucket fill</b> using a DFS (depth-first search) flood-fill algorithm with a stack-based traversal of neighboring pixels matching the target color",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Added <b>variable brush size</b> (1px to 32px) with area-based painting that iterates over a square brush footprint, wired to a UI slider",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Wired the <b>eraser tool</b> to paint with Qt::transparent on the canvas, integrating it with the toolbar's tool selection system",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "se-frame-h",
+      "type": "header",
+      "data": {
+        "text": "Frame Management System (Frame + FramesView)",
+        "level": 4
+      }
+    },
+    {
+      "id": "se-frame-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Designed the <b>Frame</b> data model managing an ordered std::vector of QImage frames with add, remove, copy, swap (reorder), clear, and select operations",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built the <b>FramesView</b> timeline panel (100% sole author) — a vertical list of 128×128 clickable thumbnails with yellow highlight on the selected frame and dynamic height calculation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented <b>insert-after-selected</b> frame positioning, <b>deep-copy frame</b>, and <b>swap frames</b> for reordering — with edge case handling (last frame clears instead of deleting)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Added <b>scroll auto-focus</b> that automatically scrolls the timeline to the newest frame when one is added",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "se-arch-h",
+      "type": "header",
+      "data": {
+        "text": "Application Architecture &amp; Model",
+        "level": 4
+      }
+    },
+    {
+      "id": "se-arch-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Established the <b>Model-View architecture</b> and signal/slot wiring pattern used by all team members — created the initial project structure, model file, and the setModel() pattern for connecting views to the centralized SpriteEditorModel",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Made a key architectural decision to <b>migrate pixel storage from a raw 2D array to QImage</b>, enabling native Qt rendering and simplifying the save/load pipeline",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built the core <b>SpriteEditorModel</b> — the central state manager owning the Frame instance, coordinating signals between views, and providing the drawing API (updateFrame, bucketAlgorithm)",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "se-polish-h",
+      "type": "header",
+      "data": {
+        "text": "Integration &amp; Code Quality",
+        "level": 4
+      }
+    },
+    {
+      "id": "se-polish-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Connected the <b>color palette to the edit canvas</b>, fixed color selection not updating on the drawing pane",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Fixed bugs: <b>eraser leaving extra pixels</b>, unwanted initial pixel when adding new frames, bucket tool misbehavior after switching from eraser",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Wrote documentation across header files (editview.h, framesview.h, mainview.h, model.h, previewpaneview.h), created the Code Style Document and README",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Restructured editview.cpp for cleaner code organization and adjusted overall UI layout and widget positioning",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "se-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "se-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Languages:</b> C++",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frameworks:</b> Qt 6, QWidget, QImage, QPainter, QTimer, QColorDialog, QScrollArea",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Patterns:</b> Model-View separation, Observer pattern (Qt signals/slots), centralized wiring hub (MainWindow)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Algorithms:</b> DFS flood fill (bucket tool), coordinate mapping with zoom factor, area-based brush painting",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Concepts:</b> Pixel-level rendering with layered compositing (checkerboard → image → overlay → grid), mouse event handling (press/move/release/leave), frame-based animation, QImage as a mutable pixel buffer",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Tools:</b> Git (collaborative branching, 54 commits), QMake, GitHub",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "7CCA9vhdr7",
+      "type": "button",
+      "data": {
+        "text": "Video",
+        "url": "https://youtu.be/zJ9jUnhrFWY"
+      }
+    }
+  ]
+}

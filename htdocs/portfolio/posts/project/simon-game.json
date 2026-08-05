@@ -3,17 +3,26 @@
   "title": "Simon Game",
   "slug": "simon-game",
   "category": "project",
-  "tags": ["C++", "Qt", "Group Project"],
+  "tags": [
+    "C++",
+    "Qt",
+    "Group Project"
+  ],
   "date": "2025-09-01",
   "summary": "Two-color Simon game with a challenging fun mode where buttons switch positions",
   "thumbnail": "../img/simon-game.png",
-  "link": "https://youtu.be/V3pPpd_xe68",
-  "linkText": "Video",
   "content": [
     {
       "type": "paragraph",
       "data": {
         "text": "A simple two-color Simon game in which the player must replay sequences that grow longer with each correct attempt. It also features a fun mode where the buttons switch while flashing, requiring the player to pay extra attention."
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "text": "Video",
+        "url": "https://youtu.be/V3pPpd_xe68"
       }
     }
   ]

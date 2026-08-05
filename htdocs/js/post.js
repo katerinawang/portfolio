@@ -11,6 +11,10 @@ async function renderPost(category, slug) {
 
         let postHTML = '<article class="post-page">';
 
+        if (post.thumbnail) {
+            postHTML += `<img class="post-hero" src="${post.thumbnail}" alt="${post.title}">`;
+        }
+
         const backHash = category === 'blog' ? '#blog' : '#projects';
         postHTML += `<button class="post-back" onclick="navigate('${backHash}')">&#8592; Back</button>`;
 
@@ -25,17 +29,9 @@ async function renderPost(category, slug) {
             postHTML += '</div>';
         }
 
-        if (post.thumbnail) {
-            postHTML += `<img class="post-hero" src="${post.thumbnail}" alt="${post.title}">`;
-        }
-
         postHTML += '<div class="post-content">';
         postHTML += renderBlocks(post.content || []);
         postHTML += '</div>';
-
-        if (post.link && post.link !== 'to be upload') {
-            postHTML += `<a href="${post.link}" class="post-action" target="_blank">${post.linkText || 'View'}</a>`;
-        }
 
         postHTML += '</article>';
 
@@ -51,31 +47,53 @@ async function renderPost(category, slug) {
 }
 
 function renderBlocks(blocks) {
-    return blocks.map(block => {
-        switch (block.type) {
-            case 'paragraph':
-                return `<p>${block.data.text}</p>`;
-            case 'header':
-                return `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
-            case 'list': {
-                const tag = block.data.style === 'ordered' ? 'ol' : 'ul';
-                const items = renderListItems(block.data.items);
-                return `<${tag}>${items}</${tag}>`;
+    let html = '';
+    let i = 0;
+    while (i < blocks.length) {
+        if (blocks[i].type === 'button') {
+            html += '<div class="post-actions">';
+            while (i < blocks.length && blocks[i].type === 'button') {
+                const b = blocks[i];
+                html += `<a href="${b.data.url || '#'}" class="post-action" target="_blank">${b.data.text || 'View'}</a>`;
+                i++;
             }
-            case 'code':
-                return `<pre><code>${block.data.code}</code></pre>`;
-            case 'quote':
-                return `<blockquote><p>${block.data.text}</p>${block.data.caption ? `<cite>${block.data.caption}</cite>` : ''}</blockquote>`;
-            case 'delimiter':
-                return '<hr>';
-            case 'image': {
-                const caption = block.data.caption ? `<figcaption>${block.data.caption}</figcaption>` : '';
-                return `<figure><img src="${block.data.file?.url || ''}" alt="${block.data.caption || ''}">${caption}</figure>`;
-            }
-            default:
-                return '';
+            html += '</div>';
+        } else {
+            html += renderBlock(blocks[i]);
+            i++;
         }
-    }).join('');
+    }
+    return html;
+}
+
+function renderBlock(block) {
+    switch (block.type) {
+        case 'paragraph':
+            return `<p>${block.data.text}</p>`;
+        case 'header':
+            return `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
+        case 'list': {
+            const tag = block.data.style === 'ordered' ? 'ol' : 'ul';
+            const items = renderListItems(block.data.items);
+            return `<${tag}>${items}</${tag}>`;
+        }
+        case 'code':
+            return `<pre><code>${block.data.code}</code></pre>`;
+        case 'quote':
+            return `<blockquote><p>${block.data.text}</p>${block.data.caption ? `<cite>${block.data.caption}</cite>` : ''}</blockquote>`;
+        case 'delimiter':
+            return '<hr>';
+        case 'image': {
+            const caption = block.data.caption ? `<figcaption>${block.data.caption}</figcaption>` : '';
+            return `<figure><img src="${block.data.file?.url || ''}" alt="${block.data.caption || ''}">${caption}</figure>`;
+        }
+        case 'pdf': {
+            const pdfCaption = block.data.caption ? `<figcaption>${block.data.caption}</figcaption>` : '';
+            return `<figure class="pdf-embed"><embed src="${block.data.file?.url || ''}" type="application/pdf" width="100%" height="600px">${pdfCaption}</figure>`;
+        }
+        default:
+            return '';
+    }
 }
 
 function renderListItems(items) {

@@ -57,11 +57,13 @@
 }
 
 .post-hero {
-    width: 100%;
-    border-radius: 12px;
-    margin: 1.5rem 0;
-    border: 5px solid #fff;
-    box-shadow: var(--bx-shadow-1);
+    width: calc(100% + 4rem - 16px);
+    margin: calc(-2rem + 8px) calc(-2rem + 8px) 1.5rem calc(-2rem + 8px);
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px 12px 0 0;
+    display: block;
 }
 
 .post-content {
@@ -176,9 +178,15 @@
     font-style: italic;
 }
 
+.post-actions {
+    display: block;
+    text-align: center;
+    margin: 2rem 0;
+}
+
 .post-action {
     display: inline-block;
-    margin-top: 2rem;
+    margin: 0.25rem 0.5rem;
     padding: 0.6rem 2rem;
     font-family: var(--h3), sans-serif;
     font-size: 1rem;

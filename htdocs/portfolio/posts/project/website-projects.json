@@ -3,17 +3,27 @@
   "title": "Website Projects",
   "slug": "website-projects",
   "category": "project",
-  "tags": ["HTML", "CSS", "JavaScript", "Bootstrap"],
+  "tags": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Bootstrap"
+  ],
   "date": "2023-12-01",
   "summary": "Front-end web projects for CS 1430 using plain HTML, CSS, JS, and Bootstrap",
   "thumbnail": "../img/website-img.png",
-  "link": "/cs1430",
-  "linkText": "Check",
   "content": [
     {
       "type": "paragraph",
       "data": {
         "text": "Website projects created for CS 1430, focusing on pure front-end development using plain HTML, CSS, JavaScript, and Bootstrap."
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "text": "Check",
+        "url": "/cs1430"
       }
     }
   ]

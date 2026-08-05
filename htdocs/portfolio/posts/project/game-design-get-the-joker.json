@@ -1,0 +1,89 @@
+{
+  "id": "get-the-joker",
+  "title": "[Game Design] - Get the Joker",
+  "slug": "game-design-get-the-joker",
+  "category": "project",
+  "tags": [
+    "Game Design",
+    "Print-and-Play"
+  ],
+  "date": "2025-12-05",
+  "summary": "Original single-player print-and-play card game with grid-based movement",
+  "thumbnail": "../img/get-the-joker.png",
+  "content": [
+    {
+      "id": "rbLzEgaBCd",
+      "type": "paragraph",
+      "data": {
+        "text": "<b>Get the Joker</b> is an original single-player print-and-play board game played on a 7×9 grid using a standard deck of playing cards and a six-sided die. The player's goal is to catch the Joker token on the board before running out of lives — but the Joker fights back, chasing the player through an escalating Red Zone mechanic that shifts the balance of power as the game progresses."
+      }
+    },
+    {
+      "id": "intro-mechanics",
+      "type": "header",
+      "data": {
+        "text": "Core Mechanics",
+        "level": 3
+      }
+    },
+    {
+      "id": "intro-mechanics-p1",
+      "type": "paragraph",
+      "data": {
+        "text": "The movement system maps the four card suits to the four cardinal directions — spades move up, hearts move left, clubs move down, and diamonds move right. Card numbers determine the number of steps. Before each game, the player chooses a <i>Special Suit</i>, which grants full directional freedom but requires moving the exact number of steps on the card. Non-special suit cards allow flexible step counts (1 up to the card's value) but lock the direction. This creates a constant tension between precision and freedom in every move."
+      }
+    },
+    {
+      "id": "intro-mechanics-p2",
+      "type": "paragraph",
+      "data": {
+        "text": "Each turn, the Joker draws and plays one card, moving in a ping-pong pattern that bounces off edges and tokens. The player draws up to three cards and plays all of them, choosing the order and step counts strategically. When the Joker lands on a corner square, it captures that corner and places a Red Corner token — once all four corners are taken, the board's Yellow Zone (a safe area) converts into a Red Zone where the Joker abandons cards entirely and rolls a die to chase the player directly."
+      }
+    },
+    {
+      "id": "intro-design",
+      "type": "header",
+      "data": {
+        "text": "Design Philosophy",
+        "level": 3
+      }
+    },
+    {
+      "id": "intro-design-p1",
+      "type": "paragraph",
+      "data": {
+        "text": "The game was designed around one core pillar: <i>a card-driven movement game that combines tactical decision-making, randomness, and rising tension on a 7×9 grid.</i> The design went through multiple iterations — starting as a 5×5 grid with five cards in hand, then evolving through playtesting into the final 7×9 board with three-card hands and the Special Suit system. The asymmetric grid dimensions (7 columns, 9 rows) were chosen specifically to prevent repetitive movement patterns that occurred on the square grid."
+      }
+    },
+    {
+      "id": "intro-design-p2",
+      "type": "paragraph",
+      "data": {
+        "text": "A key breakthrough came during a class playtesting workshop, where a survey question — <i>\"In this game you played as [ ], in order to [ ], you had to [ ]\"</i> — revealed the missing piece: obstacles. This led to the Red Corner and Red Zone mechanics that give the game its escalating tension. The goal was a game that feels joyful rather than stressful, with a low learning curve (familiar playing cards as the interface) but enough tactical depth to reward thoughtful play."
+      }
+    },
+    {
+      "id": "intro-skills",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "intro-skills-p1",
+      "type": "paragraph",
+      "data": {
+        "text": "Game mechanics design, iterative prototyping, playtesting and user feedback integration, balance tuning, technical writing (rulebook), and visual design (game board, tokens, and materials). The full game design document — including the rulebook, game materials, design rationale, and designer diary — is available below."
+      }
+    },
+    {
+      "id": "uugcmFdc3N",
+      "type": "button",
+      "data": {
+        "text": "Game Design Page",
+        "url": "https://canva.link/0epm83mavh15yb6"
+      }
+    }
+  ]
+}

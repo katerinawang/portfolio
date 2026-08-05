@@ -1,0 +1,234 @@
+{
+  "id": "logic-gate",
+  "title": "[Group Project] - Logic Gate",
+  "slug": "group-project-logic-gate",
+  "category": "project",
+  "tags": [
+    "C++",
+    "Qt",
+    "QGraphicsView",
+    "Group Project"
+  ],
+  "date": "2025-12-12",
+  "summary": "Educational logic gate wiring simulator built with Qt and QGraphicsView",
+  "thumbnail": "../img/logic-gate.png",
+  "content": [
+    {
+      "id": "USKNXOCyzq",
+      "type": "paragraph",
+      "data": {
+        "text": "An educational logic gate wiring simulator where players learn how digital circuits work by connecting AND, OR, and NOT gates to solve 8 progressively harder puzzles. Built as a final group project for CS 3505 (Software Practice II) at the University of Utah with 5 contributors. I authored 100+ commits and was the primary developer for the core circuit system and game interaction layer."
+      }
+    },
+    {
+      "id": "cf7P6zNkJC",
+      "type": "header",
+      "data": {
+        "text": "My Contributions",
+        "level": 3
+      }
+    },
+    {
+      "id": "yAWjnvHo8n",
+      "type": "header",
+      "data": {
+        "text": "Circuit System (Model Layer)",
+        "level": 4
+      }
+    },
+    {
+      "id": "I8CneuJnsX",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Designed and implemented the <b>Gate</b> model with an enum-based type system (AND, OR, NOT, T, F, DOOR, C) and boolean evaluation logic that computes output from connected inputs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built the <b>Node</b> model as connection endpoints for gates, supporting input/output roles, wire attachment/detachment, and null-safe pointer management",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented the <b>Wire</b> model for signal propagation between nodes, with color state toggling to visually reflect signal values (true/false)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Handled object lifecycle and <b>memory management</b> \u2014 fixed destructor ordering for gates, nodes, and wires to prevent dangling pointers and crashes from dynamic scene rearrangement",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "8e4Pd4f2Tq",
+      "type": "header",
+      "data": {
+        "text": "Graphics &amp; Interaction (View Layer)",
+        "level": 4
+      }
+    },
+    {
+      "id": "fhWbuTT-pW",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Built <b>GateView</b> using QGraphicsPixmapItem for rendering gate icons on the canvas with click-to-toggle behavior for T/F/C gates",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented <b>WireView</b> with real-time color updates reflecting signal propagation, click-to-delete, and edge case handling for reverse-connected and deleted wires",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Created <b>NodeView</b> with mouse press/release event handling to initiate and complete wire connections between gates via temporary wire preview",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Developed <b>ToolView</b> \u2014 a draggable gate palette using custom mouse event overrides (mousePressEvent, mouseMoveEvent, mouseReleaseEvent) for drag-and-drop from the tool panel onto the game canvas with 100px snap-to-slot positioning",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "UzGj39rrY2",
+      "type": "header",
+      "data": {
+        "text": "Game Logic &amp; Navigation",
+        "level": 4
+      }
+    },
+    {
+      "id": "yVC4mE8GNr",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Built <b>MainWindow</b> with QStackedWidget for page-based navigation between main menu, level select, and game views",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented <b>level progression system</b> \u2014 sequential level unlocking, timed challenges with fail-on-timeout, level completion detection, and auto-advance to next level",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Added UI polish: styled level select buttons, help popup, toolbar layout, hover tooltips for gate descriptions, and warning messages for invalid wire connections",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Integrated <b>QMediaPlayer</b> and QAudioOutput for title screen music and background audio",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "a1fO4KyBu9",
+      "type": "header",
+      "data": {
+        "text": "Cross-Platform &amp; Code Quality",
+        "level": 4
+      }
+    },
+    {
+      "id": "0hOCqNk7ik",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Resolved <b>cross-platform mouse event handling</b> differences between macOS and Windows \u2014 added event-&gt;accept() calls and refactored drag logic for consistent behavior",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Wrote documentation for header files (gate.h, wire.h, wireview.h, mainwindow.h) using Doxygen-style comments",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Managed merge conflicts and integration across 5 contributors working on concurrent features",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "DxOudCNOzo",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "TcOnYp0vqo",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Languages:</b> C++",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frameworks:</b> Qt 6, QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QStackedWidget, QMediaPlayer",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Patterns:</b> Model-View separation, Observer pattern (Qt signals/slots), enum-based type dispatch",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data Structures:</b> Directed graph (nodes and edges for circuit wiring), std::vector for dynamic input management",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Concepts:</b> Object lifecycle and memory management (destructor ordering, dangling pointer prevention), event-driven programming, drag-and-drop with coordinate snapping, cross-platform input handling, boolean logic evaluation and signal propagation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Tools:</b> Git (collaborative branching, merge conflict resolution), QMake, GitHub",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "text": "GitHub",
+        "url": "https://github.com/University-of-Utah-CS3505/a9-edu-app-f25-katerinawang"
+      }
+    }
+  ]
+}

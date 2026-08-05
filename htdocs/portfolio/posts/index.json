@@ -2,8 +2,8 @@
   "posts": [
     {
       "id": "logic-gate",
-      "title": "Logic Gate",
-      "slug": "logic-gate",
+      "title": "[Group Project] - Logic Gate",
+      "slug": "group-project-logic-gate",
       "category": "project",
       "tags": [
         "C++",
@@ -11,27 +11,27 @@
         "QGraphicsView",
         "Group Project"
       ],
-      "date": "2025-12-01",
+      "date": "2025-12-12",
       "summary": "Educational logic gate wiring simulator built with Qt and QGraphicsView",
       "thumbnail": "../img/logic-gate.png"
     },
     {
       "id": "get-the-joker",
-      "title": "Get the Joker",
-      "slug": "get-the-joker",
+      "title": "[Game Design] - Get the Joker",
+      "slug": "game-design-get-the-joker",
       "category": "project",
       "tags": [
         "Game Design",
         "Print-and-Play"
       ],
-      "date": "2025-11-01",
+      "date": "2025-12-05",
       "summary": "Original single-player print-and-play card game with grid-based movement",
       "thumbnail": "../img/get-the-joker.png"
     },
     {
       "id": "sprite-editor",
-      "title": "Sprite Editor",
-      "slug": "sprite-editor",
+      "title": "[Group Project] - Sprite Editor",
+      "slug": "group-project-sprite-editor",
       "category": "project",
       "tags": [
         "C++",
@@ -39,7 +39,7 @@
         "Group Project",
         "DFS"
       ],
-      "date": "2025-10-01",
+      "date": "2025-11-13",
       "summary": "Pixel art sprite editor with frame timeline, bucket fill, and animation support",
       "thumbnail": "../img/sprite-editor.png"
     },

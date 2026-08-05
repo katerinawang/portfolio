@@ -3,17 +3,28 @@
   "title": "3D Platformer Level",
   "slug": "3d-platformer-level",
   "category": "project",
-  "tags": ["Unreal Engine 5", "Maya", "ZBrush", "Substance 3D Painter", "Level Design"],
+  "tags": [
+    "Unreal Engine 5",
+    "Maya",
+    "ZBrush",
+    "Substance 3D Painter",
+    "Level Design"
+  ],
   "date": "2025-05-01",
   "summary": "Asset pipeline and level design for GAME 3010 using UE5 and industry-standard 3D tools",
   "thumbnail": "../img/asset-pipeline-level-design.png",
-  "link": "https://youtu.be/QcthJPmrvZc",
-  "linkText": "Video",
   "content": [
     {
       "type": "paragraph",
       "data": {
         "text": "Assets pipeline and level design for GAME 3010 using Unreal Engine 5, Maya, ZBrush, Substance 3D Painter."
+      }
+    },
+    {
+      "type": "button",
+      "data": {
+        "text": "Video",
+        "url": "https://youtu.be/QcthJPmrvZc"
       }
     }
   ]
