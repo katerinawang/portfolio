@@ -4,7 +4,7 @@ let swiperInstance = null;
 async function renderHome() {
     if (!main) return;
 
-    const raw = await fetchHtmlAsText("./portfolio/home.html");
+    const raw = await fetchHtmlAsText("/portfolio/home.html");
     const content = htmlToFragment(raw);
 
     main.replaceChildren(content);

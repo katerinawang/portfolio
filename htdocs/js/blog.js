@@ -6,7 +6,7 @@ async function renderBlog() {
     destroyHomeEffects();
 
     try {
-        const response = await fetch('./portfolio/posts/index.json');
+        const response = await fetch('/portfolio/posts/index.json');
         const data = await response.json();
 
         blogPosts = data.posts
@@ -190,7 +190,7 @@ function initBlogEvents() {
 function bindBlogEntryClicks() {
     document.querySelectorAll('.blog-entry').forEach(entry => {
         entry.addEventListener('click', () => {
-            navigate(`#post/${entry.dataset.category}/${entry.dataset.slug}`);
+            navigate(`/post/${entry.dataset.category}/${entry.dataset.slug}`);
         });
     });
 }

@@ -3,7 +3,7 @@ async function renderProjects() {
     destroyHomeEffects();
 
     try {
-        const response = await fetch('./portfolio/posts/index.json');
+        const response = await fetch('/portfolio/posts/index.json');
         const data = await response.json();
 
         const projects = data.posts
@@ -39,7 +39,7 @@ async function renderProjects() {
 
         main.querySelectorAll('.proj-card').forEach(card => {
             card.addEventListener('click', () => {
-                navigate(`#post/${card.dataset.category}/${card.dataset.slug}`);
+                navigate(`/post/${card.dataset.category}/${card.dataset.slug}`);
             });
         });
 

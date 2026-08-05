@@ -225,9 +225,15 @@ const server = http.createServer(async (req, res) => {
     filePath = path.join(filePath, "index.html");
   }
 
+  // SPA fallback: if no file found and path has no extension, serve index.html
   if (!fs.existsSync(filePath)) {
-    res.writeHead(404);
-    return res.end("Not found");
+    const ext = path.extname(pathname);
+    if (!ext) {
+      filePath = path.join(ROOT, "index.html");
+    } else {
+      res.writeHead(404);
+      return res.end("Not found");
+    }
   }
 
   const ext = path.extname(filePath);

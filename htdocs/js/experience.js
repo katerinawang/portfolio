@@ -3,7 +3,7 @@ async function renderExperience() {
     destroyHomeEffects();
 
     try {
-        const response = await fetch('./portfolio/exp.json');
+        const response = await fetch('/portfolio/exp.json');
         const data = await response.json();
 
         let expHTML = '<div class="timeline-box">';

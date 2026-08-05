@@ -5,24 +5,231 @@
   "category": "project",
   "tags": [
     "C++",
-    "Qt",
-    "Group Project"
+    "Qt"
   ],
-  "date": "2025-09-01",
-  "summary": "Two-color Simon game with a challenging fun mode where buttons switch positions",
+  "date": "2025-10-28",
+  "summary": "Two-color Simon game with progressive difficulty and a Fun Mode that swaps button positions",
   "thumbnail": "../img/simon-game.png",
   "content": [
     {
+      "id": "sg-intro",
       "type": "paragraph",
       "data": {
-        "text": "A simple two-color Simon game in which the player must replay sequences that grow longer with each correct attempt. It also features a fun mode where the buttons switch while flashing, requiring the player to pay extra attention."
+        "text": "A two-color Simon memory game built with Qt Widgets and C++17 for CS 3505 (Software Practice II) at the University of Utah. The player replays sequences of red and blue flashes that grow longer and faster with each correct round. A bonus <b>Fun Mode</b> swaps the button positions before each flash, forcing the player to track colors rather than positions. Solo project — 17 commits, 512 lines of code."
       }
     },
     {
+      "id": "sg-impl-h",
+      "type": "header",
+      "data": {
+        "text": "Implementation",
+        "level": 3
+      }
+    },
+    {
+      "id": "sg-model-h",
+      "type": "header",
+      "data": {
+        "text": "Game Logic (SimonModel)",
+        "level": 4
+      }
+    },
+    {
+      "id": "sg-model-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Designed a <b>sequence generation and validation system</b> using std::vector&lt;bool&gt; — each round appends a random color via QRandomGenerator, then plays back the full sequence with timed single-shot QTimer events",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented <b>progressive difficulty</b> — flash interval starts at 1000ms and decreases by 50ms per round (minimum 200ms), making sequences harder to follow as the game advances",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built <b>input validation</b> that compares each player click against the expected sequence position, advancing on match, triggering game-over on mismatch, and scheduling the next round after a 500ms delay when the full sequence is completed",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Used <b>signals to decouple model from view</b> — the model emits sendCurrentColor, sendPlayStatus, sendGameStatus, and sendCurrentSequenceStatus without any knowledge of the UI layer",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-view-h",
+      "type": "header",
+      "data": {
+        "text": "UI &amp; Interaction (MainWindow)",
+        "level": 4
+      }
+    },
+    {
+      "id": "sg-view-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Built the <b>button flash animation</b> system — temporarily applies a highlight stylesheet to the target button, then reverts after 300ms using QTimer::singleShot",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Added <b>keyboard bindings</b> (key 1 for red, key 2 for blue) as shortcuts alongside click input, with buttons disabled during sequence playback to prevent input during flashes",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented a <b>progress bar</b> that tracks the player's position within the current sequence, resetting at the start of each new round",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Designed <b>dynamic UI state management</b> — game-over message, progress bar visibility, start/restart button text, and Fun Mode toggle all update based on game status signals",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Created <b>custom stylesheet-driven button styling</b> with distinct normal, pressed, and flash states for red and blue buttons, structured as reusable style string constants in the header",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-fun-h",
+      "type": "header",
+      "data": {
+        "text": "Fun Mode (Creative Element)",
+        "level": 4
+      }
+    },
+    {
+      "id": "sg-fun-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Implemented a <b>button-swap mechanic</b> that removes the red and blue buttons from the QGridLayout and re-adds them in swapped columns before each flash, so the player must track color rather than position",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Added <b>timing coordination</b> between the swap and flash — delays ensure the layout swap completes before the flash animation fires, preventing visual collisions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built a <b>toggle system</b> with a Fun Mode button that switches between normal and fun modes, showing a fun.png icon when active and resetting button positions on mode change",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges &amp; Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "sg-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Flash and swap timing collisions in Fun Mode:</b> When Fun Mode swaps button positions before each flash, the swap and flash animations would fire simultaneously, causing the wrong button to light up. Solved by chaining QTimer::singleShot delays — the swap executes first, then the flash fires after a short delay, ensuring the layout settles before the visual highlight is applied.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Button positions not resetting after Fun Mode toggle:</b> Toggling Fun Mode off mid-game left the buttons in their swapped positions. Fixed by tracking a <code>swapped</code> boolean and forcing a position reset in the toggle handler, restoring red to column 1 and blue to column 3 regardless of current state.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stylesheet duplication across button states:</b> Each button had separate normal, pressed, and flash stylesheets with repeated border-radius, font-size, and layout properties. Refactored by extracting shared style fragments into reusable QString constants in the header file, composing the final stylesheets from a base + color-specific override.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "sg-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Languages:</b> C++17",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frameworks:</b> Qt Widgets, QTimer, QRandomGenerator, QGridLayout, QProgressBar, QShortcut",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Patterns:</b> Model-View separation, Observer pattern (Qt signals/slots), event-driven game loop with single-shot timers",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Concepts:</b> Timed sequence playback with progressive speedup, dynamic layout manipulation (runtime widget reparenting), stylesheet-based visual state management, keyboard shortcut binding",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Tools:</b> Git, QMake, Qt Designer (.ui), Qt Resource System (.qrc)",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-video-btn",
       "type": "button",
       "data": {
         "text": "Video",
         "url": "https://youtu.be/V3pPpd_xe68"
+      }
+    },
+    {
+      "id": "XV6IegZ1CW",
+      "type": "button",
+      "data": {
+        "text": "GitHub",
+        "url": "https://github.com/University-of-Utah-CS3505/a6-simon-f24-katerinawang"
       }
     }
   ]

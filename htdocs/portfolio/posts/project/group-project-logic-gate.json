@@ -59,7 +59,7 @@
             "items": []
           },
           {
-            "content": "Handled object lifecycle and <b>memory management</b> \u2014 fixed destructor ordering for gates, nodes, and wires to prevent dangling pointers and crashes from dynamic scene rearrangement",
+            "content": "Handled object lifecycle and <b>memory management</b> — fixed destructor ordering for gates, nodes, and wires to prevent dangling pointers and crashes from dynamic scene rearrangement",
             "meta": {},
             "items": []
           }
@@ -97,7 +97,7 @@
             "items": []
           },
           {
-            "content": "Developed <b>ToolView</b> \u2014 a draggable gate palette using custom mouse event overrides (mousePressEvent, mouseMoveEvent, mouseReleaseEvent) for drag-and-drop from the tool panel onto the game canvas with 100px snap-to-slot positioning",
+            "content": "Developed <b>ToolView</b> — a draggable gate palette using custom mouse event overrides (mousePressEvent, mouseMoveEvent, mouseReleaseEvent) for drag-and-drop from the tool panel onto the game canvas with 100px snap-to-slot positioning",
             "meta": {},
             "items": []
           }
@@ -125,7 +125,7 @@
             "items": []
           },
           {
-            "content": "Implemented <b>level progression system</b> \u2014 sequential level unlocking, timed challenges with fail-on-timeout, level completion detection, and auto-advance to next level",
+            "content": "Implemented <b>level progression system</b> — sequential level unlocking, timed challenges with fail-on-timeout, level completion detection, and auto-advance to next level",
             "meta": {},
             "items": []
           },
@@ -143,32 +143,42 @@
       }
     },
     {
-      "id": "a1fO4KyBu9",
+      "id": "lg-challenges-h",
       "type": "header",
       "data": {
-        "text": "Cross-Platform &amp; Code Quality",
-        "level": 4
+        "text": "Challenges &amp; Solutions",
+        "level": 3
       }
     },
     {
-      "id": "0hOCqNk7ik",
+      "id": "lg-challenges-list",
       "type": "list",
       "data": {
         "style": "unordered",
         "meta": {},
         "items": [
           {
-            "content": "Resolved <b>cross-platform mouse event handling</b> differences between macOS and Windows \u2014 added event-&gt;accept() calls and refactored drag logic for consistent behavior",
+            "content": "<b>Destructor ordering crash when deleting gates:</b> Deleting a gate would crash the program because its child nodes and connected wires were destroyed in the wrong order, leaving dangling pointers in the scene. Fixed by explicitly detaching all wires from a gate's nodes before removing the gate, ensuring wires are deleted first, then nodes, then the gate itself.",
             "meta": {},
             "items": []
           },
           {
-            "content": "Wrote documentation for header files (gate.h, wire.h, wireview.h, mainwindow.h) using Doxygen-style comments",
+            "content": "<b>Cross-platform mouse drag differences (macOS vs Windows):</b> The drag-and-drop system for placing gates from the tool palette worked on macOS but failed silently on Windows — mouse move events were not being received during a drag. Debugged over several commits and rollbacks, ultimately fixed by adding explicit <code>event-&gt;accept()</code> calls in the mouse event handlers so the event system would continue delivering events on Windows.",
             "meta": {},
             "items": []
           },
           {
-            "content": "Managed merge conflicts and integration across 5 contributors working on concurrent features",
+            "content": "<b>Wire signal propagation after deletion and reverse connections:</b> Deleting a wire or connecting wires in reverse order (output-to-input vs input-to-output) left stale signal values in downstream gates, causing incorrect circuit evaluation. Fixed by rewriting the propagation logic to re-evaluate all connected gates after any wire change, regardless of connection direction.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Multiple wires connecting to a single input node:</b> Nothing prevented a player from connecting two wires to the same input node, creating an invalid circuit state with conflicting signals. Added a guard in the wire connection handler that checks whether the target input node already has an attached wire and rejects the connection with a warning message.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Level progression allowing players to skip ahead:</b> The initial unlock logic let players jump to any unlocked level, but the gate-placement order check was flawed — gates could be placed out of sequence, bypassing the intended learning progression. Rewrote the no-skipping logic with a proper gate order system that validates placement sequence and locks the next level until the current one is fully solved.",
             "meta": {},
             "items": []
           }
@@ -224,6 +234,7 @@
       }
     },
     {
+      "id": "H43DOlEe7O",
       "type": "button",
       "data": {
         "text": "GitHub",

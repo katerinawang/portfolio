@@ -50,11 +50,10 @@
       "category": "project",
       "tags": [
         "C++",
-        "Qt",
-        "Group Project"
+        "Qt"
       ],
-      "date": "2025-09-01",
-      "summary": "Two-color Simon game with a challenging fun mode where buttons switch positions",
+      "date": "2025-10-28",
+      "summary": "Two-color Simon game with progressive difficulty and a Fun Mode that swaps button positions",
       "thumbnail": "../img/simon-game.png"
     },
     {

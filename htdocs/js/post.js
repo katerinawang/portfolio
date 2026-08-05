@@ -3,7 +3,7 @@ async function renderPost(category, slug) {
     destroyHomeEffects();
 
     try {
-        const response = await fetch(`./portfolio/posts/${category}/${slug}.json`);
+        const response = await fetch(`/portfolio/posts/${category}/${slug}.json`);
         const post = await response.json();
 
         const [py, pm, pd] = post.date.split('-');
@@ -11,12 +11,9 @@ async function renderPost(category, slug) {
 
         let postHTML = '<article class="post-page">';
 
-        if (post.thumbnail) {
-            postHTML += `<img class="post-hero" src="${post.thumbnail}" alt="${post.title}">`;
-        }
 
-        const backHash = category === 'blog' ? '#blog' : '#projects';
-        postHTML += `<button class="post-back" onclick="navigate('${backHash}')">&#8592; Back</button>`;
+        const backPath = category === 'blog' ? '/blog' : '/projects';
+        postHTML += `<button class="post-back" onclick="navigate('${backPath}')">&#8592; Back</button>`;
 
         postHTML += `<h1 class="post-title">${post.title}</h1>`;
         postHTML += `<span class="post-date">${dateStr}</span>`;
@@ -38,6 +35,7 @@ async function renderPost(category, slug) {
         const content = htmlToFragment(postHTML);
         main.replaceChildren(content);
         playMainAnimation();
+        initVideoLightbox();
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (error) {
@@ -52,9 +50,17 @@ function renderBlocks(blocks) {
     while (i < blocks.length) {
         if (blocks[i].type === 'button') {
             html += '<div class="post-actions">';
+            let hasVideo = false;
             while (i < blocks.length && blocks[i].type === 'button') {
                 const b = blocks[i];
-                html += `<a href="${b.data.url || '#'}" class="post-action" target="_blank">${b.data.text || 'View'}</a>`;
+                const url = b.data.url || '#';
+                const text = b.data.text || 'View';
+                if (isVideoUrl(url)) {
+                    html += `<a href="${url}" class="post-action glightbox-video">${text}</a>`;
+                    hasVideo = true;
+                } else {
+                    html += `<a href="${url}" class="post-action" target="_blank">${text}</a>`;
+                }
                 i++;
             }
             html += '</div>';
@@ -94,6 +100,10 @@ function renderBlock(block) {
         default:
             return '';
     }
+}
+
+function isVideoUrl(url) {
+    return /youtu\.?be|vimeo\.com/i.test(url);
 }
 
 function renderListItems(items) {

@@ -143,37 +143,42 @@
       }
     },
     {
-      "id": "se-polish-h",
+      "id": "se-challenges-h",
       "type": "header",
       "data": {
-        "text": "Integration &amp; Code Quality",
-        "level": 4
+        "text": "Challenges &amp; Solutions",
+        "level": 3
       }
     },
     {
-      "id": "se-polish-list",
+      "id": "se-challenges-list",
       "type": "list",
       "data": {
         "style": "unordered",
         "meta": {},
         "items": [
           {
-            "content": "Connected the <b>color palette to the edit canvas</b>, fixed color selection not updating on the drawing pane",
+            "content": "<b>Migrating pixel storage from 2D array to QImage:</b> The model originally stored pixel data in a <code>QColor pixels[32][32]</code> array, requiring nested loops to iterate all 1024 cells and emit individual per-pixel signals on every update. Replaced the array with a single <code>QImage</code>, so pixel updates use <code>setPixelColor()</code> and the view renders with one <code>painter.drawImage()</code> call — simplifying the rendering pipeline and enabling native Qt save/load.",
             "meta": {},
             "items": []
           },
           {
-            "content": "Fixed bugs: <b>eraser leaving extra pixels</b>, unwanted initial pixel when adding new frames, bucket tool misbehavior after switching from eraser",
+            "content": "<b>Stray pixel appearing on new frames:</b> Creating a new frame would show a pixel at the last-painted position because the paint method still had valid coordinates from the prior interaction. Fixed by introducing an <code>isPainting</code> flag that's only set during active mouse press/drag and cleared on mouse release and leave events, ensuring painting never fires on a fresh frame.",
             "meta": {},
             "items": []
           },
           {
-            "content": "Wrote documentation across header files (editview.h, framesview.h, mainview.h, model.h, previewpaneview.h), created the Code Style Document and README",
+            "content": "<b>Eraser leaving extra pixels after mouse release:</b> Releasing the mouse button while erasing didn't clear the painting state, so moving the cursor afterward continued erasing unintentionally. Added a <code>mouseReleaseEvent()</code> override to reset <code>isPainting</code> and changed the hover highlight to a semi-transparent white overlay when the eraser is active for better visual feedback.",
             "meta": {},
             "items": []
           },
           {
-            "content": "Restructured editview.cpp for cleaner code organization and adjusted overall UI layout and widget positioning",
+            "content": "<b>Bucket tool misbehavior after switching from eraser:</b> Switching from eraser to bucket left the eraser's state flags set, causing the bucket to behave like the eraser. Fixed by explicitly resetting <code>isErasing</code> and <code>isPainting</code> in the tool selection handler, and replaced the original toggle-based tool switching with a proper <code>selectTool(Tool)</code> method using a switch statement.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Color selection not syncing to the canvas:</b> Editing a color via QColorDialog updated the palette but the edit view kept using the old color because the model's <code>changeColor()</code> method didn't emit the <code>sendSelectColor</code> signal. Added the missing signal emission and connected the canvas to sync its active color whenever the palette changes.",
             "meta": {},
             "items": []
           }
@@ -234,6 +239,14 @@
       "data": {
         "text": "Video",
         "url": "https://youtu.be/zJ9jUnhrFWY"
+      }
+    },
+    {
+      "id": "QbA3Owxneq",
+      "type": "button",
+      "data": {
+        "text": "GitHub",
+        "url": "https://github.com/University-of-Utah-CS3505/a5-sprite-editor-f25-katerinawang"
       }
     }
   ]

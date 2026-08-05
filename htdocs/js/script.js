@@ -9,16 +9,18 @@ window.addEventListener("scroll", () => {
 });
 
 // ---------- Routing ----------
-function navigate(hash) {
-    if (location.hash === hash) {
-        handleRoute(hash);
+function navigate(path) {
+    if (path.startsWith('#')) path = '/' + path.slice(1);
+    if (path === location.pathname) {
+        handleRoute(path);
     } else {
-        location.hash = hash;
+        history.pushState(null, '', path);
+        handleRoute(path);
     }
 }
 
-async function handleRoute(hash) {
-    const parts = hash.replace(/^#\/?/, '').split('/');
+async function handleRoute(path) {
+    const parts = path.replace(/^\//, '').split('/');
     const page = parts[0] || 'home';
 
     if (page === 'post' && parts[1] && parts[2]) {
@@ -34,12 +36,13 @@ async function handleRoute(hash) {
     }
 }
 
-window.addEventListener('hashchange', () => handleRoute(location.hash));
+window.addEventListener('popstate', () => handleRoute(location.pathname));
 
 nav?.addEventListener("click", (e) => {
     const btn = e.target.closest("button");
     if (!btn) return;
-    navigate('#' + btn.id);
+    const path = btn.id === 'home' ? '/' : '/' + btn.id;
+    navigate(path);
 });
 
 // ---------- Utilities ----------
@@ -114,4 +117,4 @@ function initProjectLightbox() {
 }
 
 // ---------- Initial load ----------
-window.addEventListener("load", () => handleRoute(location.hash));
+window.addEventListener("load", () => handleRoute(location.pathname));
