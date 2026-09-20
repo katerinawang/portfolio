@@ -1,0 +1,269 @@
+{
+  "id": "snake",
+  "title": "[Group Project] - Snake",
+  "slug": "group-project-snake",
+  "category": "project",
+  "tags": [
+    "C#",
+    "Blazor",
+    "Multiplayer",
+    "SQL",
+    "Networking"
+  ],
+  "date": "2025-03-01",
+  "summary": "Online multiplayer Snake game with real-time rendering and SQL-backed scoreboard",
+  "thumbnail": "../img/snake.png",
+  "content": [
+    {
+      "id": "snake-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A multiplayer Snake game built for CS 3500 (Software Practice) at the University of Utah. The project spans three assignment phases — a networking library and chat system (PS8), a real-time game client with canvas rendering (PS9), and a MySQL-backed game statistics database with a custom web server (PS10). Built as a group project with 2 contributors. I authored 60 of 74 total commits and was the primary developer for the networking layer, game client, rendering engine, and database integration."
+      }
+    },
+    {
+      "id": "snake-contrib-h",
+      "type": "header",
+      "data": {
+        "text": "My Contributions",
+        "level": 3
+      }
+    },
+    {
+      "id": "snake-net-h",
+      "type": "header",
+      "data": {
+        "text": "Networking Layer &amp; Chat System",
+        "level": 4
+      }
+    },
+    {
+      "id": "snake-net-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Built <b>NetworkConnection</b>, a reusable TCP wrapper around <code>TcpClient</code> with <code>StreamReader</code>/<code>StreamWriter</code> for line-based message exchange, connection lifecycle management, and <code>IDisposable</code> implementation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented the <b>Server</b> class with a thread-per-connection model — listens on a given port via <code>TcpListener</code> and spawns a new thread for each accepted client, dispatching to a caller-provided <code>Action&lt;NetworkConnection&gt;</code> delegate",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built a <b>multi-client chat server</b> with thread-safe client tracking using a locked dictionary, username validation (rejects duplicates and empty names), and message broadcasting to all connected clients",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Handled <b>connection edge cases</b> — client disconnects mid-session, stream disposal ordering, and exception suppression to prevent one client's crash from affecting others",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "snake-client-h",
+      "type": "header",
+      "data": {
+        "text": "Game Client &amp; Rendering Engine",
+        "level": 4
+      }
+    },
+    {
+      "id": "snake-client-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Designed the client using <b>MVC architecture</b> in Blazor WebAssembly — GUI owns the World, NetworkController handles server protocol and I/O, Models are pure data objects",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built <b>NetworkController</b> to handle the server handshake (send player name, receive player ID and world size), then run a background thread that continuously deserializes JSON into <code>Snake</code>, <code>Wall</code>, and <code>Powerup</code> model objects with fine-grained locks per dictionary",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Implemented the <b>rendering engine</b> (<code>SnakeGUI</code>) drawing on HTML5 Canvas via <code>Blazor.Extensions.Canvas</code> at ~50 FPS with a viewport camera that follows the player's snake head using canvas translate transforms, clipping objects outside the visible area",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Wrote a <b>wall rendering algorithm</b> that computes sprite tile positions from two endpoint coordinates, determining orientation (vertical/horizontal), calculating segment count, and positioning each tile from the correct starting point",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Drew snakes as <b>thick rounded polylines</b> with per-player color assignment (up to 8 unique colors via random RGB generation) and name/score display near each snake's head",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Created two <b>death animations</b> — a ghost sprite that floats upward with decreasing alpha transparency, and a tombstone placed at the death location — plus a blinking powerup collect animation on pickup",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Created <b>sprite assets</b> (wall tiles, powerup icon, ghost animation) used in the game rendering",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "snake-db-h",
+      "type": "header",
+      "data": {
+        "text": "Database &amp; Web Server",
+        "level": 4
+      }
+    },
+    {
+      "id": "snake-db-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Integrated <b>MySQL</b> to record game sessions and player statistics in real time — every game session logs start/end time, and each player's join time, leave time, and max score are tracked per game",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Wired SQL inserts and updates into the <b>NetworkController</b> at key game events — <code>RecordNewGame()</code>, <code>RecordEndGame()</code>, <code>RecordNewSnake()</code>, <code>RecordMaxScore()</code>, <code>RecordSnakeLeave()</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Built a <b>standalone HTTP web server</b> from scratch — raw HTTP over the same networking library, no ASP.NET — serving dynamic HTML pages with three routes: home page, <code>/games</code> (all recorded games table), and <code>/games?gid=N</code> (per-game player stats with clickable drill-down)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Used <b>regex-based URL parsing</b> with <code>[GeneratedRegex]</code> source generators for route matching and game ID extraction",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "snake-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges &amp; Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "snake-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Thread-safe world state with concurrent network updates:</b> The background network thread continuously deserializes incoming JSON while the rendering loop reads the same dictionaries at ~50 FPS, causing race conditions. Fixed by introducing fine-grained locks — one per collection (snakes, walls, powerups) — so the network thread and render loop block each other only on the specific collection being updated, not the entire world.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Snake movement pixel gaps at segment turns:</b> When a snake turned, gaps appeared between body segments because the polyline endpoints didn't overlap at corners. Debugged the rendering math and adjusted the segment drawing to produce continuous thick rounded polylines with proper join behavior, eliminating visible seams.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Viewport camera clipping and coordinate transforms:</b> Objects outside the visible area were still being drawn, wasting render cycles, and the canvas origin had to track the player's snake head in world coordinates. Implemented viewport bounds checking before each draw call and used canvas translate transforms to center the view on the player's head position.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Wall rendering from arbitrary endpoint pairs:</b> Walls are defined by two endpoint coordinates that can be in any order (top-to-bottom, bottom-to-top, left-to-right, right-to-left). Built an algorithm that determines orientation from the endpoints, finds the correct starting point (minimum X or Y), calculates segment count, and positions each sprite tile at the right offset.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Page refresh crash during active game:</b> Refreshing the Blazor page while connected to the game server caused an unhandled exception from the disposed network stream. Added proper exception handling and connection state checks in the network loop and disconnect flow to handle abrupt page unloads gracefully.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "snake-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "snake-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Languages:</b> C#",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frameworks:</b> .NET 8, Blazor WebAssembly, Blazor.Extensions.Canvas, MySql.Data",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Patterns:</b> Model-View-Controller, thread-per-connection server, delegate-based event dispatch",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data Structures:</b> Concurrent dictionaries with fine-grained locking, JSON deserialization into typed models, line-based TCP message protocol",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Concepts:</b> Real-time multiplayer networking, HTML5 Canvas rendering with viewport transforms, thread synchronization, TCP socket programming, SQL database integration, raw HTTP server implementation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Tools:</b> Git (collaborative development, 60+ commits), MySQL, regex-based URL routing",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "snake-btn-video",
+      "type": "button",
+      "data": {
+        "text": "Video Demo",
+        "url": "https://youtu.be/Vx6_of4tbwA"
+      }
+    },
+    {
+      "id": "snake-btn-source",
+      "type": "button",
+      "data": {
+        "text": "Source Code",
+        "url": "https://github.com/katerinawang/cs3500-snake"
+      }
+    }
+  ]
+}

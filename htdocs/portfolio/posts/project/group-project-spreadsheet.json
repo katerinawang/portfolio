@@ -1,0 +1,398 @@
+{
+  "id": "spreadsheet",
+  "title": "Spreadsheet",
+  "slug": "group-project-spreadsheet",
+  "category": "project",
+  "tags": [
+    "C#",
+    "Blazor",
+    ".NET",
+    "Group Project"
+  ],
+  "date": "2025-04-17",
+  "summary": "Functional spreadsheet application with formula evaluation, dependency tracking, and infinite scrolling built with Blazor Server",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "ss-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A fully functional spreadsheet application supporting cell formulas, dependency tracking, JSON save/load, and a responsive web GUI. Built across multiple assignments for CS 3500 (Software Practice I) at the University of Utah. The individual phase covered the core data structures and model layer, while the group phase (with one partner) added the interactive Blazor GUI and serialization polish. I authored 51 of 52 commits in the individual repository and 32 of 59 commits in the group repository."
+      }
+    },
+    {
+      "id": "ss-indiv-h",
+      "type": "header",
+      "data": {
+        "text": "Individual Work (51 / 52 commits)",
+        "level": 3
+      }
+    },
+    {
+      "id": "ss-dg-h",
+      "type": "header",
+      "data": {
+        "text": "Dependency Graph",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-dg-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Dual-dictionary architecture:</b> Implemented the full DependencyGraph class using two <code>Dictionary&lt;string, HashSet&lt;string&gt;&gt;</code> maps (dependents and dependees) backed by a master <code>HashSet&lt;(string, string)&gt;</code> for O(1) add, remove, and lookup of dependency pairs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>AlterReplacement helper:</b> Built a shared method for ReplaceDependents and ReplaceDependees that uses a <code>Func&lt;string, (string, string)&gt;</code> delegate to alternate the ordered-pair direction, eliminating duplicated replacement logic",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>DRY insertion helper:</b> Created an <code>AddElement</code> method to handle dictionary key initialization and set insertion in one place, used by both AddDependency and the replacement methods",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-formula-h",
+      "type": "header",
+      "data": {
+        "text": "Formula Evaluator",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-formula-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Infix expression parser:</b> Built a Formula constructor that tokenizes, validates, and normalizes arithmetic expressions with parentheses, enforcing syntactic rules (opening/closing paren balance, operator-operand sequencing, extra-following rules)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dual-stack evaluation:</b> Implemented <code>Evaluate</code> using a value stack and operator stack with helper methods for operator precedence — <code>ApplyMultiplicationOrDivision</code>, <code>ApplyAdditionOrSubtraction</code>, <code>ParenMultiplicationOrDivision</code>, and <code>ProcessFinalResult</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Variable lookup via delegate:</b> The evaluator accepts a <code>Lookup</code> delegate for resolving cell references at evaluation time, keeping the Formula class decoupled from the Spreadsheet model",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Division-by-zero detection:</b> Added a <code>ZeroCheck</code> helper using epsilon comparison to catch near-zero divisors and return a FormulaError instead of crashing",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stack extension methods:</b> Created <code>IsEmpty&lt;T&gt;</code> and <code>IsOnTop</code> extensions for cleaner stack operations throughout the evaluator",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-model-indiv-h",
+      "type": "header",
+      "data": {
+        "text": "Spreadsheet Model",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-model-indiv-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Sparse cell storage:</b> Designed the model around <code>Dictionary&lt;string, Cell&gt;</code> so only cells with content are stored — each Cell tracks its Content (raw input), StringForm (display text), and Value (computed result)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>SetContentsOfCell pipeline:</b> Implemented the core set-contents method that handles doubles, text, and formulas, updates the dependency graph, detects circular dependencies with rollback, and recalculates affected cells via topological sort",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Circular dependency detection:</b> Before committing a formula, the model checks for cycles in the dependency graph; if one is found, it rolls back the graph to its previous state and throws an exception",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>JSON serialization:</b> Implemented save and load using <code>System.Text.Json</code> — save writes cell names, contents, and string forms; load reconstructs the spreadsheet through the validated constructor path",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-testing-h",
+      "type": "header",
+      "data": {
+        "text": "Testing",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-testing-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>143 unit tests across 2,025 lines:</b> 53 tests for Spreadsheet (cell contents, name validation, save/load, circular detection), 62 tests for Formula (parsing, evaluation, error cases), and 28 tests for DependencyGraph (add/remove, replace, stress test)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stress test with performance constraint:</b> A 200-element DependencyGraph stress test with a 2-second timeout that exercises add, remove, re-add, and re-remove cycles, then validates every dependent and dependee set against a parallel HashSet reference",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-group-h",
+      "type": "header",
+      "data": {
+        "text": "Group Work (32 / 59 commits)",
+        "level": 3
+      }
+    },
+    {
+      "id": "ss-gui-h",
+      "type": "header",
+      "data": {
+        "text": "Spreadsheet GUI (Blazor Server)",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-gui-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Full SpreadsheetPage UI:</b> Built the entire page using Blazor Server with interactive rendering, including a content entry bar, cell selection display, file save/load controls, and a dismissible error alert system",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Infinite scrolling:</b> Rows and columns are added dynamically when the user scrolls to the edge, using JS-to-C# interop via <code>[JSInvokable]</code> methods and <code>DotNetObjectReference</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Arrow key navigation:</b> Keyboard navigation and Escape-to-clear through a JavaScript keydown listener that calls back into Blazor, with hover state toggling to prevent visual conflicts during keyboard use",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Scroll position persistence:</b> Saved scroll coordinates to sessionStorage on every scroll event and restored them in <code>OnAfterRenderAsync</code> with requestAnimationFrame timing",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>File save and load:</b> Save triggers a browser download via a dynamically created blob URL; load reads an uploaded JSON file, deserializes it into a new Spreadsheet instance, and refreshes all cell values",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-serial-h",
+      "type": "header",
+      "data": {
+        "text": "Serialization Refactoring",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-serial-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>LoadJson factory method:</b> Refactored from an instance method to a static factory that writes JSON to a temp file and delegates to the file-based constructor, eliminating duplicated deserialization logic",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Exception handling restructure:</b> Separated try/catch blocks for InvalidNameException, FormulaFormatException, and CircularException with descriptive messages, and wrapped circular errors in SpreadsheetReadWriteException for user-facing alerts",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-style-h",
+      "type": "header",
+      "data": {
+        "text": "Styling &amp; UX Polish",
+        "level": 4
+      }
+    },
+    {
+      "id": "ss-style-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>About page:</b> Designed with Bootstrap card components, dark header styling, and a grouped list of added functionality",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Active-cell highlighting:</b> Styled with cornflowerblue outline, transition effects, sticky header/column positioning, and conditional hover effects that disable during keyboard navigation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>MudBlazor to Bootstrap migration:</b> Replaced MudBlazor components with standard HTML/Bootstrap classes and removed unused NuGet packages to reduce dependency overhead",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges &amp; Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "ss-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Operator precedence in nested formulas:</b> Early evaluator versions applied operators left-to-right, ignoring multiplication/division precedence inside parenthesized subexpressions. Fixed by splitting evaluation into dedicated helper methods — <code>ApplyMultiplicationOrDivision</code> runs after each operand push, while <code>ApplyAdditionOrSubtraction</code> only runs after parenthesis closure or at the end, enforcing correct precedence at every nesting depth.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Circular dependency detection with rollback:</b> Setting a formula that introduces a cycle could leave the dependency graph in a corrupted state. Fixed by capturing the current dependency set before modification, running cycle detection after the update, and rolling back to the saved state if a cycle is found — only then throwing an exception.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Scroll position lost on re-render:</b> Blazor's re-rendering cycle reset the scroll viewport after every cell update. Fixed by saving scroll coordinates to sessionStorage on every scroll event and restoring them in <code>OnAfterRenderAsync</code> with a short delay and requestAnimationFrame to let the DOM settle.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Multiple key listeners on page reload:</b> Blazor Server's lifecycle re-invoked <code>OnAfterRenderAsync</code> on hot reloads, stacking duplicate keydown listeners. Fixed by tracking registration state with a boolean flag and removing the previous handler before adding a new one.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Hover and keyboard navigation conflict:</b> CSS hover effects persisted when switching from mouse to keyboard, creating dual-highlighted cells. Solved with a <code>DisableHover</code>/<code>EnableHover</code> toggle — keyboard events disable hover via CSS class swap, and mousemove re-enables it.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "ss-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Languages:</b> C#, JavaScript, HTML, CSS",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frameworks:</b> .NET 8, Blazor Server, Bootstrap 5",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Patterns:</b> MVC separation, Observer pattern (change event propagation), Factory method (LoadJson), Delegate-based lookup (Formula.Evaluate), Stack extension methods",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data Structures:</b> Dependency graph (dual-dictionary with HashSet backing), sparse matrix via Dictionary, dual-stack infix expression evaluator, topological sort for recalculation ordering",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Concepts:</b> Infix expression parsing with operator precedence, circular dependency detection with rollback, JS-to-C# interop (DotNetObjectReference, [JSInvokable]), infinite scrolling with dynamic DOM expansion, session-based state persistence, JSON serialization with System.Text.Json",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Testing:</b> 143 unit tests across three libraries with MSTest, including a performance-constrained stress test",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Tools:</b> Git, Visual Studio, JetBrains Rider, GitHub",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ss-btn-indiv",
+      "type": "button",
+      "data": {
+        "text": "GitHub (Individual)",
+        "url": "https://github.com/katerinawang/spreadsheet-katerinawang"
+      }
+    },
+    {
+      "id": "ss-btn-group",
+      "type": "button",
+      "data": {
+        "text": "GitHub (Group)",
+        "url": "https://github.com/katerinawang/cs3500-spreadsheet"
+      }
+    }
+  ]
+}

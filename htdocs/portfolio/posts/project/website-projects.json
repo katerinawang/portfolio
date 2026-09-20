@@ -14,15 +14,513 @@
   "thumbnail": "../img/website-img.png",
   "content": [
     {
+      "id": "wp-intro",
       "type": "paragraph",
       "data": {
-        "text": "Website projects created for CS 1430, focusing on pure front-end development using plain HTML, CSS, JavaScript, and Bootstrap."
+        "text": "A collection of 11 front-end web projects built for CS 1430 (Web Fundamentals) at SLCC, progressing from raw HTML tables through CSS layout techniques and Bootstrap, up to JavaScript-driven interactive applications with API integration and game logic. Each project targets a specific skill set, and together they trace a full arc from static markup to dynamic client-side programming."
       }
     },
     {
+      "id": "wp-html-h",
+      "type": "header",
+      "data": {
+        "text": "HTML Foundation",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-tables-h",
+      "type": "header",
+      "data": {
+        "text": "Tables — Favorite YouTube Videos",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-tables-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Pure HTML table</b> with <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> structure, displaying 9 video entries with name, description, duration, and thumbnail columns",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Embedded media:</b> YouTube <code>&lt;iframe&gt;</code> embed below the table for inline video playback",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>External links:</b> each video title is a clickable <code>&lt;a&gt;</code> linking to YouTube, with inline-styled thumbnail images",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-css-h",
+      "type": "header",
+      "data": {
+        "text": "CSS Styling &amp; Layout",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-heroes-h",
+      "type": "header",
+      "data": {
+        "text": "Superheroes — DC vs Marvel Flexbox Layout",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-heroes-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Flexbox two-column layout</b> with <code>justify-content: space-around</code> placing DC Comics and Marvel Comics sections side by side",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CSS typography trick:</b> Marvel header uses <code>writing-mode: vertical-rl</code> with <code>transform: scale(-1, -1)</code> for a vertical title rotated to read top-to-bottom",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Mixed styling approach:</b> combines internal <code>&lt;style&gt;</code> block (6 properties) with an external stylesheet for separation of concerns practice",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-boxes-h",
+      "type": "header",
+      "data": {
+        "text": "Boxes — Kirby CSS Art",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-boxes-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Pure CSS illustration</b> of the Kirby character built entirely from <code>&lt;div&gt;</code> elements — no images, only CSS shapes for body, eyes, mouth, blush, hands, legs, and hair tie",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Advanced CSS properties:</b> uses <code>border-radius</code> for organic shapes, layered <code>z-index</code> positioning, and geometric background elements (triangle-circle pattern) for the backdrop",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-horiz-h",
+      "type": "header",
+      "data": {
+        "text": "Horizontal — Navigation Menu &amp; Multi-Page Site",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-horiz-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Horizontal navigation bar</b> using styled <code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code> elements with CSS for inline layout across a 4-page site (Home, Contact, About, Order)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>HTML form handling:</b> contact page with labeled input fields (<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>) posting to an external PHP endpoint for server-side processing",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-midterm-h",
+      "type": "header",
+      "data": {
+        "text": "Midterm — Crusty Bite Pizza (Full Site)",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-midterm-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>4-page responsive site</b> (Home, Contact, About, Order) for a fictional pizza restaurant with consistent navigation and custom CSS across all pages",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Complex order form:</b> 8 icon-labeled checkbox toppings (pepperoni, sausage, ham, meatballs, red onion, jalapeno, mushroom, broccoli), radio button size selector, crust dropdown (<code>&lt;select&gt;</code>), and a full delivery information section with text, email, tel, and textarea inputs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Form features:</b> HTML5 validation with <code>required</code> attributes, a 50-state <code>&lt;select&gt;</code> dropdown, and separate reset/submit buttons posting to an external PHP endpoint",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Visual design:</b> custom background images per page via header IDs, decorative arrow and icon graphics, and a two-column card layout for the order page",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-wordle-h",
+      "type": "header",
+      "data": {
+        "text": "Photoshop — Wordle UI Clone",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-wordle-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Pixel-perfect CSS recreation</b> of the Wordle game interface — static layout, no JavaScript — replicating the 5×6 letter grid and 3-row on-screen keyboard",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CSS Grid layout:</b> the letter grid uses a <code>grid-wrapper</code> with 30 cells (6 rows × 5 columns), and the keyboard uses nested <code>&lt;div&gt;</code> rows matching the QWERTY layout including an ENTER key and delete icon",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Header bar:</b> nav icon, centered title, and right-aligned icon group (help, statistics, settings) — all positioned with CSS to match the original Wordle UI",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-bootstrap-h",
+      "type": "header",
+      "data": {
+        "text": "Bootstrap Framework",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-pizzastrap-h",
+      "type": "header",
+      "data": {
+        "text": "Pizza Strap — Bootstrap Pizza Site",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-pizzastrap-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Bootstrap rebuild</b> of the Crusty Bite Pizza site — same multi-page structure reimplemented using Bootstrap 5 components instead of custom CSS",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Responsive navbar:</b> <code>navbar-expand-md</code> with a collapsible hamburger toggler (<code>navbar-toggler</code>) for mobile, dark theme (<code>bg-dark navbar-dark</code>), and right-aligned nav links",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bootstrap utilities:</b> container system, margin/text utility classes (<code>mt-4</code>, <code>text-center</code>), and <code>bootstrap.bundle.min.js</code> for interactive components",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-js-h",
+      "type": "header",
+      "data": {
+        "text": "JavaScript &amp; Interactivity",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-bday-h",
+      "type": "header",
+      "data": {
+        "text": "Birthday — Interactive Birthday Card",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-bday-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Cascading prompt inputs</b> with validation — collects name (rejects empty), age (rejects NaN and negatives via <code>parseInt</code> + charAt check), and birth month (accepts both full name and number)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data lookups:</b> month-to-number mapping object supporting bidirectional lookup, season calculation by slicing the months array into quarters, and a birthstone dictionary with article (a/an) determination via vowel check on the first character",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>DOM rendering:</b> dynamically injects a personalized birthday message into the page with a CSS opacity transition fade-in effect on <code>window.onload</code>",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-lotto-h",
+      "type": "header",
+      "data": {
+        "text": "Lotto — Lottery Number Generator",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-lotto-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Prompt-based input validation:</b> accepts an integer 1–7 for the number of lottery pairs, rejecting NaN, non-integers, and out-of-range values in a while loop",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Random number generation:</b> produces 1–7 random numbers (1–99) with zero-padding for single digits, formatted as a dash-separated string",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CSS animation reset:</b> uses <code>requestAnimationFrame</code> with a nested <code>setTimeout</code> to force-restart a CSS warning animation by toggling <code>animationName</code> between <code>'none'</code> and <code>''</code>",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-madlibs-h",
+      "type": "header",
+      "data": {
+        "text": "Mad Libs — API-Powered Word Game",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-madlibs-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>WordsAPI integration:</b> validates every user-entered word against the WordsAPI (<code>wordsapiv1.p.rapidapi.com</code>) to confirm it matches the required part of speech (noun, verb, or adjective) before generating the story",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Random word generation:</b> fetches random verbs and adjectives from the Random Words API (<code>random-words-api.vercel.app</code>), and picks random animal nouns from a local data file for the \"I'm Feeling Lucky\" feature",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Regex-based verb conjugation:</b> a one-liner function converts present-tense verbs to past tense, handling consonant-y→i (<code>carry→carried</code>), consonant doubling (<code>stop→stopped</code>), and silent-e dropping (<code>dance→danced</code>) via chained <code>.replace()</code> calls",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Async coordination:</b> uses <code>fetch().then()</code> chains for API calls with a <code>setTimeout</code> gate to wait for all validation promises before generating the story, plus the <code>pluralize</code> library for singular noun handling",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-ttt-h",
+      "type": "header",
+      "data": {
+        "text": "Tic Tac Toe — Bitwise Win Detection",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-ttt-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Bitwise game engine:</b> each cell is assigned a power-of-2 value (1, 2, 4, … 256), and each player's score is the bitwise OR of their occupied cells — win checking uses <code>(score &amp; winCode) === winCode</code> against 8 precomputed bitmasks representing all winning lines",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Tie detection:</b> checks if <code>score[0] + score[1] === 511</code> (2⁹ − 1), meaning all 9 cells are filled with no winner",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dynamic board generation:</b> builds the 3×3 grid programmatically with nested loops, assigning each cell's bit value via <code>onclick</code> handlers injected through <code>innerHTML</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Game features:</b> two-player mode with custom player names, persistent scoreboard tracking wins and ties across rounds, sound effects for win and tie events, and a \"Play Again\" button that resets the board while preserving scores",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges &amp; Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>CSS-only character illustration:</b> Building the Kirby figure from pure CSS required computing exact border-radius percentages, layering z-index values for overlapping shapes (eyes over face, blush over head), and using pseudo-elements for decorative details — no images allowed, so every curve is a styled div.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Wordle grid precision:</b> Replicating the Wordle UI demanded precise CSS Grid sizing for the 5×6 letter grid and three keyboard rows with unequal key widths (ENTER and DELETE wider than letter keys), all matching the original spacing and proportions without JavaScript.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Async API validation race conditions:</b> In Mad Libs, multiple <code>fetch</code> calls validate words in parallel, but the story generation had to wait for all checks to complete. Solved with a <code>setTimeout</code> gate and an error flag — a pragmatic approach to coordinating async validations without <code>Promise.all</code>.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Regex verb conjugation edge cases:</b> The past-tense converter needed to handle irregular English patterns — consonant+y endings (carry→carried), short vowel consonant doubling (stop→stopped), and silent-e words (dance→danced) — all in a single chained regex function.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bitwise win logic with bitmask encoding:</b> Encoding the Tic Tac Toe board as power-of-2 cell values and precomputing winning bitmasks required mapping all 8 winning lines (3 rows, 3 columns, 2 diagonals) to their correct sum values — e.g., top row = 1+2+4 = 7, main diagonal = 1+8+64 = 73.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Languages:</b> HTML5, CSS3, JavaScript (ES6)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frameworks:</b> Bootstrap 5 (navbar, grid system, responsive utilities, collapse component)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Layout Techniques:</b> Flexbox, CSS Grid, float-based positioning, writing-mode transforms, border-radius shape construction",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Forms:</b> HTML5 input types (text, email, tel, radio, checkbox, select, textarea), required validation, form submission to external PHP endpoints",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>JavaScript Concepts:</b> DOM manipulation (innerHTML, createElement, event handlers), prompt-based input with validation loops, fetch API with async/then chains, regex string processing, bitwise operations for game state",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>API Integration:</b> WordsAPI (part-of-speech validation), Random Words API (random word generation), RapidAPI authentication headers",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Design:</b> CSS-only illustrations, pixel-perfect UI cloning, responsive navigation, icon-labeled form controls, CSS animations with requestAnimationFrame reset",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-btn-portfolio",
       "type": "button",
       "data": {
-        "text": "Check",
+        "text": "CS 1430 Portfolio",
         "url": "/cs1430"
       }
     }
