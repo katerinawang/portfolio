@@ -17,7 +17,7 @@
       "id": "wp-intro",
       "type": "paragraph",
       "data": {
-        "text": "A collection of 11 front-end web projects built for CS 1430 (Web Fundamentals) at SLCC, progressing from raw HTML tables through CSS layout techniques and Bootstrap, up to JavaScript-driven interactive applications with API integration and game logic. Each project targets a specific skill set, and together they trace a full arc from static markup to dynamic client-side programming."
+        "text": "A collection of 13 front-end web projects built for CS 1430 (Web Fundamentals) at SLCC across 50 commits (May–Aug 2023), progressing from raw HTML pages through CSS layout techniques and Bootstrap, up to JavaScript-driven interactive applications with API integration and game logic, culminating in a Bootstrap portfolio site that ties the entire course together. Each project targets a specific skill set, and the commit history traces a full arc from static markup to dynamic client-side programming — including real learning moments like refactoring bitmask logic per instructor feedback, migrating from local data files to live APIs, and iterating through nine rounds of CSS adjustments to get a pixel-perfect layout right."
       }
     },
     {
@@ -26,6 +26,39 @@
       "data": {
         "text": "HTML Foundation",
         "level": 3
+      }
+    },
+    {
+      "id": "wp-pizza1-h",
+      "type": "header",
+      "data": {
+        "text": "Pizza-1 — First Multi-Page Site",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-pizza1-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Pure HTML multi-page site</b> — the very first project (commit 1, May 28 2023), a 4-page pizza restaurant skeleton (Home, Contact, About, Order) with no CSS, built entirely with semantic HTML elements",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Navigation practice:</b> unordered list <code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code> nav menu linking all four pages, establishing the multi-page structure later expanded into the midterm",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Contact form:</b> form with labeled text inputs, email field, textarea, and submit/reset buttons posting to an external PHP endpoint — first exposure to HTML form elements and server-side submission",
+            "meta": {},
+            "items": []
+          }
+        ]
       }
     },
     {
@@ -126,6 +159,11 @@
             "content": "<b>Advanced CSS properties:</b> uses <code>border-radius</code> for organic shapes, layered <code>z-index</code> positioning, and geometric background elements (triangle-circle pattern) for the backdrop",
             "meta": {},
             "items": []
+          },
+          {
+            "content": "<b>Iterative refinement:</b> evolved across multiple commits with responsive adjustments — the commit history shows dedicated passes for box sizing, responsive breakpoints, and layout tweaks",
+            "meta": {},
+            "items": []
           }
         ]
       }
@@ -174,7 +212,7 @@
         "meta": {},
         "items": [
           {
-            "content": "<b>4-page responsive site</b> (Home, Contact, About, Order) for a fictional pizza restaurant with consistent navigation and custom CSS across all pages",
+            "content": "<b>4-page responsive site</b> (Home, Contact, About, Order) for a fictional pizza restaurant with consistent navigation and custom CSS across all pages — the largest single commit in the course (15 commits total including the initial batch, CSS ordering optimizations, and subsequent refinements)",
             "meta": {},
             "items": []
           },
@@ -185,6 +223,11 @@
           },
           {
             "content": "<b>Form features:</b> HTML5 validation with <code>required</code> attributes, a 50-state <code>&lt;select&gt;</code> dropdown, and separate reset/submit buttons posting to an external PHP endpoint",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Semantic HTML refactoring:</b> a dedicated commit replaced <code>&lt;section&gt;</code> tags with <code>&lt;header&gt;</code> in header sections across all four pages, plus a separate commit aligned input and select element heights for consistent form styling",
             "meta": {},
             "items": []
           },
@@ -223,6 +266,11 @@
           },
           {
             "content": "<b>Header bar:</b> nav icon, centered title, and right-aligned icon group (help, statistics, settings) — all positioned with CSS to match the original Wordle UI",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Iterative polish:</b> 9 commits spanning initial layout, icon image uploads, detailed HTML comments, and three separate rounds of size adjustments — including a typo fix that was committed and then reverted, showing real version control learning",
             "meta": {},
             "items": []
           }
@@ -304,7 +352,7 @@
             "items": []
           },
           {
-            "content": "<b>DOM rendering:</b> dynamically injects a personalized birthday message into the page with a CSS opacity transition fade-in effect on <code>window.onload</code>",
+            "content": "<b>DOM rendering:</b> dynamically injects a personalized birthday message into the page with a CSS opacity transition fade-in effect on <code>window.onload</code> — a follow-up commit fixed the initial loading state so the fade-in triggers correctly",
             "meta": {},
             "items": []
           }
@@ -365,7 +413,7 @@
             "items": []
           },
           {
-            "content": "<b>Random word generation:</b> fetches random verbs and adjectives from the Random Words API (<code>random-words-api.vercel.app</code>), and picks random animal nouns from a local data file for the \"I'm Feeling Lucky\" feature",
+            "content": "<b>Evolved architecture:</b> originally shipped with local <code>adjectives.js</code> and <code>verbs.js</code> word-list files and a local npm <code>pluralize</code> dependency — over 7 commits, migrated the word lists to the Random Words API (<code>random-words-api.vercel.app</code>), switched <code>pluralize</code> from npm to a CDN, and restructured <code>animals.js</code> from a 227-line flat array to a compact data format",
             "meta": {},
             "items": []
           },
@@ -375,7 +423,7 @@
             "items": []
           },
           {
-            "content": "<b>Async coordination:</b> uses <code>fetch().then()</code> chains for API calls with a <code>setTimeout</code> gate to wait for all validation promises before generating the story, plus the <code>pluralize</code> library for singular noun handling",
+            "content": "<b>Async coordination:</b> uses <code>fetch().then()</code> chains for API calls with a <code>setTimeout</code> gate to wait for all validation promises before generating the story, plus the <code>pluralize</code> library (via CDN) for singular noun handling",
             "meta": {},
             "items": []
           }
@@ -403,7 +451,7 @@
             "items": []
           },
           {
-            "content": "<b>Tie detection:</b> checks if <code>score[0] + score[1] === 511</code> (2⁹ − 1), meaning all 9 cells are filled with no winner",
+            "content": "<b>Bitmask revision:</b> the original implementation assigned cell values starting at 2 (2, 4, 8, … 512) with a tie check of 1022 — a dedicated commit per instructor feedback corrected the encoding to start at 1 (1, 2, 4, … 256) with all 8 <code>winCode</code> values recalculated and the tie check updated to 511 (2⁹ − 1)",
             "meta": {},
             "items": []
           },
@@ -414,6 +462,57 @@
           },
           {
             "content": "<b>Game features:</b> two-player mode with custom player names, persistent scoreboard tracking wins and ties across rounds, sound effects for win and tie events, and a \"Play Again\" button that resets the board while preserving scores",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "wp-capstone-h",
+      "type": "header",
+      "data": {
+        "text": "Capstone",
+        "level": 3
+      }
+    },
+    {
+      "id": "wp-portfolio-h",
+      "type": "header",
+      "data": {
+        "text": "CS 1430 Portfolio — Course Showcase Site",
+        "level": 4
+      }
+    },
+    {
+      "id": "wp-portfolio-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Bootstrap + MDB portfolio page</b> (252-line HTML, 234-line CSS) tying all 11 course projects together — the single largest commit in the repo (862 insertions) followed by 8 iterative refinement commits for layout and styling adjustments",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Multi-item Bootstrap carousel:</b> project screenshot gallery using <code>carousel-item</code> elements with a JS loop that clones sibling slides to display 3 cards at a time, with smooth sliding transitions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dynamic quote system:</b> fetches from a local <code>quotes.json</code> (201 lines of inspirational quotes) and injects a random quote into a <code>&lt;blockquote&gt;</code> element with a clickable refresh icon",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bootstrap components:</b> responsive <code>navbar-expand-md</code> with dropdown project menu featuring color-coded skill badges (HTML, HTML+CSS, Bootstrap, JavaScript), scrollspy-tracked sections, and an offcanvas panel for an embedded Spotify audio player",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Project screenshots:</b> 12 PNG images captured and organized for the carousel, with direct links to each project folder — the portfolio page serves as both a course showcase and a navigation hub",
             "meta": {},
             "items": []
           }
@@ -441,12 +540,17 @@
             "items": []
           },
           {
-            "content": "<b>Wordle grid precision:</b> Replicating the Wordle UI demanded precise CSS Grid sizing for the 5×6 letter grid and three keyboard rows with unequal key widths (ENTER and DELETE wider than letter keys), all matching the original spacing and proportions without JavaScript.",
+            "content": "<b>Wordle grid precision:</b> Replicating the Wordle UI demanded precise CSS Grid sizing for the 5×6 letter grid and three keyboard rows with unequal key widths (ENTER and DELETE wider than letter keys), all matching the original spacing and proportions without JavaScript — refined across 9 commits including three separate size adjustment passes.",
             "meta": {},
             "items": []
           },
           {
-            "content": "<b>Async API validation race conditions:</b> In Mad Libs, multiple <code>fetch</code> calls validate words in parallel, but the story generation had to wait for all checks to complete. Solved with a <code>setTimeout</code> gate and an error flag — a pragmatic approach to coordinating async validations without <code>Promise.all</code>.",
+            "content": "<b>Local-to-API migration:</b> Mad Libs originally bundled local <code>adjectives.js</code> and <code>verbs.js</code> word-list files with a local npm dependency. Over several commits, the architecture shifted to fetching random words from a live API and loading the <code>pluralize</code> library via CDN — requiring changes to async flow, dependency management, and the \"I'm Feeling Lucky\" random-fill logic.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bitmask encoding correction:</b> The original Tic Tac Toe assigned cell values starting at 2 instead of 1, making all 8 win-code bitmasks and the tie-check value wrong. A dedicated commit per instructor feedback recalculated every value — e.g., top row changed from 14 to 7, tie check from 1022 to 511 — a lesson in how one off-by-one in a bit scheme cascades through the entire game logic.",
             "meta": {},
             "items": []
           },
@@ -456,7 +560,7 @@
             "items": []
           },
           {
-            "content": "<b>Bitwise win logic with bitmask encoding:</b> Encoding the Tic Tac Toe board as power-of-2 cell values and precomputing winning bitmasks required mapping all 8 winning lines (3 rows, 3 columns, 2 diagonals) to their correct sum values — e.g., top row = 1+2+4 = 7, main diagonal = 1+8+64 = 73.",
+            "content": "<b>Git workflow learning curve:</b> Early commits show a real .gitignore struggle — 4 consecutive commits toggling between adding and clearing cached files from tracking, learning how <code>.gitignore</code> only prevents future tracking and doesn't remove already-tracked files without <code>git rm --cached</code>.",
             "meta": {},
             "items": []
           }
@@ -484,7 +588,7 @@
             "items": []
           },
           {
-            "content": "<b>Frameworks:</b> Bootstrap 5 (navbar, grid system, responsive utilities, collapse component)",
+            "content": "<b>Frameworks:</b> Bootstrap 5 (navbar, grid system, responsive utilities, collapse, dropdown, carousel, scrollspy, offcanvas), MDB (Material Design for Bootstrap)",
             "meta": {},
             "items": []
           },
@@ -499,17 +603,22 @@
             "items": []
           },
           {
-            "content": "<b>JavaScript Concepts:</b> DOM manipulation (innerHTML, createElement, event handlers), prompt-based input with validation loops, fetch API with async/then chains, regex string processing, bitwise operations for game state",
+            "content": "<b>JavaScript Concepts:</b> DOM manipulation (innerHTML, createElement, event handlers), prompt-based input with validation loops, fetch API with async/then chains, regex string processing, bitwise operations for game state, JSON data loading",
             "meta": {},
             "items": []
           },
           {
-            "content": "<b>API Integration:</b> WordsAPI (part-of-speech validation), Random Words API (random word generation), RapidAPI authentication headers",
+            "content": "<b>API Integration:</b> WordsAPI (part-of-speech validation), Random Words API (random word generation), RapidAPI authentication headers, local JSON data fetching",
             "meta": {},
             "items": []
           },
           {
             "content": "<b>Design:</b> CSS-only illustrations, pixel-perfect UI cloning, responsive navigation, icon-labeled form controls, CSS animations with requestAnimationFrame reset",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Version Control:</b> Git workflow across 50 commits — branching from initial scaffolds to iterative refinements, .gitignore management, semantic commit messages, and a revert/re-commit cycle",
             "meta": {},
             "items": []
           }
