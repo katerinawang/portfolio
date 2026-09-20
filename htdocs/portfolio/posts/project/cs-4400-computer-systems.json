@@ -1,0 +1,523 @@
+{
+  "id": "cs4400",
+  "title": "CS 4400 — Computer Systems",
+  "slug": "cs-4400-computer-systems",
+  "category": "project",
+  "tags": [
+    "C",
+    "x86",
+    "Systems Programming",
+    "Signals",
+    "Memory Allocation",
+    "Network Programming",
+    "Concurrency"
+  ],
+  "date": "2026-05-01",
+  "summary": "6 assignments and 4 labs spanning x86 simulation, reverse engineering, cache optimization, shell implementation, malloc design, and concurrent network programming for CS 4400",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "cs4400-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A deep dive into computer systems for CS 4400 at the University of Utah across 6 assignments and several labs (Spring 2026), progressing from machine-level instruction execution through reverse engineering, performance optimization, process control and signals, virtual memory and dynamic allocation, to concurrent network programming. The course followed the CS:APP (Computer Systems: A Programmer's Perspective) textbook and built up systems expertise layer by layer — from writing an x86-like processor simulator that decodes instructions via bit masking and executes them on a register file, to defusing a binary bomb without source code, to squeezing cache performance out of image-processing kernels with loop blocking and sliding-window algorithms, to building a full Unix shell with job control and pipe support, to implementing a custom malloc with segregated free lists and boundary-tag coalescing, to writing a multi-threaded HTTP server with semaphore synchronization and federated friend discovery. Labs reinforced each topic with focused exercises in buffer overflow attacks, process trees with fork/execve, inter-process communication through pipes, and mmap-based memory allocation. All code was written in C."
+      }
+    },
+    {
+      "id": "cs4400-machine-h",
+      "type": "header",
+      "data": {
+        "text": "Machine-Level Programming",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-a1-h",
+      "type": "header",
+      "data": {
+        "text": "A1 — x86-Like Processor Simulator",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-a1-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Instruction decoding via bit masking:</b> parsed 4-byte instructions by extracting fields with bitwise operations — opcode from bits 27–31, first register from bits 22–26, second register from bits 17–21, and a 16-bit signed immediate from bits 0–15, using right shifts and masks to isolate each field",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Register file and execution engine:</b> implemented a processor with 17 named registers (including <code>%rsp</code> and <code>%rbp</code>), a 1024-byte stack, and a program counter that indexes 4-byte instructions, executing ~20 opcodes covering arithmetic (<code>addl</code>, <code>subl</code>, <code>imull</code>), data movement (<code>movl</code> with register-indirect addressing via <code>memcpy</code>), and stack operations (<code>pushl</code>/<code>popl</code>)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Flags and conditional execution:</b> computed condition flags after <code>cmpl</code> — carry flag via unsigned overflow check, zero flag via equality, sign flag from bit 31, and overflow flag by detecting sign-bit disagreement between operands and result — then used them to drive conditional jumps (<code>je</code>, <code>jl</code>, <code>jle</code>, <code>jg</code>, <code>jge</code>) with the correct signed/unsigned semantics",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Control flow:</b> implemented <code>call</code> (push return address, jump to target), <code>ret</code> (pop return address, jump back), and unconditional/conditional jumps, enabling the simulator to run recursive and branching programs on its custom ISA",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-a2-h",
+      "type": "header",
+      "data": {
+        "text": "A2 — Binary Bomb Lab",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-a2-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Reverse engineering without source:</b> defused a multi-phase binary bomb using only GDB and <code>objdump</code> disassembly — no source code was provided, so each phase required reading raw x86-64 assembly, identifying the expected input format, and determining the correct passphrase or numeric sequence to avoid detonation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>x86-64 disassembly analysis:</b> traced register usage, memory accesses, and control flow through optimized machine code, recognizing compiler-generated patterns for loops, conditionals, string comparisons, linked-list traversals, and recursive calls",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>GDB debugging:</b> set breakpoints at key comparison instructions, inspected register and memory state mid-execution, and used watchpoints and single-stepping to reverse-engineer the logic of each bomb phase without triggering the explode function",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-opt-h",
+      "type": "header",
+      "data": {
+        "text": "Code Optimization & Cache Performance",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-a3-h",
+      "type": "header",
+      "data": {
+        "text": "A3 — Performance Optimization Lab",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-a3-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Complex rotation+grayscale kernel:</b> optimized an image kernel that simultaneously rotates and converts to grayscale using 8×8 loop blocking (tiling) to keep working data in cache, pointer arithmetic instead of array indexing to eliminate repeated multiply-offset calculations, 4× loop unrolling within each tile, and <code>__attribute__((always_inline))</code> on helper functions to remove call overhead",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Motion blur with sliding window:</b> replaced the naive 3×3 convolution (9 reads per pixel) with a sliding-window algorithm that computes the initial column sums once, then subtracts the departing column and adds the arriving column as the window moves right — reducing redundant memory accesses from O(9n) to O(3n) for interior pixels",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Edge-case handling:</b> implemented separate code paths for interior pixels (divide by 9), edge pixels (divide by 6), and corner pixels (divide by 3), using bit-shift division (<code>&gt;&gt; 2</code> and <code>&gt;&gt; 1</code>) where the divisor was a power of 2 to avoid expensive integer division, and adjusting the sliding-window logic for the narrower windows at image boundaries",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Cache-aware data access:</b> structured all loop traversals to access memory in row-major order matching C's array layout, maximizing spatial locality so that each cache line fetched is fully utilized before eviction — the single biggest performance lever for both kernels",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-ecf-h",
+      "type": "header",
+      "data": {
+        "text": "Exceptional Control Flow & Process Control",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-a4-h",
+      "type": "header",
+      "data": {
+        "text": "A4 — Tiny Shell (tsh)",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-a4-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Full shell implementation:</b> built a Unix shell supporting foreground and background job execution, built-in commands (<code>quit</code>, <code>jobs</code>, <code>bg</code>, <code>fg</code>), and pipe chains (<code>cmd1 | cmd2</code>) — parsing command lines, forking child processes, and managing a job list that tracks PID, job ID, and run state",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Pipe support:</b> implemented single-pipe command chains by creating a <code>pipe(fd)</code>, forking two children where the first <code>dup2</code>s its stdout to the pipe's write end and the second <code>dup2</code>s its stdin from the pipe's read end, then closing unused file descriptors in each child to prevent deadlock on EOF",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Signal handling:</b> installed handlers for <code>SIGCHLD</code> (reap terminated or stopped children via <code>waitpid(-1, &amp;status, WNOHANG | WUNTRACED)</code>), <code>SIGINT</code> (forward Ctrl-C to the foreground process group), and <code>SIGTSTP</code> (forward Ctrl-Z to suspend the foreground job), using <code>sigprocmask</code> with <code>sigfillset</code> to block all signals during critical job-list updates",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Race condition prevention:</b> blocked <code>SIGCHLD</code> before <code>fork()</code> and unblocked after the child was added to the job list, ensuring the handler cannot reap a child before the parent has registered it — the classic signal-masking pattern for avoiding TOCTOU races between <code>fork</code> and job-list insertion",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Foreground waiting with sigsuspend:</b> used <code>sigsuspend(&amp;empty)</code> in a loop checking a global <code>fg_pid</code> flag rather than busy-waiting or calling <code>waitpid</code> directly — atomically unmasking signals and sleeping so that <code>SIGCHLD</code> delivery is the only wakeup, avoiding both race conditions and wasted CPU cycles",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Terminal control:</b> transferred terminal ownership to the foreground process group with <code>tcsetpgrp(0, gid)</code> so that child processes receive keyboard signals, then restored terminal control to the shell after the foreground job completes — each child calls <code>setpgid(0, 0)</code> to form its own process group",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-lab4-h",
+      "type": "header",
+      "data": {
+        "text": "Lab 4 — Buffer Overflow Attack",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-lab4-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Stack smashing exploit:</b> exploited a stack buffer overflow in a program with a <code>vals_to_sum[4]</code> array and no bounds checking on the user-supplied <code>num_vals</code> count — by writing past the array's bounds, overwrote the saved return address on the stack to redirect execution to a <code>nevercalled()</code> function",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stack layout analysis:</b> mapped out the stack frame to understand the offset between the buffer and the return address, calculating exactly how many extra values to write and what value to inject so that <code>ret</code> pops the attacker-chosen address instead of the legitimate caller",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-lab7-h",
+      "type": "header",
+      "data": {
+        "text": "Lab 7 — Process Trees with fork & execve",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-lab7-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Process tree construction:</b> used <code>fork()</code> to create a target tree of processes matching a required <code>pstree</code> diagram, then called <code>execve</code> from the parent to run <code>pstree -p</code> on the first child's PID to verify the structure — coordinating with <code>sleep()</code> to ensure all forks complete before the snapshot",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>execve mechanics:</b> set up the argument array (<code>{\"/usr/bin/pstree\", \"-p\", pid, NULL}</code>) and environment (<code>{NULL}</code>) for <code>execve</code>, converting the child PID to a string with <code>sprintf</code> — reinforcing that <code>execve</code> replaces the current process image entirely and never returns on success",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-lab8-h",
+      "type": "header",
+      "data": {
+        "text": "Lab 8 — Pipes & Inter-Process Communication",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-lab8-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Pipe-based IPC:</b> built a <code>microbash</code> that forks a <code>writer</code> and a <code>reader</code> process — the writer sends 5 random bytes to stdout with random 1–3 second delays, and the reader continuously reads one byte at a time from stdin, printing each byte's arrival timestamp to demonstrate that <code>read()</code> blocks until data is available",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Understanding blocking I/O:</b> the lab demonstrated how pipes naturally synchronize producer and consumer — the reader's <code>read(0, &amp;readbyte, 1)</code> call blocks when the pipe is empty and returns 0 (EOF) only when all write ends of the pipe are closed, making the pipe the synchronization primitive itself rather than requiring explicit locks",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-vm-h",
+      "type": "header",
+      "data": {
+        "text": "Virtual Memory & Dynamic Allocation",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-a5-h",
+      "type": "header",
+      "data": {
+        "text": "A5 — Custom malloc Implementation",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-a5-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Segregated free lists:</b> organized free blocks into 10 size classes (16 B to 4096 B+), each with its own explicit doubly-linked free list — <code>mm_malloc</code> searches the appropriate size class first, falling back to larger classes, so small allocations don't have to scan past large free blocks",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Boundary-tag coalescing:</b> each block carries a header and footer (<code>PACK(size, alloc)</code>) so that <code>mm_free</code> can check both the next block's header and the previous block's footer in O(1) to determine whether to merge — implementing all four coalescing cases (neither neighbor free, previous free, next free, both free) to combat external fragmentation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Block splitting:</b> when the best-fit free block is larger than needed, <code>set_allocated</code> splits it into an allocated portion and a new free remainder (if the remainder is at least the minimum block size), keeping internal fragmentation low while maintaining the free-list invariant",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Page-level memory management:</b> extended the heap using <code>mem_map</code>/<code>mem_unmap</code> with an exponential page-growth strategy (doubling the page size on each extension, capped at 64 KB) — and returned fully-freed pages to the OS when <code>page_count &gt; 1</code>, balancing allocation speed against memory footprint",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>16-byte alignment:</b> all returned pointers are aligned to 16-byte boundaries as required by the x86-64 ABI, with block headers and footers sized so that the payload starts at the correct alignment regardless of the block's position within a page",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-lab10-h",
+      "type": "header",
+      "data": {
+        "text": "Lab 10 — mmap-Based Heap Allocator",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-lab10-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Custom heap with mmap:</b> allocated a 4096-byte region via <code>mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0)</code> and implemented a bump allocator that advances a pointer through the region — a minimal allocator that trades the inability to reuse freed memory for extreme simplicity",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Linked-list data structure:</b> built a doubly-linked list of strings on the custom heap, with each node storing three pointers (data, prev, next) accessed through macros (<code>DATA(l)</code>, <code>PREV(l)</code>, <code>NEXT(l)</code>) — supporting add (with deduplication), remove (by relinking neighbors), and display operations",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-net-h",
+      "type": "header",
+      "data": {
+        "text": "Network Programming & Concurrency",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-a6-h",
+      "type": "header",
+      "data": {
+        "text": "A6 — Multi-Threaded HTTP Friend-List Server",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs4400-a6-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Thread-per-connection architecture:</b> spawned a new POSIX thread for each incoming HTTP connection with <code>pthread_create</code> and immediately detached it with <code>pthread_detach</code>, so each client is served concurrently while the main thread loops back to <code>accept()</code> — the simplest concurrent server model that avoids the serialization of a single-threaded design",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Semaphore synchronization:</b> protected the shared user dictionary with a binary semaphore (<code>sem_init(&amp;sem, 0, 1)</code>) using <code>P(&amp;sem)</code>/<code>V(&amp;sem)</code> wrappers to ensure mutual exclusion — every read or write to the shared data structure is bracketed by lock/unlock to prevent data races between concurrent handler threads",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>REST API endpoints:</b> implemented four HTTP endpoints — <code>/friends?user=</code> (list a user's friends), <code>/befriend?user=&amp;friend=</code> (add a mutual friendship), <code>/unfriend?user=&amp;friend=</code> (remove a mutual friendship), and <code>/introduce?user=&amp;friend=&amp;host=&amp;port=</code> (federated friend discovery) — parsing query parameters from the HTTP request line and returning plain-text responses",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Federated friend discovery:</b> the <code>/introduce</code> endpoint turns the server into an HTTP client — it opens a connection to a remote server with <code>Open_clientfd</code>, sends a GET request for the remote user's friend list, parses the newline-delimited response, and adds each remote friend as a mutual friend of the local user, demonstrating server-to-server communication",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges & Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Signal-masking race conditions in tsh:</b> the shell's job list could be corrupted if <code>SIGCHLD</code> arrived between <code>fork()</code> and <code>addjob()</code> — solved by blocking <code>SIGCHLD</code> with <code>sigprocmask</code> before forking, adding the job while signals are blocked, then unblocking afterward so the handler never sees a child that isn't in the list yet",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Pipe file-descriptor leaks:</b> forgetting to close unused pipe ends in the shell caused readers to hang waiting for EOF — systematically closed the write end in the reading child, the read end in the writing child, and both ends in the parent after forking, following the rule that every <code>pipe()</code> creates two FDs that must be closed in every process that doesn't use them",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Coalescing edge cases in malloc:</b> boundary-tag coalescing required careful handling when a free block sits at the start or end of a page — an off-by-one in the footer pointer calculation would read into an adjacent page's header, producing phantom merges or segfaults; solved by adding sentinel checks at page boundaries before attempting to read neighbor tags",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Sliding-window correctness in motion blur:</b> the sliding-window optimization produced incorrect blur values at image edges where the 3×3 kernel extends past the boundary — fixed by computing separate sums for edge and corner regions with adjusted divisors (9 for interior, 6 for edges, 3 for corners) rather than clamping or padding",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Flag computation in the x86 simulator:</b> getting all four condition flags correct for <code>cmpl</code> required treating the same operands as both signed and unsigned simultaneously — carry flag checks the unsigned subtraction for borrow, while overflow flag checks whether two same-sign operands produced an opposite-sign result, and mixing up the two produced subtly wrong conditional-jump behavior that only surfaced on specific test inputs",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs4400-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills & Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs4400-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>x86 machine-level programming:</b> instruction encoding and decoding, register files, condition flags (CF/ZF/SF/OF), conditional execution, call/return mechanics, and reverse engineering compiled binaries with GDB and objdump",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Performance optimization:</b> cache-aware programming with loop blocking/tiling, spatial and temporal locality, loop unrolling, strength reduction (replacing division with bit shifts), sliding-window algorithms to eliminate redundant memory accesses, and function inlining",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Process control and signals:</b> <code>fork</code>/<code>exec</code>/<code>wait</code> process lifecycle, process groups and terminal control, Unix signal handling (<code>SIGCHLD</code>, <code>SIGINT</code>, <code>SIGTSTP</code>), signal masking with <code>sigprocmask</code> for race-condition prevention, <code>sigsuspend</code> for safe blocking, and async-signal-safe programming",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Inter-process communication:</b> Unix pipes (<code>pipe</code>/<code>dup2</code>), file descriptor management and the importance of closing unused ends, blocking vs. non-blocking I/O, and EOF semantics in producer-consumer pipelines",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dynamic memory allocation:</b> segregated free lists, explicit doubly-linked free-list management, boundary-tag coalescing (header/footer metadata), block splitting, page-level memory mapping with <code>mmap</code>/<code>munmap</code>, alignment requirements, and the fragmentation-vs-utilization tradeoff",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Security:</b> buffer overflow attacks, stack smashing, return-address overwriting, and understanding how unchecked array bounds become exploitable vulnerabilities",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Network programming:</b> socket API (<code>accept</code>/<code>connect</code>/<code>read</code>/<code>write</code>), HTTP request/response parsing, building both server and client sides within a single program, and query-parameter routing for REST-style endpoints",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Concurrency:</b> POSIX threads (<code>pthread_create</code>/<code>pthread_detach</code>), shared-state synchronization with semaphores, mutual exclusion for thread-safe data structures, and the thread-per-connection server model",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Systems programming in C:</b> pointer arithmetic, bitwise operations for instruction decoding and flag computation, <code>void*</code> casting, macro-driven data structures, <code>memcpy</code>/<code>memset</code> for raw memory manipulation, and low-level system calls throughout every assignment",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    }
+  ]
+}

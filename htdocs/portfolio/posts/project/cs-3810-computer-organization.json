@@ -1,0 +1,599 @@
+{
+  "id": "cs3810",
+  "title": "CS 3810 — Computer Organization",
+  "slug": "cs-3810-computer-organization",
+  "category": "project",
+  "tags": [
+    "MIPS Assembly",
+    "Python",
+    "LaTeX",
+    "Cache Simulation",
+    "Pipelining",
+    "Digital Logic",
+    "Computer Architecture"
+  ],
+  "date": "2025-08-01",
+  "summary": "11 assignments spanning performance analysis, MIPS assembly, digital logic, assembler design, pipelining, and cache optimization for CS 3810",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "cs3810-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A comprehensive tour through computer organization for CS 3810 at the University of Utah across 11 assignments (Spring 2025), progressing from high-level performance metrics and number representations down through MIPS assembly programming, digital logic design, a custom two-pass assembler written in Python, pipeline hazard analysis, and finally cache simulation and optimization. Each assignment peeled back another layer of abstraction — from reasoning about CPI and Amdahl's Law, to hand-encoding machine instructions, to writing recursive MIPS with full callee-save stack discipline, to building an assembler that turns human-readable mnemonics into binary, to designing caches that minimize miss rates on real workloads. Written submissions were typeset in LaTeX, assembly was tested in MARS 4.5, circuits were built in a digital logic simulator, and the Python projects ranged from a regex-driven assembler to a brute-force cache parameter optimizer."
+      }
+    },
+    {
+      "id": "cs3810-perf-h",
+      "type": "header",
+      "data": {
+        "text": "Performance & Data Representation",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-a1-h",
+      "type": "header",
+      "data": {
+        "text": "A1 — Performance Metrics & Manufacturing",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a1-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>CPI, clock rate, and IPS analysis:</b> compared three processors (P1 at 3 GHz, P2 at 2.5 GHz, P3 at 4 GHz) across different instruction-class mixes, computing cycles-per-instruction weighted by class frequencies and deriving instructions-per-second to identify which processor actually executes a given workload fastest despite having a slower clock",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Clock cycle reduction:</b> analyzed a proposed CPI improvement for P1 (reducing CPI of class A from 1→2 cycles while lowering clock time to 0.5 ns), calculated execution time before and after the change, and determined the net speedup — illustrating that a higher CPI can still win if the clock period shrinks enough",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Amdahl's Law:</b> applied the speedup formula to determine how much of an overall program must be improved to hit a target speedup, reinforcing the diminishing-returns insight that accelerating 10% of a workload can never yield more than ~1.11× overall",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Manufacturing yield:</b> calculated die area, dies per wafer, and defect-driven yield for a 300 mm wafer at a given defect density, then explored how shrinking the die or reducing defects shifts the cost-per-good-die equation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Number base conversions:</b> converted a student ID (u1480977) into 32-bit binary and hexadecimal representations as a warmup for the representation-heavy work in A2",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-a2-h",
+      "type": "header",
+      "data": {
+        "text": "A2 — Number Representations & IEEE 754",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a2-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Three-way hex interpretation:</b> took raw hex values and decoded them as unsigned integer, two's complement signed integer, and IEEE 754 single-precision float — the same bit pattern yielding three completely different numbers depending on the interpretation scheme",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Overflow detection:</b> built truth tables for addition overflow under both unsigned and two's complement, identifying carry-out vs. sign-bit disagreement as the distinguishing detection mechanisms",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Decimal to IEEE 754 conversion:</b> manually converted decimal values (including negatives and fractions) into 32-bit IEEE 754 — decomposing sign, biased exponent (bias 127), and normalized mantissa with the implicit leading 1",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Custom 16-bit float design:</b> designed a reduced-precision float format with 1 sign bit, 5 exponent bits (bias 15), and 10 mantissa bits, then analyzed its range and precision tradeoffs compared to IEEE 754 single-precision",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Precision boundary:</b> proved that 2<sup>24</sup> (16,777,216) is the largest integer exactly representable in IEEE 754 single-precision by showing that 2<sup>24</sup>+1 requires 25 significand bits but only 24 are available (23 stored + 1 implicit)",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-mips-h",
+      "type": "header",
+      "data": {
+        "text": "MIPS Assembly Programming",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-a3-h",
+      "type": "header",
+      "data": {
+        "text": "A3 — Assembly Basics & Reverse Engineering",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a3-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Mystery program analysis:</b> reverse-engineered a MIPS program that computes floor(n/3) without using division — it doubles the input, then counts how many times it can subtract 6, effectively implementing integer division through repeated subtraction on a scaled value",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>C-to-MIPS translation:</b> hand-translated C functions into MIPS assembly, mapping local variables to registers, array accesses to base-plus-offset <code>lw</code>/<code>sw</code> instructions with <code>sll</code> for word-aligned indexing, and if/else branches to <code>beq</code>/<code>bne</code> with labels",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Register allocation:</b> practiced mapping C variables to MIPS registers ($t0–$t9 for temporaries, $s0–$s7 for saved values), choosing which values survive across function calls and which can be freely overwritten",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-a4-h",
+      "type": "header",
+      "data": {
+        "text": "A4 — Bit Manipulation & Control Flow",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a4-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Absolute value without pseudoinstructions:</b> implemented <code>abs(n)</code> using only real MIPS instructions — XOR with <code>0xFFFFFFFF</code> to flip all bits, then add 1 to complete the two's complement negation, with a branch to skip negation for non-negative inputs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Formula via strength reduction:</b> computed <code>9x + 5</code> using only <code>add</code>/<code>addi</code> — no multiply instruction — by chaining x → 2x → 4x → 8x → 9x through repeated doubling, demonstrating how compilers replace expensive multiplications with shift-add sequences",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bit isolation:</b> extracted the bit at position <i>x</i> from integer <i>n</i> using <code>srav</code> (arithmetic right shift by x) followed by <code>andi</code> with 1, plus input validation ensuring x stays within [0, 31]",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Range summation loop:</b> summed all integers in [x, y] using <code>slt</code> and <code>bne</code> for loop control, accumulating into a register and printing the result with a syscall — straightforward loop mechanics but a key exercise in MIPS branching idioms",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-a5-h",
+      "type": "header",
+      "data": {
+        "text": "A5 — Recursion & Calling Convention",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a5-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Full recursive mergesort:</b> implemented a complete mergesort in MIPS assembly with 24-byte stack frames that save <code>$ra</code> and <code>$s0</code>–<code>$s4</code> on every recursive call, compute <code>mid = left + (right − left) / 2</code> via <code>srl</code>, recursively sort both halves, then merge in-place — the most complex assembly program in the course",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stack discipline:</b> practiced the MIPS calling convention end-to-end — callee-saved registers pushed on entry and popped on exit, arguments passed in <code>$a0</code>–<code>$a3</code>, return values in <code>$v0</code>, and <code>$sp</code> adjusted symmetrically so the stack unwinds correctly through O(n log n) recursive depth",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Power-of-2 filter:</b> wrote a function that scans an array and copies only power-of-2 elements into a result array, detecting powers of 2 by right-shifting until 1 and checking that no other bits were set — using proper <code>jal</code>/<code>jr</code> calling convention with <code>$ra</code> preservation",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-logic-h",
+      "type": "header",
+      "data": {
+        "text": "Machine Code & Digital Logic",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-a6-h",
+      "type": "header",
+      "data": {
+        "text": "A6 — Instruction Encoding & Combinational Logic",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a6-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>R-type and I-type encoding:</b> hand-encoded MIPS instructions into 32-bit binary by filling in opcode, rs, rt, rd, shamt, and funct fields for R-type, and opcode, rs, rt, and immediate fields for I-type — then decoded hex machine words back into assembly mnemonics",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Combinational logic design:</b> built truth tables from English specifications, derived sum-of-products Boolean expressions, and simplified them — translating word-problem requirements into minimal gate-level circuits",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Finite state machine:</b> designed a conveyor-belt controller FSM with states, transitions, and output logic, specifying the state diagram, transition table, and the flip-flop/gate implementation needed to build it in hardware",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-a7-h",
+      "type": "header",
+      "data": {
+        "text": "A7 — Circuit Design",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a7-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Digital circuit implementation:</b> designed and built circuits in a logic simulator (<code>.cv</code> format), wiring gates, flip-flops, and multiplexers to implement the combinational and sequential logic from A6's theoretical designs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Iterative refinement:</b> multiple circuit file versions (structured vs. unstructured layouts) reflect the process of reorganizing wiring for clarity and correctness — mirroring real hardware design iteration",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-asm-h",
+      "type": "header",
+      "data": {
+        "text": "Assembler Design",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-a8-h",
+      "type": "header",
+      "data": {
+        "text": "A8 — COAL Assembler in Python",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a8-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Two-pass assembly:</b> built a complete assembler for the COAL instruction set architecture — pass one scans for labels and records their addresses in a symbol table, pass two resolves label references and emits binary machine code",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>16-bit ISA with 13 instructions:</b> the COAL architecture uses 4-bit opcodes, 2-bit register fields (4 registers: R0–R3), and multiple instruction formats — R-type (register-register), I-type (register-immediate), J-type (jump with 12-bit address), and H-type (halt)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Regex-driven parsing:</b> used Python regular expressions to tokenize each assembly line, handling <code>LW</code>/<code>SW</code> offset syntax (e.g., <code>LW R1, 4(R2)</code>) with a dedicated regex pattern that extracts the offset and base register separately",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Label resolution:</b> forward references (jumping to a label defined later in the source) work automatically because pass one builds the full symbol table before pass two emits any code — a textbook demonstration of why assemblers need multiple passes",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CLI with argparse:</b> the assembler runs from the command line, taking an input <code>.asm</code> file and producing a binary output file, with proper error handling for unknown instructions, undefined labels, and malformed operands",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-pipe-h",
+      "type": "header",
+      "data": {
+        "text": "Pipelining",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-a9-h",
+      "type": "header",
+      "data": {
+        "text": "A9 — Pipeline Hazards & Optimization",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a9-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Single-cycle vs. pipelined timing:</b> calculated execution time for instruction sequences under both models, demonstrating how pipelining overlaps stages (IF → ID → EX → MEM → WB) to achieve near-N× speedup for N-stage pipes on long instruction streams",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data hazard analysis:</b> traced register dependencies through pipeline stages to identify read-after-write (RAW) hazards, then compared three resolution strategies: stalling (inserting bubbles), forwarding/bypassing (routing results directly from EX/MEM to the next instruction's inputs), and a combination of both",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Control hazards:</b> analyzed branch instructions in the pipeline, computing the penalty of mispredicted branches and the cycles lost to pipeline flushes when a branch resolves in the MEM stage vs. the ID stage",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Instruction reordering:</b> optimized code sequences by rearranging independent instructions to fill branch delay slots and eliminate data-hazard stalls — a manual version of what modern compilers do automatically to maximize pipeline throughput",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Speedup calculations:</b> computed actual speedup ratios (pipelined vs. single-cycle) for specific instruction traces, accounting for stall cycles, forwarding paths, and branch penalties — showing that real speedup falls short of the ideal N× due to hazards",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-cache-h",
+      "type": "header",
+      "data": {
+        "text": "Cache Design & Optimization",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-a10-h",
+      "type": "header",
+      "data": {
+        "text": "A10 — Cache Simulator in Python",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a10-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Three associativity modes:</b> implemented direct-mapped, set-associative, and fully-associative caches in a single Python simulator, switching behavior based on the number of sets and ways specified at runtime",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Address decomposition:</b> split each memory address into tag, index, and offset fields based on cache geometry (block size determines offset bits, number of sets determines index bits, remaining bits form the tag) — the fundamental operation underlying all cache lookups",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>LRU replacement:</b> tracked access recency using ordered lists within a dictionary, evicting the least-recently-used block when a set is full — a faithful simulation of the replacement policy used in real hardware",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Storage overhead calculation:</b> computed the total SRAM cost of each cache configuration including tag storage, valid bits, and LRU tracking bits alongside the data storage — showing that higher associativity adds metadata overhead that must be weighed against the miss-rate improvement",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-a11-h",
+      "type": "header",
+      "data": {
+        "text": "A11 — Workload-Aware Cache Optimization",
+        "level": 4
+      }
+    },
+    {
+      "id": "cs3810-a11-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Brute-force parameter search:</b> refactored the A10 simulator to sweep 280 cache configurations — block sizes from 64 B to 1024 B, set counts from 2 to 128, associativity from 1-way to 8-way — against a 464 KB memory-address trace from a ray-tracing workload",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>BVH traversal analysis:</b> analyzed why the ray-tracing workload benefits from large cache lines (256 B) — bounding-volume hierarchy (BVH) node traversals access spatially adjacent memory, so wider lines capture more of the access pattern in each fetch and dramatically cut compulsory misses",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Optimal configuration:</b> identified 256 B lines, 2 sets, 4-way associativity as the best large-cache design for this workload, achieving the lowest miss rate while staying within the bit budget — a result that contradicts the naive assumption that more sets always help",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>LaTeX report:</b> wrote up the optimization methodology, results tables, and analysis as a formal technical report in LaTeX, explaining why spatial locality in BVH traversals makes line size the dominant parameter and why the optimal set count is surprisingly low",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges & Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Recursive MIPS stack management:</b> mergesort required tracking five callee-saved values ($s0–$s4 plus $ra) across recursive calls that go O(log n) deep — one misaligned <code>$sp</code> adjustment or forgotten restore would corrupt the entire call tree; solved by templating a strict 24-byte frame and verifying with MARS single-step execution",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Two-pass assembler label resolution:</b> forward references to labels not yet defined required separating scanning (pass 1) from code generation (pass 2) — initially tried a single-pass approach that broke on forward jumps, then restructured into the classic two-pass design where pass 1 builds a complete symbol table before pass 2 emits any binary",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>LW/SW offset parsing:</b> the <code>LW R1, 4(R2)</code> syntax doesn't tokenize cleanly with <code>split()</code> — solved with a dedicated regex <code>r'(\\d+)\\((R[0-3])\\)'</code> that captures the numeric offset and base register as separate groups, handling the parenthesized addressing mode the ISA spec requires",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Pipeline trace accuracy:</b> hand-tracing 10+ instructions through a 5-stage pipeline with forwarding paths and branch penalties required meticulous cycle-by-cycle bookkeeping — developed a tabular method (instruction × cycle grid) to systematically track which stage each instruction occupies and where forwarding eliminates stalls",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Cache simulator correctness:</b> off-by-one errors in address-bit decomposition (particularly the boundary between index and tag fields) caused phantom misses in set-associative mode — debugged by printing the tag/index/offset split for known addresses and cross-checking against hand calculations",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cs3810-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills & Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "cs3810-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>MIPS assembly:</b> register allocation, memory addressing modes (base+offset), control flow (branches, jumps), bit manipulation (shifts, masks, XOR), recursive functions with full callee-save stack frames, and the MIPS calling convention",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Computer arithmetic:</b> unsigned and two's complement integer representation, IEEE 754 single-precision floating point, overflow detection, precision boundaries, and custom reduced-precision float design",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Performance analysis:</b> CPI calculation, clock rate vs. throughput tradeoffs, Amdahl's Law, and manufacturing yield modeling — the quantitative tools for evaluating architectural decisions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Digital logic:</b> truth tables, sum-of-products expressions, Boolean simplification, finite state machines, and circuit implementation in a logic simulator",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Instruction encoding:</b> R-type and I-type MIPS instruction formats, hand encoding/decoding between assembly and 32-bit binary, and the relationship between ISA design and hardware decoder complexity",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Assembler construction:</b> two-pass assembly, symbol tables, label resolution, regex-based tokenization, and the translation from mnemonic instructions to binary machine code",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Pipelining:</b> 5-stage pipeline operation (IF/ID/EX/MEM/WB), data hazards and RAW dependencies, stalling vs. forwarding/bypassing, control hazards, branch delay slots, and instruction reordering for hazard elimination",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Cache architecture:</b> direct-mapped, set-associative, and fully-associative designs, LRU replacement, address decomposition (tag/index/offset), storage overhead analysis, and workload-driven parameter optimization",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Python tooling:</b> building command-line tools (argparse), regex-driven parsing, dictionary-based data structures for symbol tables and LRU tracking, and brute-force search over parameter spaces",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>LaTeX:</b> typesetting technical documents with mathematical notation, tables, code listings, and structured reports for both homework submissions and the cache optimization analysis",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    }
+  ]
+}

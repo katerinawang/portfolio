@@ -18,6 +18,42 @@
       "thumbnail": "../img/dishbook.png"
     },
     {
+      "id": "cs4400",
+      "title": "CS 4400 — Computer Systems",
+      "slug": "cs-4400-computer-systems",
+      "category": "project",
+      "tags": [
+        "C",
+        "x86",
+        "Systems Programming",
+        "Signals",
+        "Memory Allocation",
+        "Network Programming",
+        "Concurrency"
+      ],
+      "date": "2026-05-01",
+      "summary": "6 assignments and 4 labs spanning x86 simulation, reverse engineering, cache optimization, shell implementation, malloc design, and concurrent network programming for CS 4400",
+      "thumbnail": ""
+    },
+    {
+      "id": "cs3810",
+      "title": "CS 3810 — Computer Organization",
+      "slug": "cs-3810-computer-organization",
+      "category": "project",
+      "tags": [
+        "MIPS Assembly",
+        "Python",
+        "LaTeX",
+        "Cache Simulation",
+        "Pipelining",
+        "Digital Logic",
+        "Computer Architecture"
+      ],
+      "date": "2025-08-01",
+      "summary": "11 assignments spanning performance analysis, MIPS assembly, digital logic, assembler design, pipelining, and cache optimization for CS 3810",
+      "thumbnail": ""
+    },
+    {
       "id": "logic-gate",
       "title": "[Group Project] - Logic Gate",
       "slug": "group-project-logic-gate",
