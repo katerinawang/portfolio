@@ -11,7 +11,7 @@
     "CSS",
     "Full-Stack"
   ],
-  "date": "2026-09-01",
+  "date": "2025-11-22",
   "summary": "Full-stack recipe sharing platform built with Django across 7 homework phases for CS 3550",
   "thumbnail": "../img/dishbook.png",
   "content": [
@@ -19,7 +19,7 @@
       "id": "db-intro",
       "type": "paragraph",
       "data": {
-        "text": "A full-stack recipe sharing platform built with Django 5.2 and SQLite for CS 3550 (Web Software Development) at the University of Utah, developed across seven iterative homework phases — each adding a layer to the application, from static HTML mockups and Django templates through ORM-backed data models, form processing, authentication and authorization, client-side JavaScript interactivity, and finally production deployment to a Linux server via SFTP with GitHub Actions CI. The project covers the complete web development stack: a relational data model with five interconnected tables, server-side rendering with Django's template engine, secure image upload with PNG magic-byte validation, a JSON API powering instant search with a race-condition guard, real-time ingredient aggregation via Map-based JavaScript, and a responsive cookbook-themed design with CSS Grid and four breakpoints."
+        "text": "A full-stack recipe sharing platform built with Django 5.2 and SQLite for CS 3550 (Web Software Development) at the University of Utah, developed across seven iterative homework phases — each adding a layer to the application, from static HTML mockups and Django templates through ORM-backed data models, form processing, authentication and authorization, client-side JavaScript interactivity, and finally production deployment to an AWS EC2 instance via SFTP with DNS configured through Cloudflare. The project covers the complete web development stack: a relational data model with five custom models (plus Django's User), server-side rendering with Django's template engine, secure image upload with PNG magic-byte validation, a JSON API powering instant search with a race-condition guard, real-time ingredient aggregation via Map-based JavaScript, and a responsive cookbook-themed design with CSS Grid and four breakpoints."
       }
     },
     {
@@ -214,7 +214,7 @@
             "items": []
           },
           {
-            "content": "<b>Prefix-based query routing:</b> queries starting with <code>tag:</code> filter by tag name, and <code>variation:</code> filters by the original recipe's title through the <code>copied_from</code> relationship — all other queries fall through to the full-text multi-field search",
+            "content": "<b>Prefix-based query routing:</b> queries starting with <code>tag:</code> filter by tag name, and <code>variation:</code> filters by the original recipe's ID through the <code>copied_from</code> ForeignKey — all other queries fall through to the full-text multi-field search",
             "meta": {},
             "items": []
           },
@@ -372,12 +372,50 @@
         "meta": {},
         "items": [
           {
-            "content": "<b>GitHub Actions CI:</b> automated startup checks run on push to verify the Django project boots correctly — catching configuration errors before deployment and ensuring the application is always in a deployable state",
+            "content": "<b>GitHub Actions CI:</b> a course-provided autotester runs on every push, verifying the Django project starts correctly and passes phase-specific checks for each homework — catching configuration errors and regressions before deployment",
             "meta": {},
             "items": []
           },
           {
-            "content": "<b>Production-ready deployment:</b> configured for deployment to any Linux server via SFTP file transfer, with the application structured for easy setup on a fresh host — <code>settings.py</code> separates debug and production configuration, static files are collected with <code>collectstatic</code>, and the CI pipeline validates the project before each push",
+            "content": "<b>Production deployment:</b> deployed to an AWS EC2 instance with an Elastic IP, configured DNS via Cloudflare TXT records, and transferred the full application via SFTP — file permissions had to be corrected after the upload since the transfer changed ownership, a hands-on lesson in Linux server administration",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-process-h",
+      "type": "header",
+      "data": {
+        "text": "Development Process",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-process-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Static-first approach (HW1–HW2):</b> the first two homework phases built the entire site as static HTML and CSS — index, login, recipe detail, search, and profile pages — before any Django code existed. This meant designing the full page structure, navigation, and responsive layout upfront, then converting the static pages into Django templates in HW3",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Template refactoring with partials:</b> during HW3, the duplicated header and recipe card markup across all pages was extracted into reusable <code>header.html</code> and <code>cards.html</code> includes — a practical DRY refactoring that eliminated ~200 lines of repeated HTML across five templates",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data seeding script:</b> wrote a <code>makedata.py</code> script to populate the database with sample recipes, steps, ingredients, and user profiles for development and testing — later removed from version control since it contained hardcoded test data",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Iterative debugging across 65 commits:</b> the git history shows real development patterns — multiple \"phase 1 maybe finished\" attempts for the form processing, going back to fix grading errors from previous homeworks, rebuilding the database and migrations when the schema changed, and a merge conflict resolution from concurrent work on the autotester CI configuration",
             "meta": {},
             "items": []
           }
@@ -425,7 +463,7 @@
             "items": []
           },
           {
-            "content": "<b>Deployment troubleshooting:</b> the initial <code>scp</code> transfer method consistently failed with \"operation canceled\" errors during deployment. Diagnosing the issue and switching to SFTP provided a reliable alternative — a practical lesson in having fallback strategies and debugging production infrastructure problems.",
+            "content": "<b>Deployment troubleshooting:</b> the initial <code>scp</code> transfer method consistently failed with \"operation canceled\" errors during deployment. Switching to SFTP resolved the transfer issue, but the upload changed file permissions on the server — requiring manual correction before the application would run. The commit message captures this directly: \"Since permission changed during uploading, i had to push everything.\"",
             "meta": {},
             "items": []
           }
@@ -478,7 +516,7 @@
             "items": []
           },
           {
-            "content": "<b>DevOps:</b> GitHub Actions CI, SFTP deployment to Linux servers, Django admin configuration with TabularInline",
+            "content": "<b>DevOps:</b> GitHub Actions CI (course autotester), AWS EC2 with Elastic IP, Cloudflare DNS, SFTP deployment, Linux file permissions, Django admin with TabularInline",
             "meta": {},
             "items": []
           },
@@ -494,8 +532,8 @@
       "id": "db-btn-github",
       "type": "button",
       "data": {
-        "text": "GitHub Repository (private)",
-        "url": "https://github.com/utah-cs3550-fa25/Katerina-Wang"
+        "text": "GitHub Repository",
+        "url": "https://github.com/katerinawang/dishbook"
       }
     }
   ]

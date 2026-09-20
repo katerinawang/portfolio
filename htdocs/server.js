@@ -58,6 +58,43 @@ function writeIndex(index) {
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
 }
 
+/**
+ * Rebuild index.json from individual post files.
+ * Each post JSON is the source of truth — index.json is derived from them.
+ * Called on server startup so manual edits to post files are always picked up.
+ */
+function rebuildIndex() {
+  const posts = [];
+
+  for (const category of fs.readdirSync(POSTS_DIR)) {
+    const catDir = path.join(POSTS_DIR, category);
+    if (!fs.statSync(catDir).isDirectory()) continue;
+
+    for (const file of fs.readdirSync(catDir)) {
+      if (!file.endsWith(".json")) continue;
+      try {
+        const post = JSON.parse(fs.readFileSync(path.join(catDir, file), "utf-8"));
+        posts.push({
+          id: post.id,
+          title: post.title,
+          slug: post.slug || file.replace(/\.json$/, ""),
+          category: post.category || category,
+          tags: post.tags || [],
+          date: post.date || "",
+          summary: post.summary || "",
+          thumbnail: post.thumbnail || "",
+        });
+      } catch {
+        console.warn(`Skipping malformed post file: ${category}/${file}`);
+      }
+    }
+  }
+
+  const index = { posts };
+  writeIndex(index);
+  console.log(`Rebuilt index.json with ${posts.length} posts`);
+}
+
 function extractMediaUrls(blocks) {
   const urls = [];
   for (const block of blocks) {
@@ -211,6 +248,15 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  if (pathname === "/api/reindex" && method === "POST") {
+    try {
+      rebuildIndex();
+      return sendJSON(res, 200, { ok: true, count: readIndex().posts.length });
+    } catch (err) {
+      return sendJSON(res, 500, { error: err.message });
+    }
+  }
+
   // Catch-all for unknown /api/ routes
   if (pathname.startsWith("/api/")) {
     return sendJSON(res, 404, { error: "Unknown API route" });
@@ -241,6 +287,8 @@ const server = http.createServer(async (req, res) => {
   res.writeHead(200, { "Content-Type": mime });
   fs.createReadStream(filePath).pipe(res);
 });
+
+rebuildIndex();
 
 server.listen(PORT, () => {
   console.log(`Dev server running at http://localhost:${PORT}`);
