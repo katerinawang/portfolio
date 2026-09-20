@@ -19,7 +19,7 @@
       "id": "db-intro",
       "type": "paragraph",
       "data": {
-        "text": "A full-stack recipe sharing platform built with Django 5.2 and SQLite for CS 3550 (Web Software Development) at the University of Utah, developed across seven iterative homework phases — each adding a layer to the application, from static HTML mockups and Django templates through ORM-backed data models, form processing, authentication and authorization, client-side JavaScript interactivity, and finally production deployment to katerina.wang. The project covers the complete web development stack: a relational data model with five interconnected tables, server-side rendering with Django's template engine, secure image upload with PNG magic-byte validation, a JSON API powering instant search with a race-condition guard, real-time ingredient aggregation via Map-based JavaScript, and a responsive cookbook-themed design with CSS Grid and four breakpoints."
+        "text": "A full-stack recipe sharing platform built with Django 5.2 and SQLite for CS 3550 (Web Software Development) at the University of Utah, developed across seven iterative homework phases — each adding a layer to the application, from static HTML mockups and Django templates through ORM-backed data models, form processing, authentication and authorization, client-side JavaScript interactivity, and finally production deployment to a Linux server via SFTP with GitHub Actions CI. The project covers the complete web development stack: a relational data model with five interconnected tables, server-side rendering with Django's template engine, secure image upload with PNG magic-byte validation, a JSON API powering instant search with a race-condition guard, real-time ingredient aggregation via Map-based JavaScript, and a responsive cookbook-themed design with CSS Grid and four breakpoints."
       }
     },
     {
@@ -372,12 +372,12 @@
         "meta": {},
         "items": [
           {
-            "content": "<b>GitHub Actions CI:</b> automated startup checks run on push to verify the Django project boots correctly — catching configuration errors before deployment",
+            "content": "<b>GitHub Actions CI:</b> automated startup checks run on push to verify the Django project boots correctly — catching configuration errors before deployment and ensuring the application is always in a deployable state",
             "meta": {},
             "items": []
           },
           {
-            "content": "<b>SFTP over SCP:</b> the original plan was to use <code>scp</code> for deployment, but after repeated \"operation canceled\" errors, switched to SFTP for reliable file transfer to the production server",
+            "content": "<b>Production-ready deployment:</b> configured for deployment to any Linux server via SFTP file transfer, with the application structured for easy setup on a fresh host — <code>settings.py</code> separates debug and production configuration, static files are collected with <code>collectstatic</code>, and the CI pipeline validates the project before each push",
             "meta": {},
             "items": []
           }
@@ -425,7 +425,7 @@
             "items": []
           },
           {
-            "content": "<b>SCP deployment failures:</b> the <code>scp</code> command consistently failed with \"operation canceled\" errors during the final deployment phase. Switching to SFTP provided a reliable interactive transfer method — a practical lesson in having fallback tools for production operations.",
+            "content": "<b>Deployment troubleshooting:</b> the initial <code>scp</code> transfer method consistently failed with \"operation canceled\" errors during deployment. Diagnosing the issue and switching to SFTP provided a reliable alternative — a practical lesson in having fallback strategies and debugging production infrastructure problems.",
             "meta": {},
             "items": []
           }
@@ -478,7 +478,7 @@
             "items": []
           },
           {
-            "content": "<b>DevOps:</b> GitHub Actions CI, SFTP deployment to production server, Django admin configuration with TabularInline",
+            "content": "<b>DevOps:</b> GitHub Actions CI, SFTP deployment to Linux servers, Django admin configuration with TabularInline",
             "meta": {},
             "items": []
           },
@@ -491,11 +491,11 @@
       }
     },
     {
-      "id": "db-btn-live",
+      "id": "db-btn-github",
       "type": "button",
       "data": {
-        "text": "Live Site — katerina.wang",
-        "url": "http://katerina.wang"
+        "text": "GitHub Repository (private)",
+        "url": "https://github.com/utah-cs3550-fa25/Katerina-Wang"
       }
     }
   ]
