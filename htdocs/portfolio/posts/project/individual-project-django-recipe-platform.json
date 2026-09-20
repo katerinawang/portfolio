@@ -1,0 +1,502 @@
+{
+  "id": "dishbook",
+  "title": "[Individual Project] - Django Recipe Platform",
+  "slug": "individual-project-django-recipe-platform",
+  "category": "project",
+  "tags": [
+    "Python",
+    "Django",
+    "SQLite",
+    "JavaScript",
+    "CSS",
+    "Full-Stack"
+  ],
+  "date": "2026-09-01",
+  "summary": "Full-stack recipe sharing platform built with Django across 7 homework phases for CS 3550",
+  "thumbnail": "../img/dishbook.png",
+  "content": [
+    {
+      "id": "db-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A full-stack recipe sharing platform built with Django 5.2 and SQLite for CS 3550 (Web Software Development) at the University of Utah, developed across seven iterative homework phases — each adding a layer to the application, from static HTML mockups and Django templates through ORM-backed data models, form processing, authentication and authorization, client-side JavaScript interactivity, and finally production deployment to katerina.wang. The project covers the complete web development stack: a relational data model with five interconnected tables, server-side rendering with Django's template engine, secure image upload with PNG magic-byte validation, a JSON API powering instant search with a race-condition guard, real-time ingredient aggregation via Map-based JavaScript, and a responsive cookbook-themed design with CSS Grid and four breakpoints."
+      }
+    },
+    {
+      "id": "db-models-h",
+      "type": "header",
+      "data": {
+        "text": "Data Modeling &amp; ORM",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-hierarchy-h",
+      "type": "header",
+      "data": {
+        "text": "Recipe–Step–Ingredient Hierarchy",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-hierarchy-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Three-level relational model:</b> Recipe → Step → Ingredient, each linked by ForeignKey with <code>on_delete=models.CASCADE</code> so deleting a recipe cascades through all its steps and their ingredients automatically",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Self-referential ForeignKey:</b> <code>copied_from = models.ForeignKey(\"self\", null=True, blank=True, on_delete=models.SET_NULL, related_name=\"copies\")</code> tracks recipe variations — when the original is deleted, copies survive with a null reference instead of cascading",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>ManyToManyField for tags:</b> recipes connect to Tag objects through Django's automatic join table, enabling flexible categorization and powering the <code>tag:</code> prefix search",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Ingredient aggregation:</b> a <code>calculate_ingredients()</code> function walks all steps, summing amounts by name and unit into a nested dictionary <code>{name: {unit: total}}</code> — the same ingredient appearing in multiple steps gets combined into a single shopping-list entry",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-auth-h",
+      "type": "header",
+      "data": {
+        "text": "User Profiles &amp; Authentication",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-auth-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>OneToOneField profile extension:</b> each Django User gets a Profile with a bio and photo, linked via <code>models.OneToOneField(User, on_delete=models.CASCADE)</code> — the profile page displays the user's avatar and biography alongside their recipes",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Django authentication integration:</b> uses <code>@login_required</code> decorator, <code>authenticate()</code>/<code>login()</code>/<code>logout()</code>, and <code>LOGIN_URL = \"/login\"</code> in settings to redirect unauthenticated users to the login page with a <code>next</code> parameter for post-login return",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Open redirect prevention:</b> the login view validates the <code>next</code> parameter — rejecting values starting with <code>//</code> to prevent redirecting users to an external domain after authentication",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-recipe-h",
+      "type": "header",
+      "data": {
+        "text": "Recipe Management",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-detail-h",
+      "type": "header",
+      "data": {
+        "text": "Recipe Detail &amp; Visibility",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-detail-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Public/private visibility system:</b> recipes have an <code>is_public</code> boolean — the index and profile views use <code>Q(is_public=True) | Q(author=request.user)</code> to show public recipes to everyone while letting authors see their own private recipes",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Permission enforcement:</b> the recipe detail view raises <code>PermissionDenied</code> (HTTP 403) when a non-author tries to access a private recipe, and <code>make_public</code> is restricted to POST-only and author-only access",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Protected media delivery:</b> recipe and profile images are served through dedicated view functions using Django's <code>FileResponse</code> rather than exposing the media directory — each request checks permissions before serving the file",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Featured recipes:</b> the homepage shows up to 3 recipes with a non-null <code>featured_on</code> datetime, ordered by most recently featured — a simple editorial curation mechanism using the admin interface",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-edit-h",
+      "type": "header",
+      "data": {
+        "text": "Recipe Editing &amp; Validation",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-edit-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Dynamic form processing:</b> the edit view parses variable-length POST data — step descriptions keyed as <code>step-{n}</code> and ingredients as <code>ingredient-name-{step}-{i}</code>, <code>ingredient-amount-{step}-{i}</code>, <code>ingredient-unit-{step}-{i}</code> — rebuilding the entire step/ingredient tree on each save",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Server-side validation:</b> checks all required fields (title, description, prep/cook time, servings) and validates that every ingredient has a complete name/amount/unit triple before saving, collecting errors into a list displayed at the top of the form",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>PNG magic-byte validation:</b> uploaded images pass through <code>is_small_png()</code>, which reads the first 4 bytes and checks for the PNG signature <code>0x89 0x50 0x4E 0x47</code> with a 64 MB file size limit — rejecting non-PNG files at the binary level rather than trusting the file extension",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Admin interface:</b> Django admin configured with <code>TabularInline</code> classes — RecipeAdmin shows inline Steps ordered by <code>order</code>, and StepAdmin shows inline Ingredients, enabling quick data entry and debugging without the frontend form",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-search-h",
+      "type": "header",
+      "data": {
+        "text": "Search &amp; Discovery",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-server-search-h",
+      "type": "header",
+      "data": {
+        "text": "Server-Side Search",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-server-search-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Multi-field Q object queries:</b> search spans recipe title, description, step descriptions, and ingredient names using chained <code>Q</code> objects with <code>__icontains</code> lookups joined by OR, with <code>.distinct()</code> to eliminate duplicates from joined tables",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Prefix-based query routing:</b> queries starting with <code>tag:</code> filter by tag name, and <code>variation:</code> filters by the original recipe's title through the <code>copied_from</code> relationship — all other queries fall through to the full-text multi-field search",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Query optimization:</b> uses <code>select_related</code> and <code>prefetch_related</code> to minimize database round-trips when loading recipes with their authors, steps, ingredients, and tags",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-instant-search-h",
+      "type": "header",
+      "data": {
+        "text": "Instant Search API",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-instant-search-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>JSON API endpoint:</b> <code>/api/s</code> returns <code>{query, res}</code> where <code>res</code> is an array of <code>{id, title, photo, tags}</code> objects — the response echoes back the original query string for client-side staleness detection",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Race-condition guard:</b> the JavaScript checks <code>if (json.query !== search.value) return</code> after each fetch resolves — if the user has typed more characters while the request was in flight, the stale response is silently discarded instead of overwriting newer results",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dynamic DOM rendering:</b> search results rebuild the recipe grid in real time, constructing <code>&lt;article&gt;</code> elements with conditional photo display, linked titles, and tag lists — all via <code>innerHTML</code> template literals",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-frontend-h",
+      "type": "header",
+      "data": {
+        "text": "Frontend Design",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-css-h",
+      "type": "header",
+      "data": {
+        "text": "Cookbook-Themed CSS",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-css-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Warm color palette:</b> cream background (<code>#F7F1E8</code>), warm brown accents (<code>#8B5E34</code>), amber headings (<code>#A8570C</code>), and off-white card interiors (<code>#FFF9F1</code>) — evoking a physical recipe card aesthetic",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Typography pairing:</b> Playwrite US Trad cursive for headings paired with Nunito sans-serif for body text, reinforcing the hand-written cookbook feel while keeping body content readable",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CSS Grid recipe list:</b> a 3-column grid (<code>grid-template-columns: 1fr 1fr 1fr</code>) that collapses to 2 columns at 600px and 1 column at 400px, with recipe cards styled using <code>box-shadow</code> and <code>border-radius</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Recipe detail layout:</b> ingredients (33% width) and steps (66% width) displayed side by side in a flexbox row, collapsing to stacked layout on mobile at 500px — recipe photos are rotated 2° with a white border for a casual, pinned-to-the-fridge look",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Four responsive breakpoints:</b> 700px (login form spacing), 600px (grid to 2 columns, login stacking), 500px (full-width ingredients/steps, edge-to-edge cards), and 400px (single-column grid) — all handled with <code>@media</code> queries",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-js-h",
+      "type": "header",
+      "data": {
+        "text": "Client-Side Interactivity",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-js-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Live ingredient aggregation:</b> on any ingredient field change in the edit form, JavaScript rebuilds the combined ingredient list using a Map keyed by ingredient name — each name maps to an object of <code>{unit: summedAmount}</code>, so \"2 cups flour\" in step 1 and \"1 cup flour\" in step 3 displays as \"3 cups flour\"",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Unit-aware display formatting:</b> the aggregation handles the special <code>ct</code> (count) unit by displaying just the number without a unit label, and uses <code>toFixed(2)</code> with a regex strip of trailing <code>.00</code> for clean decimal display — multiple units for the same ingredient join with \"and\"",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Live cook-time calculation:</b> prep and cook time inputs update the total time field in real time using the unary <code>+</code> operator for string-to-number conversion (<code>+prep.value + +cook.value</code>)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Password visibility toggle:</b> a checkbox swaps the password input's type attribute between <code>password</code> and <code>text</code>, using a guard check (<code>if (isViewPass)</code>) so the listener only attaches on pages with the login form",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-deploy-h",
+      "type": "header",
+      "data": {
+        "text": "Deployment &amp; CI",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-deploy-h4",
+      "type": "header",
+      "data": {
+        "text": "Production Deployment",
+        "level": 4
+      }
+    },
+    {
+      "id": "db-deploy-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>GitHub Actions CI:</b> automated startup checks run on push to verify the Django project boots correctly — catching configuration errors before deployment",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>SFTP over SCP:</b> the original plan was to use <code>scp</code> for deployment, but after repeated \"operation canceled\" errors, switched to SFTP for reliable file transfer to the production server",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-challenges-h",
+      "type": "header",
+      "data": {
+        "text": "Challenges &amp; Solutions",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-challenges-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Nested dictionary for ingredient aggregation:</b> the hardest part of HW3 was computing the combined ingredient list across all steps — the solution uses a two-level dictionary <code>{name: {unit: amount}}</code> that walks every step's ingredients, summing amounts by name and unit, then flattens into display strings. The same logic had to be reimplemented in JavaScript for the live edit view, using a Map instead of a dict.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Preserving form input on validation errors:</b> when the edit form fails server-side validation, the user's partially entered steps and ingredients needed to survive the round-trip. Passing <code>request.POST</code> data back to the template proved difficult — the dynamic step/ingredient structure doesn't map cleanly to Django's form framework, and fully preserving user input on invalid submissions remained an unsolved challenge.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Ordered ingredient list in JavaScript:</b> the live ingredient recalculation had to maintain insertion order when combining ingredients across steps. Using a Map (which preserves insertion order in JavaScript) instead of a plain object ensured the combined list appears in the order ingredients are first encountered, not alphabetically or randomly.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Race conditions in instant search:</b> rapid typing fires multiple fetch requests to <code>/api/s</code>, and responses can arrive out of order. The fix echoes the query string back in the JSON response and checks <code>json.query !== search.value</code> — if the user has typed more since the request was sent, the stale response is dropped.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Image validation beyond file extensions:</b> accepting any file with a <code>.png</code> extension would allow uploading arbitrary data disguised as images. The <code>is_small_png()</code> function reads the first 4 bytes and checks for the PNG magic number (<code>89 50 4E 47</code>), rejecting files that aren't actually PNG regardless of their extension or MIME type.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>SCP deployment failures:</b> the <code>scp</code> command consistently failed with \"operation canceled\" errors during the final deployment phase. Switching to SFTP provided a reliable interactive transfer method — a practical lesson in having fallback tools for production operations.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills &amp; Concepts",
+        "level": 3
+      }
+    },
+    {
+      "id": "db-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Backend:</b> Python, Django 5.2, Django ORM (ForeignKey, OneToOneField, ManyToManyField, self-referential FK), Django templates, server-side rendering, SQLite",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Authentication &amp; Authorization:</b> Django auth framework (login, logout, @login_required), PermissionDenied, session-based authentication, open redirect prevention, public/private content visibility",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data Modeling:</b> relational schema design (Recipe → Step → Ingredient hierarchy), cascade deletion, SET_NULL for optional references, M2M relationships, query optimization with select_related/prefetch_related",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Search:</b> Django Q objects for complex OR queries across joined tables, icontains lookups, .distinct() deduplication, prefix-based query routing (tag:, variation:), JSON API endpoint design",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Frontend:</b> HTML5, CSS3 (Flexbox, CSS Grid, @media responsive breakpoints, ::before pseudo-elements, box-shadow cards), vanilla JavaScript (DOM manipulation, fetch API, Map, async/await, event listeners)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Security:</b> PNG magic-byte validation, FileResponse for protected media, CSRF middleware, permission checks on views, redirect URL validation",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>DevOps:</b> GitHub Actions CI, SFTP deployment to production server, Django admin configuration with TabularInline",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Design:</b> cookbook-themed visual design, Google Fonts integration (Playwrite US Trad, Nunito), responsive 4-breakpoint layout, recipe card grid system",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "db-btn-live",
+      "type": "button",
+      "data": {
+        "text": "Live Site — katerina.wang",
+        "url": "http://katerina.wang"
+      }
+    }
+  ]
+}

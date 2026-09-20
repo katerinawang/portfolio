@@ -1,6 +1,23 @@
 {
   "posts": [
     {
+      "id": "dishbook",
+      "title": "[Individual Project] - Django Recipe Platform",
+      "slug": "individual-project-django-recipe-platform",
+      "category": "project",
+      "tags": [
+        "Python",
+        "Django",
+        "SQLite",
+        "JavaScript",
+        "CSS",
+        "Full-Stack"
+      ],
+      "date": "2026-09-01",
+      "summary": "Full-stack recipe sharing platform built with Django across 7 homework phases for CS 3550",
+      "thumbnail": "../img/dishbook.png"
+    },
+    {
       "id": "logic-gate",
       "title": "[Group Project] - Logic Gate",
       "slug": "group-project-logic-gate",
