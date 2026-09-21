@@ -1,0 +1,184 @@
+{
+  "id": "tower-defense",
+  "title": "[Group Project] - Tower Defense",
+  "slug": "group-project-tower-defense",
+  "category": "project",
+  "tags": [
+    "Java",
+    "JavaFX",
+    "Graph Algorithms",
+    "BFS",
+    "DFS",
+    "Game Development",
+    "Group Project"
+  ],
+  "date": "2024-12-01",
+  "summary": "Tower defense game with graph-based pathfinding where tower placement dynamically modifies the enemy route via BFS recomputation",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "td-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A tower defense game built in Java with Swing for CSIS 2420 (Data Structures & Algorithms) at SLCC as a capstone group project (Fall 2024), applying graph algorithms to real-time gameplay. The core mechanic is graph-based pathfinding: the game map is an undirected graph where placing a tower removes a vertex's edges and triggers a BFS recomputation of the enemy path, while a DFS connectivity check prevents placements that would completely block the route. Enemies follow the shortest path from a randomized start to end vertex, towers fire projectiles using Euclidean distance targeting, and waves escalate with randomized enemy compositions and increasing spawn rates across 11 rounds. The project spans 22 Java classes organized into GUI and game-object packages, with a delta-time game loop running at 60 FPS on a dedicated thread."
+      }
+    },
+    {
+      "id": "td-graph-h",
+      "type": "header",
+      "data": {
+        "text": "Graph-Based Pathfinding",
+        "level": 3
+      }
+    },
+    {
+      "id": "td-graph-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Grid graph extending algs4:</b> <code>GridGraph</code> extends <code>edu.princeton.cs.algs4.Graph</code>, storing each vertex's grid coordinate in a <code>Point[]</code> array alongside start and end vertices — the map is an undirected adjacency-list graph where vertices correspond to tile positions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>BFS shortest path for enemy routing:</b> <code>checkPath()</code> uses algs4's <code>BreadthFirstPaths</code> to compute the shortest unweighted path from start to end, which enemies follow as a sequence of waypoints — guaranteeing the optimal route through the current graph state",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>DFS connectivity validation:</b> <code>validatePath()</code> runs <code>DepthFirstSearch</code> before confirming a tower placement — if removing the vertex's edges would disconnect start from end, the placement is denied, ensuring enemies always have a viable route",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dynamic graph modification on tower placement:</b> <code>update(int removed)</code> constructs a new <code>GridGraph</code> by copying all edges except those adjacent to the placed tower's vertex, then recomputes the BFS path if the removed vertex was on the current route — this is the core strategic mechanic, forcing enemies onto longer paths as towers reshape the graph",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "td-gameloop-h",
+      "type": "header",
+      "data": {
+        "text": "Game Loop & Architecture",
+        "level": 3
+      }
+    },
+    {
+      "id": "td-gameloop-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Delta-time accumulator at 60 FPS:</b> the <code>Game</code> panel implements <code>Runnable</code> on its own thread — each iteration measures elapsed nanoseconds, accumulates into a delta, and calls <code>update()</code> then <code>repaint()</code> when the delta exceeds one frame interval, decoupling game logic from render speed",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Observer pattern for UI updates:</b> <code>Player</code> and <code>Waves</code> fire <code>PropertyChangeEvent</code>s that drive the HUD — score, life (hearts), and gold update in <code>GameStatus</code> via property change listeners, and the <code>EnemyPane</code> shows upcoming and remaining enemy counts with thread-safe <code>SwingUtilities.invokeLater()</code> calls",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>MVC-like package structure:</b> 22 classes split across <code>GUI</code> (12 classes — panels, controls, labels, key handler) and <code>objects</code> (10 classes — entities, enums, graph, waves) with the <code>Game</code> panel as the central coordinator wiring state to rendering",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "td-combat-h",
+      "type": "header",
+      "data": {
+        "text": "Combat & Wave System",
+        "level": 3
+      }
+    },
+    {
+      "id": "td-combat-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Three tower types with stat tradeoffs:</b> small (cost 5, range 150, 5 dmg, 3 atk/sec — cheap rapid-fire), medium (cost 10, range 250, 10 dmg, 1.5 atk/sec — long range), and large (cost 20, range 200, 20 dmg, 1 atk/sec — slow heavy hitter) — attack timing is converted to a frame-based cooldown via <code>frameBetweenAtk = 60 / atkPerSec</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>First-in-range targeting with snapshot projectiles:</b> towers iterate the enemy list and target the first enemy within Euclidean distance range, firing a <code>Bullet</code> that uses linear interpolation toward the enemy's position at fire time — collision is checked per frame against actual enemy positions within <code>tileSize / 1.5</code> pixel proximity",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Three enemy types:</b> green triangles (10 HP, speed 3, reward 1), yellow squares (20 HP, speed 2, reward 2), and pink hexagons (30 HP, speed 2, reward 5) — each rendered as a custom shape via <code>EnemyShape</code> with a health bar overlay",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Wave escalation with randomized composition:</b> 11 pre-generated waves where enemy counts scale with wave number (<code>type1: 2 + random(0..i)</code>, <code>type2: 3 + (i/2 + random(0..i+4))</code>) and spawn speed increases as <code>0.5 + (i * 0.5)</code> — enemies are queued in an algs4 FIFO queue and dequeued one at a time on a frame-counter timer, cycling after wave 10 for infinite play",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "td-movement-h",
+      "type": "header",
+      "data": {
+        "text": "Enemy Movement & Player Economy",
+        "level": 3
+      }
+    },
+    {
+      "id": "td-movement-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Waypoint-based linear interpolation:</b> each enemy holds its own <code>Queue&lt;Integer&gt;</code> copy of the BFS shortest path — on each frame, it computes the direction vector to the next waypoint, normalizes it, and moves by its speed value, snapping to the waypoint when within range and dequeuing the next one",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Gold/life economy:</b> the player starts with 10 gold and 10 lives — killing enemies yields rewards (1–5 gold based on type), towers cost 5–20 gold, and enemies that reach the end vertex deduct one life until game over at zero",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Scoring formula:</b> score increments per bullet hit as <code>(int)(enemy.speed * enemy.getHealth())</code> — faster and healthier enemies yield more points per hit, rewarding engagement with tougher targets",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "td-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "td-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Java, Java Swing, Princeton algs4.jar (Graph, BreadthFirstPaths, DepthFirstSearch, Queue), BFS shortest path, DFS connectivity validation, dynamic graph modification, delta-time game loop, observer pattern (PropertyChangeSupport), linear interpolation for movement, Euclidean distance for targeting and collision, frame-based cooldown timing, enum-driven entity types, custom font loading, thread-safe Swing rendering"
+      }
+    }
+  ]
+}

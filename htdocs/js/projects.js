@@ -10,44 +10,48 @@ async function renderProjects() {
             .filter(p => p.category === 'project')
             .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        let projectsHTML = '<div id="projects-box">';
-
+        // group by year
+        const grouped = {};
         projects.forEach(post => {
-            const [y, m] = post.date.split('-');
-            const month = new Date(y, m - 1).toLocaleString('en', { month: 'short' }) + '.';
-            const year = y;
-
-            projectsHTML += `
-        <div class="proj-card" data-category="${post.category}" data-slug="${post.slug}">
-          <img class="proj-img" src="${post.thumbnail}" alt="${post.title}">
-          <div class="content-box">
-            <span class="proj-title" data-text="${post.title}">${post.title}</span>
-            <p class="proj-desc">${post.summary}</p>
-            <span class="proj-link">Detail</span>
-          </div>
-          <div class="date-box">
-            <span class="proj-month">${month}</span>
-            <span class="proj-year">${year}</span>
-          </div>
-        </div>`;
+            const year = post.date.split('-')[0];
+            if (!grouped[year]) grouped[year] = [];
+            grouped[year].push(post);
         });
 
-        projectsHTML += '</div>';
+        let html = '<div id="projects-box">';
 
-        const content = htmlToFragment(projectsHTML);
+        for (const year of Object.keys(grouped).sort((a, b) => b - a)) {
+            html += `<div class="timeline-year">${year}</div>`;
+
+            grouped[year].forEach(post => {
+                const [y, m] = post.date.split('-');
+                const monthLabel = new Date(y, m - 1).toLocaleString('en', { month: 'short' });
+
+                const tagsHTML = (post.tags || []).slice(0, 4).map(t =>
+                    `<span class="proj-tag">${t}</span>`
+                ).join('');
+
+                html += `
+          <div class="proj-item" data-category="${post.category}" data-slug="${post.slug}">
+            <span class="proj-date">${monthLabel}</span>
+            <span class="proj-name">${post.title}</span>
+            <div class="proj-tags">${tagsHTML}</div>
+          </div>`;
+            });
+        }
+
+        html += '</div>';
+
+        const content = htmlToFragment(html);
         main.replaceChildren(content);
 
-        main.querySelectorAll('.proj-card').forEach(card => {
-            card.addEventListener('click', () => {
-                navigate(`/post/${card.dataset.category}/${card.dataset.slug}`);
+        main.querySelectorAll('.proj-item').forEach(item => {
+            item.addEventListener('click', () => {
+                navigate(`/post/${item.dataset.category}/${item.dataset.slug}`);
             });
         });
 
         playMainAnimation();
-
-        const start = {r: 238, g: 174, b: 202};
-        const end = {r: 148, g: 187, b: 233};
-        changeListItemColor(".date-box", start, end, "--date-color");
 
     } catch (error) {
         console.error('Error loading projects:', error);

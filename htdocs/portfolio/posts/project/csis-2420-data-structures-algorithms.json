@@ -1,0 +1,287 @@
+{
+  "id": "csis2420",
+  "title": "CSIS 2420 — Data Structures & Algorithms",
+  "slug": "csis-2420-data-structures-algorithms",
+  "category": "project",
+  "tags": [
+    "Java",
+    "Data Structures",
+    "Algorithms",
+    "Graph Algorithms",
+    "Sorting",
+    "Binary Trees",
+    "JUnit"
+  ],
+  "date": "2024-12-11",
+  "summary": "4 assignments, 1 group sorting project, 3 module tests, and a graph-based final spanning linked structures, sorting analysis, BSTs, and shortest-path/MST algorithms for CSIS 2420",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "ds-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "A comprehensive data structures and algorithms course (CSIS 2420) at SLCC, Fall 2024, covering the full progression from linked structures through sorting, symbol tables, and graph algorithms. All work used Java with Princeton's <code>algs4.jar</code> library (Sedgewick & Wayne's <i>Algorithms, 4th Edition</i>). The coursework included four individual assignments, a group sorting comparison project, three timed module tests, and a final exam — progressing from hand-built linked lists and stack/queue manipulations through empirical sorting analysis, binary search tree traversals, and weighted graph algorithms including Dijkstra's shortest path and Kruskal's minimum spanning tree."
+      }
+    },
+    {
+      "id": "ds-linked-h",
+      "type": "header",
+      "data": {
+        "text": "Linked Structures & ADTs",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-a01-h",
+      "type": "header",
+      "data": {
+        "text": "A01 — Stack, Queue & Linked Structure",
+        "level": 4
+      }
+    },
+    {
+      "id": "ds-a01-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Custom singly-linked list:</b> implemented <code>NumberList</code> from scratch with head/tail pointers and a size tracker — supporting O(1) append via the tail pointer, arbitrary-index insertion by traversing to <code>index - 1</code>, and cyclic left rotation using modular arithmetic (<code>positions % n</code>) to move head nodes after tail",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stack/Queue challenges with constraints:</b> solved balanced bracket matching using algs4's <code>Stack</code> (push expected closing bracket on open, pop-and-compare on close) and word-order reversal using two stacks to preserve letter order while flipping word sequence — restricted to Stack and Queue only, no arrays or Java collections",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Recursive fractal drawing:</b> generated a self-similar square fractal using <code>StdDraw</code> — each recursive call draws a filled square then subdivides into four corner squares at half size, animated from order 1 through 6 with color alternation",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ds-sorting-h",
+      "type": "header",
+      "data": {
+        "text": "Sorting & Empirical Analysis",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-a03-h",
+      "type": "header",
+      "data": {
+        "text": "A03 — Mystery Sort Identification",
+        "level": 4
+      }
+    },
+    {
+      "id": "ds-a03-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Doubling experiment framework:</b> benchmarked four unknown sorting implementations across array sizes from 4,000 to 128,000 (five doublings), testing each on random, pre-sorted, and reverse-sorted inputs to reveal time complexity growth rates",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Timing and averaging:</b> each configuration ran 10 trials via <code>System.nanoTime()</code>, averaged to smooth variance, with results stored in a <code>TreeMap</code> for sorted output and written to report files",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Stability analysis:</b> tested whether sorts preserved the relative order of equal elements using custom <code>StableTestObj</code> objects with duplicate keys, identifying which mystery sorts were stable vs. unstable",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ds-p01-h",
+      "type": "header",
+      "data": {
+        "text": "P01 — Sorting Algorithm Comparison (Group Project)",
+        "level": 4
+      }
+    },
+    {
+      "id": "ds-p01-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Four sort implementations:</b> each team member implemented a different algorithm — HeapSort (max-heap with in-place heapify), QuickSort (Lomuto partition with last-element pivot), MergeSort, and ShakerSort (bidirectional bubble sort with early termination when no swaps occur)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Exhaustive permutation testing:</b> the test client generates every permutation of <code>[0, n-1]</code> for small n values (4, 6, 8), runs each sort on each permutation, and records comparison counts using Google Guava's <code>TreeMultimap</code> to sort results by count",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Best/worst/average case analysis:</b> for each algorithm, the harness outputs the 10 best-case permutations, the 10 worst-case permutations, and the average comparison count — revealing the actual input distributions that trigger extremes for each sort",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ds-trees-h",
+      "type": "header",
+      "data": {
+        "text": "Trees & Symbol Tables",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-a04-h",
+      "type": "header",
+      "data": {
+        "text": "A04 — Binary Tree Operations",
+        "level": 4
+      }
+    },
+    {
+      "id": "ds-a04-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Custom binary tree with uniqueness constraint:</b> built a tree from a list of <code>[value, leftChildIndex, rightChildIndex]</code> arrays using recursive construction, enforcing unique values via a <code>HashSet&lt;Integer&gt;</code> at insertion time",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Recursive traversal algorithms:</b> implemented five operations over the tree — <code>doubleEvenNumbers()</code> (pre-order traversal modifying even-valued nodes), <code>sumOfRightChildren()</code> (selective accumulation of right-child values), <code>countLeafParents()</code> (identifying nodes whose children are all leaves), <code>averageOfOddNumbers()</code> (using a <code>double[2]</code> accumulator array through recursion for count and sum), and <code>greatestDifference()</code> (tracking min/max via an <code>int[2]</code> array initialized to <code>Integer.MAX_VALUE</code>/<code>MIN_VALUE</code>)",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ds-graphs-h",
+      "type": "header",
+      "data": {
+        "text": "Graphs & Weighted Algorithms",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-final-h",
+      "type": "header",
+      "data": {
+        "text": "Final — Server Network Graph Problems",
+        "level": 4
+      }
+    },
+    {
+      "id": "ds-final-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Edge-weighted symbol graph:</b> built <code>EdgeWeightedSymbolDigraph</code> extending algs4's pattern — two-pass CSV reader that first constructs a symbol table (<code>ST&lt;String, Integer&gt;</code>) mapping server names to indices, then builds an <code>EdgeWeightedDigraph</code> with <code>DirectedEdge</code> objects, enabling human-readable vertex names throughout",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dijkstra's shortest path:</b> given two server names, computed the optimal route and total transfer time using <code>DijkstraUndirectedSP</code> from algs4 — the path represents the fastest data transfer route through the network",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Kruskal's minimum spanning tree:</b> computed the MST of the server network using <code>KruskalMST</code>, outputting all edges and total weight — representing the minimum-cost network configuration that keeps all servers connected",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Adjacency queries:</b> listed all directly connected servers for a given node by iterating over <code>g.adj(source)</code> edges — a basic graph traversal used as the simplest of three progressively harder challenges",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ds-module-h",
+      "type": "header",
+      "data": {
+        "text": "Module Tests",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-module-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Module 1 — Linked structure manipulation:</b> implemented <code>CharList</code> operations under timed test conditions, applying linked-list techniques from A01 to character-based data",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Module 2 — Comparable and sorting:</b> implemented <code>Employee</code> with <code>EmployeeCategory</code> enum and custom <code>Comparable</code> ordering, then applied sorting to categorized data",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Module 3 — BST with real data:</b> built a <code>LetterTree</code> BST and a <code>StockDataReader</code> parsing Microsoft stock data from CSV (<code>MSFT.csv</code>) into <code>DailyStockData</code> objects — combining tree operations with file I/O and data parsing",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ds-exercises-h",
+      "type": "header",
+      "data": {
+        "text": "Class Exercises",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-exercises-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Over 40 in-class exercises spanning the full curriculum — custom linked lists (<code>ListA</code>, <code>ListB</code>, <code>WordList</code>), linear and binary search, merge sort and quicksort comparisons, stable sorting with <code>Song</code> objects, heap sort with a mail delivery system, BST operations (<code>BSTdeluxe</code>), hash table challenges, recursion exercises, and extensive graph work: undirected and directed graph traversals, DFS vs. BFS comparisons, symbol graphs, city connection networks, internet topology, maze solving, shortest-path algorithms, and random graph generation."
+      }
+    },
+    {
+      "id": "ds-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "ds-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Java, Princeton algs4.jar (Sedgewick & Wayne), JUnit 5, Google Guava (TreeMultimap), singly linked lists, stacks and queues, binary search trees, hash tables, undirected and directed graphs, edge-weighted graphs, BFS, DFS, Dijkstra's shortest path, Kruskal's MST, HeapSort, QuickSort (Lomuto partition), MergeSort, ShakerSort, empirical algorithm analysis (doubling experiments), recursive fractal generation, StdDraw graphics, CSV parsing"
+      }
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "id": "csis2430",
+  "title": "CSIS 2430 — Algorithm Analysis",
+  "slug": "csis-2430-algorithm-analysis",
+  "category": "project",
+  "tags": [
+    "Java",
+    "Algorithms",
+    "Dynamic Programming",
+    "Monte Carlo Simulation",
+    "Set Theory",
+    "Google Guava",
+    "Probability"
+  ],
+  "date": "2024-12-11",
+  "summary": "3 group projects spanning set/multiset operations, 0/1 knapsack optimization with DP visualization, and a Monte Carlo Monopoly probability simulation for CSIS 2430",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "aa-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "An algorithm analysis course (CSIS 2430) at SLCC, Fall 2024, focused on comparing algorithmic strategies through implementation and empirical testing. All projects used Java with Princeton's <code>algs4.jar</code> library and Google Guava. The coursework included four group projects — a sorting comparison study (covered in the <a href=\"#/post/csis-2420-data-structures-algorithms\">CSIS 2420 post</a> as it was shared between courses), set and multiset operations using hash-based collections, a 0/1 knapsack optimizer comparing brute-force recursion against dynamic programming and greedy heuristics with a live Swing visualizer, and a Monte Carlo simulation analyzing Monopoly landing probabilities across two jail strategies and one million dice rolls."
+      }
+    },
+    {
+      "id": "aa-p02-h",
+      "type": "header",
+      "data": {
+        "text": "P02 — Set & Multiset Operations",
+        "level": 3
+      }
+    },
+    {
+      "id": "aa-p02-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Set operations with <code>HashSet</code>:</b> implemented the five fundamental set operations — union (A ∪ B), intersection (A ∩ B), complement (A'), difference (A − B), and symmetric difference (A ⊕ B) — each returning a new <code>HashSet&lt;Integer&gt;</code> built from membership tests against a randomly generated universal set",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Multiset operations with Guava <code>HashMultiset</code>:</b> extended the same operations to multisets where element multiplicity matters — union takes the max count of each element, intersection takes the min count, sum adds counts directly, and difference subtracts counts (floored at zero)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Random test generation:</b> built a test harness using algs4's <code>StdRandom</code> to generate a universal set of configurable size, then construct random subsets by probabilistic inclusion — each run produces fresh sets, exercises every operation, and prints formatted results for verification",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Team contributions:</b> Kate wrote the random set/multiset generators and test harness; Dylan implemented union, difference, and symmetric difference for both sets and multisets; Umair wrote complement and multiset sum; Damien handled set intersection; Angel handled multiset intersection",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "aa-p03-h",
+      "type": "header",
+      "data": {
+        "text": "P03 — Knapsack Optimization (Payload Selection)",
+        "level": 3
+      }
+    },
+    {
+      "id": "aa-p03-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>0/1 knapsack problem:</b> given 12 space experiments with individual weights (36–264 kg) and scientific ratings (1–10), selected the subset maximizing total rating without exceeding a 700 kg spacecraft capacity — a classic NP-hard combinatorial optimization problem",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Brute-force recursive solution:</b> <code>bestCombo(n, capacity, solution)</code> explores all 2ⁿ subsets by recursing with and without each item, tracking the best combination found via a shared <code>List&lt;Experiment&gt;</code> — guarantees the optimal answer but runs in exponential time",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Top-down dynamic programming:</b> <code>recursiveDynamicProgramming(n, capacity, table)</code> uses memoization with a 2D <code>int[][]</code> table to avoid redundant subproblems — cells initialized to <code>-1</code> and filled on first access, with backtracking through the completed table to recover the selected experiments by checking <code>dp[i][w] != dp[i-1][w]</code>",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Three greedy heuristics:</b> implemented greedy-by-highest-rating, greedy-by-lowest-weight, and greedy-by-best-ratio (rating/weight) strategies — each sorts the experiments by its criterion via custom <code>Comparator</code> implementations, then fills greedily up to the weight limit, demonstrating how greedy approaches can miss the true optimum",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Live DP table visualizer:</b> a Swing <code>JFrame</code> grid (by Jorge, modified by Kate) that animates the dynamic programming computation in real time — each cell update triggers a green flash via <code>javax.swing.Timer</code> and <code>SwingUtilities.invokeLater()</code>, with column headers mapped to weight ranges (0, 1–100, …, 601–700) and row headers showing each experiment's name and stats",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Debug trace mode:</b> an optional mode that writes the full recursion tree to a file with indentation-based depth tracking, showing every include/exclude decision and its resulting value — useful for verifying correctness and understanding the exponential branching structure",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "aa-p04-h",
+      "type": "header",
+      "data": {
+        "text": "P04 — Monopoly Probability Simulation",
+        "level": 3
+      }
+    },
+    {
+      "id": "aa-p04-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Monte Carlo simulation engine:</b> modeled a full 40-space Monopoly board with dice rolling, movement, and landing tracking — ran 20 total simulations (10 per strategy) with data captured at four checkpoints (1K, 10K, 100K, and 1M rolls) to observe how landing probabilities converge with increasing sample size",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Two jail strategies:</b> Strategy A pays the $50 fine immediately to exit jail; Strategy B attempts rolling doubles up to three times before paying — comparing how jail-exit behavior shifts the probability distribution across the entire board",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Complete game rule implementation:</b> handled doubles chaining (three consecutive doubles sends the player to jail), Community Chest cards (positions 2, 17, 33) and Chance cards (positions 7, 22, 36) with full card effects — including Advance to Go, Go to Jail, advance to specific properties, nearest Railroad/Utility via forward traversal, and Go Back 3 Spaces",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Card deck mechanics:</b> draw/discard/reshuffle system using <code>ArrayList&lt;String&gt;</code> — cards are drawn from a shuffled pile, discarded to a separate pile, and reshuffled when the draw pile empties; Get Out of Jail Free cards are held by the player rather than discarded, tracked via a boolean flag per deck",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Statistical output:</b> each simulation calculates the landing percentage for all 40 spaces at every checkpoint, outputting results to CSV via algs4's <code>Out</code> — enabling analysis of which spaces (like Jail, Illinois Avenue, and the railroads) have the highest long-run landing probabilities",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "aa-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "aa-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Java, Princeton algs4.jar (Sedgewick & Wayne), Google Guava (HashMultiset), HashSet, set theory (union, intersection, complement, difference, symmetric difference), multiset operations, 0/1 knapsack problem, brute-force recursion, top-down dynamic programming with memoization, greedy algorithms, Comparator design, Swing GUI (JFrame, JPanel, Timer, SwingWorker), Monte Carlo simulation, probability analysis, card deck modeling, CSV output, modular arithmetic for circular board traversal"
+      }
+    }
+  ]
+}

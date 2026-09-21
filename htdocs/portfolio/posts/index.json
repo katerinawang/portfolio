@@ -170,6 +170,60 @@
       "date": "2025-04-17",
       "summary": "Functional spreadsheet application with formula evaluation, dependency tracking, and infinite scrolling built with Blazor Server",
       "thumbnail": ""
+    },
+    {
+      "id": "csis2420",
+      "title": "CSIS 2420 — Data Structures & Algorithms",
+      "slug": "csis-2420-data-structures-algorithms",
+      "category": "project",
+      "tags": [
+        "Java",
+        "Data Structures",
+        "Algorithms",
+        "Graph Algorithms",
+        "Sorting",
+        "Binary Trees",
+        "JUnit"
+      ],
+      "date": "2024-12-11",
+      "summary": "4 assignments, 1 group sorting project, 3 module tests, and a graph-based final spanning linked structures, sorting analysis, BSTs, and shortest-path/MST algorithms for CSIS 2420",
+      "thumbnail": ""
+    },
+    {
+      "id": "csis2430",
+      "title": "CSIS 2430 — Algorithm Analysis",
+      "slug": "csis-2430-algorithm-analysis",
+      "category": "project",
+      "tags": [
+        "Java",
+        "Algorithms",
+        "Dynamic Programming",
+        "Monte Carlo Simulation",
+        "Set Theory",
+        "Google Guava",
+        "Probability"
+      ],
+      "date": "2024-12-11",
+      "summary": "3 group projects spanning set/multiset operations, 0/1 knapsack optimization with DP visualization, and a Monte Carlo Monopoly probability simulation for CSIS 2430",
+      "thumbnail": ""
+    },
+    {
+      "id": "tower-defense",
+      "title": "[Group Project] - Tower Defense",
+      "slug": "group-project-tower-defense",
+      "category": "project",
+      "tags": [
+        "Java",
+        "JavaFX",
+        "Graph Algorithms",
+        "BFS",
+        "DFS",
+        "Game Development",
+        "Group Project"
+      ],
+      "date": "2024-12-01",
+      "summary": "Tower defense game with graph-based pathfinding where tower placement dynamically modifies the enemy route via BFS recomputation",
+      "thumbnail": ""
     }
   ]
 }
