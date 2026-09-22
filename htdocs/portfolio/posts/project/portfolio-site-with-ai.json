@@ -1,0 +1,291 @@
+{
+  "id": "portfolio-site",
+  "title": "Portfolio Website — Built with AI",
+  "slug": "portfolio-site-with-ai",
+  "category": "project",
+  "tags": [
+    "JavaScript",
+    "Node.js",
+    "HTML",
+    "CSS",
+    "AI-Assisted Development",
+    "Claude",
+    "Vibe Coding",
+    "Full-Stack"
+  ],
+  "date": "2026-09-20",
+  "summary": "Personal portfolio site evolved from a class project into a full SPA with a blog CMS, admin tool, and 14+ project posts — the blog system and content pipeline were vibe-coded with Claude",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "ps-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "My personal portfolio at <a href=\"https://katerina.wang\" target=\"_blank\">katerina.wang</a> started as a CSIS 1430 class project in Summer 2023 and has gone through three major rewrites over three years. The current version is a vanilla JavaScript single-page application with a Node.js backend, a JSON-based blog/CMS system, and an admin tool for writing and editing posts — all deployed on AWS Amplify. The blog system and the bulk of the project content were built through AI-assisted development (\"vibe coding\") with Claude, making this project a case study in how I use AI as a development partner."
+      }
+    },
+    {
+      "id": "ps-source-h",
+      "type": "header",
+      "data": {
+        "text": "Source",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-source-btn",
+      "type": "button",
+      "data": {
+        "text": "GitHub Repository",
+        "url": "https://github.com/katerinawang/portfolio"
+      }
+    },
+    {
+      "id": "ps-live-btn",
+      "type": "button",
+      "data": {
+        "text": "Live Site",
+        "url": "https://katerina.wang"
+      }
+    },
+    {
+      "id": "ps-evolution-h",
+      "type": "header",
+      "data": {
+        "text": "Project Evolution",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-evolution-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>2023 — Class project origin:</b> started as static HTML/CSS/JS pages for CSIS 1430 at SLCC, hosting course assignments like a birthday greeting page, lottery game, tic-tac-toe, and a Bootstrap pizza site — all hand-coded with no frameworks",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>2025 — SPA redesign (solo):</b> rebuilt the entire site as a dynamic single-page app over winter break — replaced static HTML with JSON-driven content rendering, added a Typed.js intro animation, Swiper.js skill carousel, GLightbox media viewer, fade-in page transitions, and a fully responsive layout with custom fonts (Caveat, Gugi, Tomorrow, Ubuntu Sans)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>2026 — Blog CMS with AI:</b> vibe-coded the blog system, admin tool, Node.js API server, and content pipeline with Claude — transforming the site from a static showcase into a full content management system with 14+ detailed project posts",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-ai-h",
+      "type": "header",
+      "data": {
+        "text": "What AI Built",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-ai-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The August 2026 sprint was the first AI-assisted phase. Working with Claude in Cowork sessions, I went from having a static project grid to a fully functional blog platform in a single day. Here's what was built through that collaboration:"
+      }
+    },
+    {
+      "id": "ps-ai-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Blog system with timeline UI:</b> a blog page with posts grouped by year and month, collapsible year sections, tag filtering via clickable chips, and a live search bar — all rendering dynamically from <code>index.json</code> with no page reloads",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>EditorJS-compatible post renderer:</b> <code>post.js</code> parses a JSON content array and renders paragraph, header, list (with nested items), code, quote, delimiter, image, PDF embed, and button blocks — consecutive button blocks are automatically grouped into a centered action bar with GLightbox integration for video URLs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Node.js API server:</b> <code>server.js</code> (296 lines) serving as both a static file server with SPA fallback and a REST API — <code>/api/save</code> writes post JSON and updates the index, <code>/api/delete</code> removes posts and cleans up orphaned media, <code>/api/upload</code> handles base64 image/file uploads with timestamped filenames, and <code>/api/reindex</code> triggers a full index rebuild",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Orphaned media cleanup:</b> on every post save, the server diffs old vs. new media URLs in the post's content blocks and automatically deletes files that are no longer referenced — preventing media directory bloat",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Path-based SPA routing:</b> replaced hash-based routing (<code>#projects</code>) with History API paths (<code>/projects</code>, <code>/post/project/slug</code>) plus a server-side fallback that serves <code>index.html</code> for extensionless paths — enabling clean URLs and proper browser back/forward behavior",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CSS/JS modularization:</b> refactored a monolithic <code>style.css</code> and <code>script.js</code> into per-page modules (<code>home.js/css</code>, <code>blog.js/css</code>, <code>projects.js/css</code>, <code>post.js/css</code>, <code>experience.js/css</code>) — keeping the main files under 200 lines each",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-content-h",
+      "type": "header",
+      "data": {
+        "text": "AI-Assisted Content Pipeline",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-content-p",
+      "type": "paragraph",
+      "data": {
+        "text": "In September 2026, I used Claude to populate the blog with detailed project posts for every course and major project in my portfolio. The workflow: I connected my local project folders, Claude read the actual source code (every Java file, every C file, every assignment), and generated EditorJS JSON posts that described each project's technical implementation at the code level — not just what the project does, but how it works and what I specifically contributed. This produced 14 detailed posts across 6 courses and standalone projects, each with accurate technical descriptions drawn directly from the source."
+      }
+    },
+    {
+      "id": "ps-content-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Source-code-driven descriptions:</b> Claude read every file in each project — not summaries or READMEs — and produced technical write-ups referencing specific classes, methods, data structures, and algorithms actually used in the code",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Duplicate detection:</b> automatically identified when the same project appeared across two courses (a sorting comparison project shared between CSIS 2420 and CSIS 2430) and cross-linked instead of duplicating",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Index rebuild on startup:</b> added a <code>rebuildIndex()</code> function to <code>server.js</code> that scans all category subdirectories and regenerates <code>index.json</code> from individual post files — so posts committed directly to the filesystem (bypassing the admin tool) are picked up automatically when the server restarts",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Batch file delivery:</b> post JSON files were generated in Claude's workspace and committed directly to local project folders via the Cowork device bridge — no manual copy-paste for any of the 14 posts or index updates",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-what-i-did-h",
+      "type": "header",
+      "data": {
+        "text": "What I Built Solo",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-what-i-did-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Original 2023 site:</b> all initial HTML/CSS/JS pages, responsive layouts, and class project implementations",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>2025 SPA architecture:</b> the full redesign — dynamic JSON-driven rendering, Typed.js animation, Swiper.js carousel, GLightbox integration, fade-in transitions, responsive grid layout, custom font stack, and the visual identity (animated avatar with morphing CSS border)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Ongoing content and maintenance:</b> resume updates, work experience entries, favicon, deployment configuration on AWS Amplify, and iterative layout adjustments across 30+ commits over 2023–2026",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-approach-h",
+      "type": "header",
+      "data": {
+        "text": "AI Collaboration Approach",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-approach-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This project demonstrates my approach to AI-assisted development: I own the architecture and visual design, AI accelerates the implementation of well-scoped systems (a blog CMS, a content pipeline) and handles bulk content generation where accuracy matters more than personal voice. The AI-generated code follows the patterns I'd already established — vanilla JS, no build tools, JSON data files, modular CSS — rather than introducing its own stack. Every commit is reviewed and pushed by me, and the AI contributions are attributed in commit messages."
+      }
+    },
+    {
+      "id": "ps-arch-h",
+      "type": "header",
+      "data": {
+        "text": "Architecture",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-arch-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Frontend:</b> vanilla JS SPA — no framework, no build step. <code>index.html</code> loads per-page modules (<code>home.js</code>, <code>blog.js</code>, <code>projects.js</code>, <code>post.js</code>, <code>experience.js</code>) and a shared <code>script.js</code> router using the History API. Content is fetched from JSON and rendered as DOM fragments via <code>&lt;template&gt;</code> elements",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Backend:</b> 296-line Node.js HTTP server with no dependencies beyond stdlib — serves static files, provides CRUD API routes for posts, handles media uploads with base64 decoding, and rebuilds the post index from the filesystem on startup",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Data model:</b> posts are individual JSON files in <code>portfolio/posts/{category}/{slug}.json</code> using EditorJS block format, with a derived <code>index.json</code> for listing and search. No database — the filesystem is the source of truth",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Libraries:</b> Typed.js (intro animation), Swiper.js (skill carousel), GLightbox (image/video lightbox), Font Awesome (icons) — all loaded from CDN, no npm build pipeline for the frontend",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Deployment:</b> AWS Amplify with custom domain (katerina.wang), auto-deploy from GitHub",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ps-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "ps-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "JavaScript (vanilla ES6+), Node.js (stdlib HTTP server), HTML5, CSS3, responsive design, History API routing, SPA architecture, JSON-based CMS, REST API design, base64 file handling, media lifecycle management, Typed.js, Swiper.js, GLightbox, Font Awesome, AWS Amplify, Git, AI-assisted development (Claude), vibe coding, EditorJS block format"
+      }
+    }
+  ]
+}

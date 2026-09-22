@@ -1,0 +1,345 @@
+{
+  "id": "ai-trading-system",
+  "title": "AI Trading Analysis System — Claude Skills + MCP Server",
+  "slug": "ai-trading-system",
+  "category": "project",
+  "tags": [
+    "Python",
+    "MCP",
+    "Claude",
+    "AI-Assisted Development",
+    "Vibe Coding",
+    "Pydantic",
+    "robin_stocks",
+    "Options",
+    "Trading",
+    "Agent Architecture"
+  ],
+  "date": "2026-09-21",
+  "summary": "Two-part AI trading analysis system: a Python MCP server wrapping Robinhood's market data, and a set of Claude skills that act as specialist trading agents — built entirely with Claude, no live execution by design",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "ts-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "This is a two-project system for AI-powered stock and options analysis. The first part, <b>robinhood-mcp</b>, is a Python MCP server that wraps Robinhood account and market data into structured tool calls — quotes, portfolio positions, historical candles, options chains, earnings, and more. The second part, <b>trading-system</b>, is a set of Claude skills that act as specialist trading agents: a market scanner, news analyst, technical analyst, options analyst, and risk manager, all coordinated by an orchestrator. Together they form an analysis pipeline where Claude can pull live market data through MCP and run it through structured analytical workflows. Both projects were built with Claude. There is no live trading — execution is disabled by design, and the entire system operates in analysis-only mode."
+      }
+    },
+    {
+      "id": "ts-why-h",
+      "type": "header",
+      "data": {
+        "text": "Why This Project",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-why-p",
+      "type": "paragraph",
+      "data": {
+        "text": "I wanted to explore what happens when you give an AI agent structured access to real market data and define clear analytical roles for it to follow. The idea wasn't to build a trading bot — it was to build a system where Claude could act as a team of analysts, each with a defined specialty and a strict reporting format, pulling real data from Robinhood and producing structured trade analysis. The interesting question was whether Claude skills — markdown files that define agent behavior — could work as the \"brain\" of a trading analysis system, with an MCP server acting as the \"eyes\" into market data."
+      }
+    },
+    {
+      "id": "ts-arch-h",
+      "type": "header",
+      "data": {
+        "text": "System Architecture",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-arch-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The system has two strictly separated projects that communicate only through the MCP protocol. This separation was intentional — the data layer has no knowledge of the analysis layer, and the analysis layer treats the data tools as a black box it calls through MCP. Neither project imports from or writes to the other."
+      }
+    },
+    {
+      "id": "ts-arch-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>robinhood-mcp (data layer):</b> a Python package built on the official MCP SDK's FastMCP. It has four layers: <code>config.py</code> loads and validates credentials, <code>auth.py</code> handles TOTP-based MFA login via <code>pyotp</code>, <code>client.py</code> is the only module that imports <code>robin_stocks</code> and converts raw Robinhood payloads into Pydantic models, and the <code>tools/</code> layer registers MCP tools that validate input, call the client, and wrap results in a consistent <code>{ok, data|error}</code> envelope",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>trading-system (analysis layer):</b> not a traditional codebase — it's a structured set of Claude SKILL.md files that define AI agent behaviors. Each skill is a specialist that follows a canonical 8-heading report schema (Asset, Context, Observations, Evidence, Analysis, Risks, Confidence, Verdict). An orchestrator skill coordinates which specialists to invoke and synthesizes their outputs",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>MCP boundary:</b> the trading-system calls robinhood-mcp tools like <code>get_quote</code>, <code>get_historical_candles</code>, <code>get_options_chain</code>, and <code>get_portfolio</code> over MCP's stdio transport. Every response is structured JSON with typed error codes, so the analysis skills can branch on failure modes programmatically rather than string-matching error messages",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>No shared state:</b> the MCP server maintains a Robinhood session; the trading-system maintains analysis context. They never share files, databases, or memory — all communication is request/response through tool calls",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-mcp-h",
+      "type": "header",
+      "data": {
+        "text": "The MCP Server — robinhood-mcp",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-mcp-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Robinhood has no official public API. The MCP server uses <code>robin_stocks</code>, a Python library that works with Robinhood's undocumented internal endpoints. This means the server could break without notice if Robinhood changes their internal API — which is documented as a known limitation, not hidden. The server exposes 11 read-only tools and 3 execution tools that are registered but permanently return <code>execution_disabled</code>:"
+      }
+    },
+    {
+      "id": "ts-tools-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Account & portfolio:</b> <code>get_account</code> (buying power, cash, options approval level), <code>get_portfolio</code> (total equity, positions with per-symbol P/L), <code>get_realized_pnl</code> (client-side FIFO lot matching over order history — Robinhood has no native realized P/L endpoint, so this is computed from fills)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Market data:</b> <code>get_quote</code> (bid/ask/last with tradability flag), <code>get_historical_candles</code> (OHLCV with configurable interval and span), <code>get_fundamentals</code> (market cap, PE, dividend yield, sector/industry, 52-week range)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Options:</b> <code>get_options_chain</code> (all contracts for a symbol, optionally filtered by expiration), <code>get_option_quote</code> (full Greeks — delta, gamma, theta, vega — plus IV, volume, open interest)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Research:</b> <code>get_earnings_calendar</code> and <code>get_earnings_results</code> (EPS estimates vs actuals, revenue data), <code>market_scan</code> (client-side filter over a user-supplied symbol universe — not a true server-side screener)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Execution (disabled):</b> <code>review_order</code>, <code>place_order</code>, <code>cancel_order</code> are registered as MCP tools but always return an error. Enabling them later requires an environment flag, a per-call approval mechanism that hasn't been built yet, and a mandatory review step before any placement",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-skills-h",
+      "type": "header",
+      "data": {
+        "text": "The Analysis Layer — Claude Skills as Trading Agents",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This is the part of the project that felt most novel. Instead of writing analysis logic in Python, the trading-system defines agent behavior in SKILL.md files — structured markdown that tells Claude how to act as a specialist. Each skill has a defined role, a set of MCP tools it can call, a report format it must follow, and verdict categories it can output. Claude reads the skill, pulls data through the MCP server, and produces a structured analysis report. Six skills make up the system:"
+      }
+    },
+    {
+      "id": "ts-skills-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Orchestrator:</b> the coordination layer. It runs a startup status check with readiness tiers (from CONFIGURATION INCOMPLETE up to READY FOR LIVE TRADING), presents a workflow menu (Daily Scan, Ticker Review, Options Opportunity, Portfolio Review, etc.), dispatches to the right specialists, and synthesizes their reports into a final recommendation. Key rule: coordinate, don't re-analyze — the orchestrator never second-guesses a specialist's findings",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Market Scanner:</b> scans for trading candidates by looking at volume, volatility, catalysts, and liquidity. Produces a ranked shortlist with tradeability scores from 1-10. Data-source agnostic — it works with whatever market data tools are available",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>News Analyst:</b> evaluates company-specific news for trading relevance. Follows a source priority hierarchy (press releases > IR > earnings > SEC filings > wire services > social media). Outputs verdicts like strong/moderate/weak catalyst or no tradeable news",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Technical Analyst:</b> analyzes price action, trend, momentum, volatility, and key support/resistance levels using historical candle data. Classifies market structure and trend strength, with verdicts ranging from Strong Technical Setup to No Technical Edge",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Options Analyst:</b> evaluates whether options provide a favorable opportunity for a given setup. Assesses implied volatility, liquidity (min 500 open interest), Greeks, and selects from 8 strategy types (long calls/puts, spreads, iron condors, etc.). Can recommend using shares instead when options don't add value",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Risk Manager:</b> the final gate. Enforces a detailed risk policy (~210 lines of configurable rules) covering position sizing (1% per trade, 20% max allocation), daily loss limits (3%), portfolio exposure caps, options requirements, event risk windows, volatility safeguards, and emergency stops. Verdicts: Approved, Approved With Reduced Size, Approved With Conditions, Hold, or Rejected",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-safety-h",
+      "type": "header",
+      "data": {
+        "text": "Safety by Design",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-safety-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The system was built with deliberate constraints against autonomous trading. This isn't something that will be \"turned on later\" — the safety boundaries are architectural, not just a flag:"
+      }
+    },
+    {
+      "id": "ts-safety-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Hard-stubbed execution:</b> the three execution tools (<code>review_order</code>, <code>place_order</code>, <code>cancel_order</code>) are registered in the MCP server but always return <code>execution_disabled</code> regardless of any environment variable. The code path that would actually place an order doesn't exist yet",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Readiness tiers:</b> the orchestrator's startup check classifies the system into tiers. Without execution tools, real-time data feeds, and a working approval mechanism, the system stays at READY FOR ANALYSIS — it can analyze, it can't act",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Execution boundary testing:</b> the weekly QA reviews explicitly test that execution tools remain disabled and that the system holds its boundary even under direct user pressure to trade. The review log shows zero execution-tool calls across all QA sessions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Structured error model:</b> every tool returns one of 7 typed error codes (<code>configuration_error</code>, <code>authentication_error</code>, <code>permission_error</code>, <code>not_found_error</code>, <code>data_unavailable_error</code>, <code>upstream_error</code>, <code>execution_disabled</code>). The system never fabricates data — if Robinhood returns nothing usable, the tool returns an error instead of making something up",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-qa-h",
+      "type": "header",
+      "data": {
+        "text": "QA and Operational Reviews",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-qa-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Both projects have testing infrastructure, which was itself built with Claude's help. The robinhood-mcp server has a full contract test suite that mocks <code>robin_stocks</code> — no live Robinhood credentials needed to run tests — covering every tool's success and failure paths, plus a dedicated unit test for the FIFO realized P/L calculation. The trading-system has its own QA layer:"
+      }
+    },
+    {
+      "id": "ts-qa-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>12 smoke tests:</b> scripted scenarios that verify startup, tool connectivity, report format compliance, risk policy enforcement, and execution boundary integrity",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Regression log:</b> tracks test results across QA sessions with pass/fail status and notes on any behavioral changes",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Weekly trading review:</b> documented operational reviews covering 15+ scheduled QA sessions. The first entry (July 2026) shows active issue tracking — an account-scope violation was caught and documented, persistent <code>get_option_quotes</code> 403 errors were tracked as a known upstream issue, and risk policy enforcement was verified across all sessions. Operational status: ORANGE (Analysis Only)",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-ai-h",
+      "type": "header",
+      "data": {
+        "text": "AI Development Experience",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-ai-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Both projects were built with Claude, and the development experience was different from the other AI projects in this portfolio. The newtab extension and the portfolio site were about generating code through conversation. This project was about something weirder: using Claude to build a system where Claude is also the runtime. The trading-system's SKILL.md files aren't just documentation — they're the actual analysis engine. Claude reads them, follows their instructions, calls MCP tools, and produces reports. So Claude was simultaneously the developer that wrote the skills and the agent that executes them."
+      }
+    },
+    {
+      "id": "ts-ai-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>robinhood-mcp was traditional AI-assisted coding:</b> Claude generated the Python package structure, the Pydantic models, the client methods, the error hierarchy, and the test suite. The FIFO lot-matching algorithm for realized P/L (~75 lines) was generated in one pass after I described the requirement. The contract tests were generated alongside the tools — each tool's test covers both the happy path and every error code it can return",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>trading-system was AI writing instructions for itself:</b> the skill files were developed iteratively. I'd describe what a specialist should do (\"analyze options liquidity, check if the spread is too wide, look at Greeks\"), Claude would draft the SKILL.md, I'd test it by actually running the skill against real market data, and then refine based on how the analysis reports came out. The canonical report schema was designed to keep all specialists consistent — without it, each skill would drift into its own format",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Risk policy was the hardest to get right:</b> the 210-line risk policy went through the most iterations. Each rule needed to be specific enough that Claude would enforce it consistently (\"maximum 1% account risk per trade\" not \"keep position sizes reasonable\") but flexible enough to cover different market conditions. The policy reads like a config file, not prose — that was deliberate",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>QA required testing the AI, not just the code:</b> testing the robinhood-mcp server was normal — mock the upstream API, check the outputs. Testing the trading-system meant running Claude through scenarios and checking whether the analysis reports made sense, whether the risk manager actually rejected trades that violated policy, and whether the orchestrator dispatched to the right specialists. This was a different kind of QA — you're testing prompt behavior, not code behavior",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>MCP as the integration pattern:</b> using MCP to connect the two projects meant I never had to build an API layer or figure out authentication between services. The MCP server just exposes tools over stdio, Claude calls them like any other tool. This made the architecture clean — and it meant I could develop and test the two projects completely independently",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-techskills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "ts-techskills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Python 3.10+, MCP (Model Context Protocol), FastMCP, Pydantic, robin_stocks, pyotp (TOTP MFA), python-dotenv, pytest, Claude Skills (SKILL.md agent architecture), structured prompt engineering, risk policy design, FIFO lot matching, options Greeks, AI-assisted development (Claude), vibe coding"
+      }
+    }
+  ]
+}

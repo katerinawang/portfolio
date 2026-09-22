@@ -1,0 +1,177 @@
+{
+  "id": "catstronaut-hackathon",
+  "title": "Catstronaut — AI-Powered Hackathon Game Built in 5 Days",
+  "slug": "catstronaut-hackathon-game",
+  "category": "project",
+  "tags": [
+    "Blazor",
+    ".NET 9.0",
+    "C#",
+    "JavaScript",
+    "Canvas API",
+    "AI-Assisted Development",
+    "Hackathon",
+    "Game Development",
+    "Crimson Hackathon 2025"
+  ],
+  "date": "2025-10-29",
+  "summary": "A browser-based adventure game built with Blazor WebAssembly for the Crimson Hackathon 2025 — featuring a canvas platformer with sprite animation, physics, and coding challenges, developed as a 4-person team with heavy AI assistance under hackathon time pressure",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "cat-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "Catstronaut: Journey to Mars is a browser-based adventure game built with Blazor/.NET 9.0 for the Crimson Hackathon 2025 (October 24–29). The premise: an astronaut and their cat are on a mission to Mars when an asteroid hits the ship and knocks the astronaut unconscious. The player controls the cat — navigating through a Star Wars-style intro crawl, a canvas-based platformer level, and a series of coding challenges to debug the ship's systems and land safely on Mars. The project was a 4-person team effort (Jim's Angels) with 47 total commits. My 12 commits (26%) focused on the core game engine — project setup, the entire canvas platformer with cat physics and sprite animation, UI/layout architecture, and level progression wiring. This was my most AI-heavy project: under hackathon time pressure, I leaned on AI tools for nearly every piece of the code I wrote."
+      }
+    },
+    {
+      "id": "cat-contribution-h",
+      "type": "header",
+      "data": {
+        "text": "My Contribution — What I Built",
+        "level": 3
+      }
+    },
+    {
+      "id": "cat-contribution-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The repository has 47 commits across 4 contributors. My 12 commits (26%) covered the game engine and project foundation. The other three teammates built the intro story page, terminal coding challenges, Mars landing animation, and win screen. Here's the breakdown of what I worked on:"
+      }
+    },
+    {
+      "id": "cat-contribution-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Project foundation (3 commits):</b> initial repository setup, Visual Studio .gitignore configuration, and the Blazor project scaffold — the CatMars solution structure with server and client projects, routing, and the base App.razor/MainLayout.razor that the rest of the team built their pages on top of",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Canvas game engine — moveCanvas.js (4 commits, ~315 lines):</b> the entire cat movement platformer, written as an ES module with a full game loop using requestAnimationFrame. Includes cat state management (position, velocity, facing direction), gravity and jump physics, horizontal friction, ground and wall collision detection, keyboard input handling (arrow keys and space), and a delta-time-based update cycle clamped to ~30fps for consistent physics regardless of frame rate",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Sprite animation system (within moveCanvas.js):</b> sprite sheet loading for two animation states (OrangeTabby-Run and OrangeTabby-Idle), automatic frame counting from sheet dimensions assuming square frames, a frame accumulator that advances animation at configurable FPS rates (12fps for run, 6fps for idle), directional sprite flipping using canvas transform/scale, and a red placeholder fallback rectangle while sprites load",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Canvas rendering pipeline:</b> high-DPI scaling using devicePixelRatio, background image loading with a procedural starfield fallback (50 white pixels scattered deterministically), full-viewport canvas sizing, and image smoothing disabled for crisp pixel-art sprites. The rendering clears each frame, draws the background, then composites the animated cat sprite on top",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Level progression mechanic (1 commit):</b> proximity-based interaction — a hidden \"Start Coding\" link that appears when the cat gets within 100 pixels of a computer object positioned at the right side of the canvas. The computer's position is dynamically computed from canvas dimensions, and the link fades in/out with CSS opacity transitions and display toggling",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>UI and layout (2 commits):</b> the Move page Razor component with full-viewport canvas, a controls overlay (arrow keys + space) that fades out on first keypress using CSS class toggling, responsive styling for the game area, and the cockpit page structure with background image and overlay styling",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Page lifecycle management (2 commits):</b> page-specific initialization and disposal for the canvas module — an __IS_MOVE_PAGE__ guard that checks window.location.pathname so the canvas game loop only runs on /move and doesn't interfere with other pages. The init() and dispose() functions are no-ops outside the move page, preventing memory leaks and conflicts with Blazor's SPA navigation",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cat-code-h",
+      "type": "header",
+      "data": {
+        "text": "The Game Engine in Detail",
+        "level": 3
+      }
+    },
+    {
+      "id": "cat-code-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The moveCanvas.js file is the core of what I built — a self-contained canvas game engine in ~315 lines. The game loop runs through three stages each frame: update physics, check interactions, and render. The update function applies horizontal velocity from keyboard input with friction decay (velocity *= 0.8 when no key is pressed), adds gravitational acceleration (0.3 per frame), integrates position, and clamps the cat within canvas bounds. Jumping checks isOnGround before applying jumpPower (-20 velocity), and ground collision resets at y=600. The animation system picks between idle and run sprites based on whether the cat is moving or airborne, resets the frame counter on state changes, and advances frames using a time accumulator divided by the sprite's FPS rate. The render function draws the background, then calls drawCatSprite which extracts the current frame from the sprite sheet using calculated source rectangles and handles directional flipping with canvas save/translate/scale/restore. The whole module exports init() and dispose() for Blazor interop."
+      }
+    },
+    {
+      "id": "cat-ai-h",
+      "type": "header",
+      "data": {
+        "text": "AI in the Development Process",
+        "level": 3
+      }
+    },
+    {
+      "id": "cat-ai-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This was easily my most AI-dependent project. The hackathon time pressure — 5 days to go from nothing to a working game — made AI assistance not just helpful but essential. The commit messages themselves tell the story: phrases like \"Refactor game layout and styles for improved UI and responsiveness\" and \"Enhance UI elements and improve canvas rendering for better visual clarity\" have that unmistakable AI-generated commit message style. I was feeding code to AI, getting refactored versions back, and committing the results in rapid iteration. The JetBrains IDE config files in the repo (Rider project files with copilot.data.migration entries) confirm that GitHub Copilot was active throughout development."
+      }
+    },
+    {
+      "id": "cat-ai-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Game physics and loop structure:</b> the entire requestAnimationFrame game loop, delta-time clamping, gravity/velocity/friction system, and collision detection were built with AI assistance. Canvas game engines have well-established patterns — gravity as constant acceleration, velocity integration, ground clamping — and AI tools can generate solid implementations of these patterns quickly. The physics values (speed: 5, jumpPower: 20, gravity: 0.3, friction: 0.8) were likely tuned through AI-suggested starting points and manual playtesting",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Sprite animation system:</b> the frame accumulator pattern, sprite sheet slicing with calculated source rectangles, and the canvas transform trick for horizontal flipping are textbook canvas animation techniques. AI generated the implementation — the onload callbacks that compute frame dimensions from sheet size, the accumulator that tracks fractional frame progress, the save/translate/scale/restore sequence for mirroring. I directed what animations to support (idle vs. run, facing direction) and AI produced the rendering code",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>High-DPI canvas and rendering:</b> the devicePixelRatio scaling, imageSmoothingEnabled settings, and viewport-filling canvas sizing were AI-generated patterns. The procedural starfield fallback (drawing 50 deterministic white pixels when the background image hasn't loaded) is a nice touch that AI likely suggested as a loading state",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Blazor + JavaScript interop:</b> making a vanilla JS canvas game work inside Blazor's SPA routing was a real integration challenge. The __IS_MOVE_PAGE__ pathname guard, the ES module export pattern for init/dispose, and the DOMContentLoaded dynamic import in the Razor component were solutions to Blazor-specific problems — the game loop would keep running on other pages without these guards. AI helped work through these interop issues since Blazor WebAssembly's JavaScript interaction patterns are well-documented enough for AI to generate correct solutions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Rapid iteration under time pressure:</b> the git history shows my commits going from \"base code\" to \"movement, not yet finish\" to increasingly polished versions with sprite rendering, physics improvements, and UI enhancements — all within a few days. Each commit represents a cycle of: describe what I want → get AI-generated code → test it → feed the result back for refinement. The hackathon format made this workflow natural — there wasn't time to learn canvas game development from scratch, so AI bridged the knowledge gap between \"I know what the game should do\" and \"I know the Canvas API well enough to implement it\"",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "cat-takeaway-h",
+      "type": "header",
+      "data": {
+        "text": "AI Takeaways — Hackathon as AI Stress Test",
+        "level": 3
+      }
+    },
+    {
+      "id": "cat-takeaway-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Compared to my other projects, CatMars sits at the far end of the AI-assistance spectrum. With the TOG puzzle game (GameMaker/GML), AI was a collaborative partner — I wrote the code myself with AI helping architect systems and debug logic, partly because GML is an uncommon language that AI handles less fluently. With CatMars, AI was closer to a code generator — I described features and got working JavaScript/CSS back, because canvas game engines and Blazor patterns are exactly the kind of well-documented web development that AI tools excel at. The hackathon time constraint was the deciding factor. Five days with a team of four, building a multi-page game from scratch in a framework (Blazor) none of us had deep experience with — that's exactly the scenario where AI-assisted development proves its value. I went from zero canvas game experience to a working platformer with sprite animation, physics, and page lifecycle management. The code works, the cat moves, the game progresses. Whether that's \"my code\" in the traditional sense is an interesting question — I directed every feature, tested every iteration, and debugged the integration issues — but the implementation patterns came largely from AI. For a hackathon, that tradeoff was the right call."
+      }
+    },
+    {
+      "id": "cat-link",
+      "type": "button",
+      "data": {
+        "text": "View on GitHub →",
+        "link": "https://github.com/katerinawang/JimsAngels_Crimson_Hackathon_2025"
+      }
+    }
+  ]
+}

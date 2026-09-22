@@ -1,38 +1,60 @@
 {
   "posts": [
     {
-      "id": "dishbook",
-      "title": "[Individual Project] - Django Recipe Platform",
-      "slug": "individual-project-django-recipe-platform",
+      "id": "3d-platformer-level",
+      "title": "3D Platformer Level",
+      "slug": "3d-platformer-level",
+      "category": "project",
+      "tags": [
+        "Unreal Engine 5",
+        "Maya",
+        "ZBrush",
+        "Substance 3D Painter",
+        "Level Design"
+      ],
+      "date": "2025-05-01",
+      "summary": "Asset pipeline and level design for GAME 3010 using UE5 and industry-standard 3D tools",
+      "thumbnail": "../img/asset-pipeline-level-design.png"
+    },
+    {
+      "id": "ai-trading-system",
+      "title": "AI Trading Analysis System — Claude Skills + MCP Server",
+      "slug": "ai-trading-system",
       "category": "project",
       "tags": [
         "Python",
-        "Django",
-        "SQLite",
-        "JavaScript",
-        "CSS",
-        "Full-Stack"
+        "MCP",
+        "Claude",
+        "AI-Assisted Development",
+        "Vibe Coding",
+        "Pydantic",
+        "robin_stocks",
+        "Options",
+        "Trading",
+        "Agent Architecture"
       ],
-      "date": "2025-11-22",
-      "summary": "Full-stack recipe sharing platform built with Django across 7 homework phases for CS 3550",
-      "thumbnail": "../img/dishbook.png"
+      "date": "2026-09-21",
+      "summary": "Two-part AI trading analysis system: a Python MCP server wrapping Robinhood's market data, and a set of Claude skills that act as specialist trading agents — built entirely with Claude, no live execution by design",
+      "thumbnail": ""
     },
     {
-      "id": "cs4400",
-      "title": "CS 4400 — Computer Systems",
-      "slug": "cs-4400-computer-systems",
+      "id": "catstronaut-hackathon",
+      "title": "Catstronaut — AI-Powered Hackathon Game Built in 5 Days",
+      "slug": "catstronaut-hackathon-game",
       "category": "project",
       "tags": [
-        "C",
-        "x86",
-        "Systems Programming",
-        "Signals",
-        "Memory Allocation",
-        "Network Programming",
-        "Concurrency"
+        "Blazor",
+        ".NET 9.0",
+        "C#",
+        "JavaScript",
+        "Canvas API",
+        "AI-Assisted Development",
+        "Hackathon",
+        "Game Development",
+        "Crimson Hackathon 2025"
       ],
-      "date": "2026-05-01",
-      "summary": "6 assignments and 4 labs spanning x86 simulation, reverse engineering, cache optimization, shell implementation, malloc design, and concurrent network programming for CS 4400",
+      "date": "2025-10-29",
+      "summary": "A browser-based adventure game built with Blazor WebAssembly for the Crimson Hackathon 2025 — featuring a canvas platformer with sprite animation, physics, and coding challenges, developed as a 4-person team with heavy AI assistance under hackathon time pressure",
       "thumbnail": ""
     },
     {
@@ -54,121 +76,21 @@
       "thumbnail": ""
     },
     {
-      "id": "logic-gate",
-      "title": "[Group Project] - Logic Gate",
-      "slug": "group-project-logic-gate",
+      "id": "cs4400",
+      "title": "CS 4400 — Computer Systems",
+      "slug": "cs-4400-computer-systems",
       "category": "project",
       "tags": [
-        "C++",
-        "Qt",
-        "QGraphicsView",
-        "Group Project"
+        "C",
+        "x86",
+        "Systems Programming",
+        "Signals",
+        "Memory Allocation",
+        "Network Programming",
+        "Concurrency"
       ],
-      "date": "2025-12-12",
-      "summary": "Educational logic gate wiring simulator built with Qt and QGraphicsView",
-      "thumbnail": "../img/logic-gate.png"
-    },
-    {
-      "id": "get-the-joker",
-      "title": "[Game Design] - Get the Joker",
-      "slug": "game-design-get-the-joker",
-      "category": "project",
-      "tags": [
-        "Game Design",
-        "Print-and-Play"
-      ],
-      "date": "2025-12-05",
-      "summary": "Original single-player print-and-play card game with grid-based movement",
-      "thumbnail": "../img/get-the-joker.png"
-    },
-    {
-      "id": "sprite-editor",
-      "title": "[Group Project] - Sprite Editor",
-      "slug": "group-project-sprite-editor",
-      "category": "project",
-      "tags": [
-        "C++",
-        "Qt",
-        "Group Project",
-        "DFS"
-      ],
-      "date": "2025-11-13",
-      "summary": "Pixel art sprite editor with frame timeline, bucket fill, and animation support",
-      "thumbnail": "../img/sprite-editor.png"
-    },
-    {
-      "id": "simon-game",
-      "title": "[Individual Project] - Simon Game",
-      "slug": "individual-project-simon-game",
-      "category": "project",
-      "tags": [
-        "C++",
-        "Qt"
-      ],
-      "date": "2025-10-28",
-      "summary": "Two-color Simon game with progressive difficulty and a Fun Mode that swaps button positions",
-      "thumbnail": "../img/simon-game.png"
-    },
-    {
-      "id": "3d-platformer-level",
-      "title": "3D Platformer Level",
-      "slug": "3d-platformer-level",
-      "category": "project",
-      "tags": [
-        "Unreal Engine 5",
-        "Maya",
-        "ZBrush",
-        "Substance 3D Painter",
-        "Level Design"
-      ],
-      "date": "2025-05-01",
-      "summary": "Asset pipeline and level design for GAME 3010 using UE5 and industry-standard 3D tools",
-      "thumbnail": "../img/asset-pipeline-level-design.png"
-    },
-    {
-      "id": "snake",
-      "title": "[Group Project] - Snake",
-      "slug": "group-project-snake",
-      "category": "project",
-      "tags": [
-        "C#",
-        "Blazor",
-        "Multiplayer",
-        "SQL",
-        "Networking"
-      ],
-      "date": "2025-03-01",
-      "summary": "Online multiplayer Snake game with real-time rendering and SQL-backed scoreboard",
-      "thumbnail": "../img/snake.png"
-    },
-    {
-      "id": "website-projects",
-      "title": "Website Projects",
-      "slug": "website-projects",
-      "category": "project",
-      "tags": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "Bootstrap"
-      ],
-      "date": "2023-12-01",
-      "summary": "Front-end web projects for CS 1430 using plain HTML, CSS, JS, and Bootstrap",
-      "thumbnail": "../img/website-img.png"
-    },
-    {
-      "id": "spreadsheet",
-      "title": "Spreadsheet",
-      "slug": "group-project-spreadsheet",
-      "category": "project",
-      "tags": [
-        "C#",
-        "Blazor",
-        ".NET",
-        "Group Project"
-      ],
-      "date": "2025-04-17",
-      "summary": "Functional spreadsheet application with formula evaluation, dependency tracking, and infinite scrolling built with Blazor Server",
+      "date": "2026-05-01",
+      "summary": "6 assignments and 4 labs spanning x86 simulation, reverse engineering, cache optimization, shell implementation, malloc design, and concurrent network programming for CS 4400",
       "thumbnail": ""
     },
     {
@@ -208,6 +130,80 @@
       "thumbnail": ""
     },
     {
+      "id": "get-the-joker",
+      "title": "[Game Design] - Get the Joker",
+      "slug": "game-design-get-the-joker",
+      "category": "project",
+      "tags": [
+        "Game Design",
+        "Print-and-Play"
+      ],
+      "date": "2025-12-05",
+      "summary": "Original single-player print-and-play card game with grid-based movement",
+      "thumbnail": "../img/get-the-joker.png"
+    },
+    {
+      "id": "logic-gate",
+      "title": "[Group Project] - Logic Gate",
+      "slug": "group-project-logic-gate",
+      "category": "project",
+      "tags": [
+        "C++",
+        "Qt",
+        "QGraphicsView",
+        "Group Project"
+      ],
+      "date": "2025-12-12",
+      "summary": "Educational logic gate wiring simulator built with Qt and QGraphicsView",
+      "thumbnail": "../img/logic-gate.png"
+    },
+    {
+      "id": "snake",
+      "title": "[Group Project] - Snake",
+      "slug": "group-project-snake",
+      "category": "project",
+      "tags": [
+        "C#",
+        "Blazor",
+        "Multiplayer",
+        "SQL",
+        "Networking"
+      ],
+      "date": "2025-03-01",
+      "summary": "Online multiplayer Snake game with real-time rendering and SQL-backed scoreboard",
+      "thumbnail": "../img/snake.png"
+    },
+    {
+      "id": "spreadsheet",
+      "title": "Spreadsheet",
+      "slug": "group-project-spreadsheet",
+      "category": "project",
+      "tags": [
+        "C#",
+        "Blazor",
+        ".NET",
+        "Group Project"
+      ],
+      "date": "2025-04-17",
+      "summary": "Functional spreadsheet application with formula evaluation, dependency tracking, and infinite scrolling built with Blazor Server",
+      "thumbnail": ""
+    },
+    {
+      "id": "sprite-editor",
+      "title": "[Group Project] - Sprite Editor",
+      "slug": "group-project-sprite-editor",
+      "category": "project",
+      "tags": [
+        "C++",
+        "Qt",
+        "Group Project",
+        "DFS"
+      ],
+      "date": "2025-11-13",
+      "summary": "Pixel art sprite editor with frame timeline, bucket fill, and animation support",
+      "thumbnail": "../img/sprite-editor.png"
+    },
+    {
       "id": "tower-defense",
       "title": "[Group Project] - Tower Defense",
       "slug": "group-project-tower-defense",
@@ -224,6 +220,117 @@
       "date": "2024-12-01",
       "summary": "Tower defense game with graph-based pathfinding where tower placement dynamically modifies the enemy route via BFS recomputation",
       "thumbnail": ""
+    },
+    {
+      "slug": "index",
+      "category": "project",
+      "tags": [],
+      "date": "",
+      "summary": "",
+      "thumbnail": ""
+    },
+    {
+      "id": "dishbook",
+      "title": "[Individual Project] - Django Recipe Platform",
+      "slug": "individual-project-django-recipe-platform",
+      "category": "project",
+      "tags": [
+        "Python",
+        "Django",
+        "SQLite",
+        "JavaScript",
+        "CSS",
+        "Full-Stack"
+      ],
+      "date": "2025-11-22",
+      "summary": "Full-stack recipe sharing platform built with Django across 7 homework phases for CS 3550",
+      "thumbnail": "../img/dishbook.png"
+    },
+    {
+      "id": "simon-game",
+      "title": "[Individual Project] - Simon Game",
+      "slug": "individual-project-simon-game",
+      "category": "project",
+      "tags": [
+        "C++",
+        "Qt"
+      ],
+      "date": "2025-10-28",
+      "summary": "Two-color Simon game with progressive difficulty and a Fun Mode that swaps button positions",
+      "thumbnail": "../img/simon-game.png"
+    },
+    {
+      "id": "newtab-dashboard",
+      "title": "Focus Tab — Chrome New Tab Extension Built with AI",
+      "slug": "newtab-dashboard-with-ai",
+      "category": "project",
+      "tags": [
+        "JavaScript",
+        "Chrome Extension",
+        "AI-Assisted Development",
+        "Claude",
+        "ChatGPT",
+        "Vibe Coding",
+        "Vanilla JS",
+        "Unsplash API",
+        "LeetCode"
+      ],
+      "date": "2026-09-21",
+      "summary": "Productivity-focused Chrome new-tab replacement with draggable widgets, LeetCode spaced repetition, markdown notes, and adaptive theming — built entirely through conversational AI collaboration with Claude and ChatGPT",
+      "thumbnail": ""
+    },
+    {
+      "id": "portfolio-site",
+      "title": "Portfolio Website — Built with AI",
+      "slug": "portfolio-site-with-ai",
+      "category": "project",
+      "tags": [
+        "JavaScript",
+        "Node.js",
+        "HTML",
+        "CSS",
+        "AI-Assisted Development",
+        "Claude",
+        "Vibe Coding",
+        "Full-Stack"
+      ],
+      "date": "2026-09-20",
+      "summary": "Personal portfolio site evolved from a class project into a full SPA with a blog CMS, admin tool, and 14+ project posts — the blog system and content pipeline were vibe-coded with Claude",
+      "thumbnail": ""
+    },
+    {
+      "id": "tog-puzzle-game",
+      "title": "TOG — Math Puzzle Game Built with AI Assistance",
+      "slug": "tog-math-puzzle-game",
+      "category": "project",
+      "tags": [
+        "GameMaker Studio 2",
+        "GML",
+        "Game Development",
+        "AI-Assisted Development",
+        "Group Project",
+        "Puzzle Game",
+        "Math",
+        "GAME 3720"
+      ],
+      "date": "2026-08-01",
+      "summary": "Grid-based math puzzle game built in GameMaker Studio 2 for GAME 3720, featuring equation building, conditional walls, graph plotting with a Conway's Game of Life river animation system, and a recursive descent expression parser — developed as a group project with AI-assisted programming",
+      "thumbnail": ""
+    },
+    {
+      "id": "website-projects",
+      "title": "Website Projects",
+      "slug": "website-projects",
+      "category": "project",
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Bootstrap"
+      ],
+      "date": "2023-12-01",
+      "summary": "Front-end web projects for CS 1430 using plain HTML, CSS, JS, and Bootstrap",
+      "thumbnail": "../img/website-img.png"
     }
   ]
 }

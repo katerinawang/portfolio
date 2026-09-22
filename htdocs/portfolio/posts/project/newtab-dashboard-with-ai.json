@@ -1,0 +1,302 @@
+{
+  "id": "newtab-dashboard",
+  "title": "Focus Tab — Chrome New Tab Extension Built with AI",
+  "slug": "newtab-dashboard-with-ai",
+  "category": "project",
+  "tags": [
+    "JavaScript",
+    "Chrome Extension",
+    "AI-Assisted Development",
+    "Claude",
+    "ChatGPT",
+    "Vibe Coding",
+    "Vanilla JS",
+    "Unsplash API",
+    "LeetCode"
+  ],
+  "date": "2026-09-21",
+  "summary": "Productivity-focused Chrome new-tab replacement with draggable widgets, LeetCode spaced repetition, markdown notes, and adaptive theming — built entirely through conversational AI collaboration with Claude and ChatGPT",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "ft-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "Focus Tab is a Chrome extension that replaces the new-tab page with a productivity dashboard. It has draggable and resizable widget panels, Unsplash background photos with adaptive glass-morphism theming, markdown notes, a full todo system with categories and subtasks, and a LeetCode spaced repetition tracker powered by the SM-2 algorithm. The entire project — around 140KB of source across 11 JavaScript modules and 5 CSS files — was built purely through AI. I used both Claude and ChatGPT (formerly Codex), describing what I wanted in conversation and iterating on the results through adjustments and feedback."
+      }
+    },
+    {
+      "id": "ft-why-h",
+      "type": "header",
+      "data": {
+        "text": "Why This Project",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-why-p",
+      "type": "paragraph",
+      "data": {
+        "text": "I wanted a new-tab page that combined the things I actually use daily — a quick notes scratchpad, a todo list, and a way to track LeetCode practice — into one place I'd see every time I opened a tab. Existing extensions either did one thing or were bloated with features I didn't need. Instead of building it from scratch by hand, I treated it as an experiment in AI-driven development: could I get a fully functional, polished Chrome extension by just describing what I wanted and iterating?"
+      }
+    },
+    {
+      "id": "ft-ai-h",
+      "type": "header",
+      "data": {
+        "text": "The AI Development Process",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-ai-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This project was built entirely through AI — no code was written by hand. The workflow was conversational: I'd describe a feature or a behavior I wanted, the AI would generate the implementation, and I'd test it and come back with adjustments. Some features landed in one round; others took several iterations to get right. I used two different AI tools depending on what I was working on:"
+      }
+    },
+    {
+      "id": "ft-ai-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Claude:</b> handled the bulk of the architecture and complex module development — the widget drag/resize system, the LeetCode spaced repetition engine, state management, and the overall modular structure. Claude was especially good at generating large, coherent modules (the LeetCode tracker alone is 938 lines) that held together across features without needing major structural rework",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>ChatGPT (formerly Codex):</b> used for feature iterations, UI polish, and specific behavior adjustments. When I needed quick changes or wanted to try a different approach to an interaction pattern, I'd switch to ChatGPT for faster back-and-forth on smaller scoped changes",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Iterative communication:</b> the key to making this work was being specific about behavior, not implementation. Instead of asking for \"a todo list,\" I'd describe exactly what I wanted — \"drag to reorder tasks, move between inbox/today/done categories, inline text editing, subtasks that expand under the parent\" — and then refine based on what I saw when testing",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>No manual code edits:</b> every line of code came from AI output. My role was product design, testing, and feedback — deciding what features to build, how they should behave, and when something didn't feel right. The AI handled all implementation details including the Chrome extension manifest, API integrations, and CSS styling",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ft-features-h",
+      "type": "header",
+      "data": {
+        "text": "Features",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-features-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Draggable widget system:</b> every panel (clock, notes, todos, LeetCode) is a widget that can be dragged anywhere on screen, resized with handles, and collapsed into a floating icon that remembers its position. The system uses pointer events with viewport clamping and per-widget minimum dimensions, and persists layout positions in state so your arrangement survives between sessions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Unsplash background with adaptive theming:</b> fetches a random landscape photo from the Unsplash API on each load (cached hourly), preloads the image, and shows photographer credit with proper attribution links. The adaptive module samples the dominant color from the background via canvas, blends it 75% toward a dark base, and sets a <code>--glass</code> CSS variable that tints every glass-morphism panel to match the current photo",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>LeetCode spaced repetition tracker:</b> the largest module at 938 lines. Implements the SM-2 algorithm for spaced review scheduling — after solving a problem, you rate it hard/good/easy, which adjusts the interval, ease factor, and repetition count for the next review. Integrates with LeetCode's GraphQL API to look up problem metadata and sync submission status. Supports bulk import from a pipe-delimited format with day assignments, auto-rebalances pending problems across days, and tracks mastery (interval ≥ 30 days)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Todo system with categories:</b> tasks live in inbox, today, or completed. Each task supports subtasks, inline text editing, and drag-to-reorder via HTML5 drag events. Moving a task between categories preserves its previous location so completing and then uncompleting restores it to where it was. Sort ordering persists across reloads",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Markdown notes:</b> a sidebar with create/delete/open note management, three editor modes (edit, split, preview), rendering via <code>marked.js</code> with <code>DOMPurify</code> sanitization, File System Access API for importing <code>.md</code> files from disk, and debounced auto-save to state",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Color mood palette:</b> a customizable row of color swatches in the settings. Clicking a swatch triggers an Unsplash fetch with that color's label as the search query — so you can shift the background to match a mood or aesthetic with one click",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Settings panel:</b> clock font family selector (8 font options), clock and date font size sliders, and a full color palette editor where you can add, remove, recolor, and relabel mood swatches",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ft-arch-h",
+      "type": "header",
+      "data": {
+        "text": "Architecture",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-arch-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The extension is vanilla JavaScript with no framework or build tools — no React, no webpack, no npm. Each feature is its own module (<code>clock.js</code>, <code>tasks.js</code>, <code>notes.js</code>, <code>leetcode.js</code>, <code>widgets.js</code>, <code>background.js</code>, <code>adaptive.js</code>, <code>palette.js</code>, <code>settings.js</code>) initialized from a central <code>app.js</code> orchestrator. State management is centralized through <code>state.js</code>: a single <code>focustab_state</code> localStorage key with deep-merge on load, migration from legacy per-key storage, debounced saves, and an immediate flush on <code>beforeunload</code> and <code>visibilitychange</code>."
+      }
+    },
+    {
+      "id": "ft-arch-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Chrome Manifest V3:</b> uses <code>chrome_url_overrides</code> to replace the new tab, with storage and host permissions for Unsplash and LeetCode API access",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Modular JS (11 files):</b> each module exposes an <code>init()</code> method and communicates through the shared <code>state</code> object and <code>saveState()</code> — no event bus, no pub-sub, just direct references between modules where needed",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>CSS architecture (5 files):</b> <code>styles.css</code> (19.7KB) handles layout, glass-morphism, and base components; dedicated stylesheets for LeetCode (9.9KB), settings (4.8KB), the markdown editor (1.4KB), and widgets (1KB)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>External libraries:</b> only <code>marked.js</code> (markdown parsing) and <code>DOMPurify</code> (HTML sanitization) for the notes editor — everything else is from scratch",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>API integrations:</b> Unsplash API for background photos (with image preloading and hourly caching) and LeetCode GraphQL API for problem metadata lookup and submission status syncing",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ft-leetcode-h",
+      "type": "header",
+      "data": {
+        "text": "LeetCode Tracker Deep Dive",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-leetcode-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The spaced repetition system is the most complex feature and shows what AI collaboration can produce when you give it a well-defined problem. The SM-2 algorithm — the same algorithm behind Anki — calculates when you should review each problem based on how well you remembered it. The module manages the full lifecycle:"
+      }
+    },
+    {
+      "id": "ft-leetcode-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>SM-2 scheduling:</b> <code>_calcNext()</code> takes a rating (hard/good/easy), updates the ease factor (minimum 1.3), and computes the next review interval — 1 day for the first review, 6 days for the second, then previous interval × ease factor for subsequent reviews. A \"hard\" rating resets the interval to 1 day",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Five tabs:</b> Today (new problems for the day), Review (due for spaced repetition), Done (completed with a mastered/all toggle), Schedule (7-day lookahead calendar), and All (every tracked problem)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bulk import:</b> supports importing from a pipe-delimited text format — the included 14-day study plan has 47 problems across Arrays, Sliding Window, Two Pointers, Trees, and DP, each assigned to a specific day",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Auto-rebalance:</b> when you change the problems-per-day pace, <code>autoRebalance()</code> redistributes all pending problems across future days so the schedule stays even",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Review queue management:</b> daily review limit with persistent queue IDs, overdue problem tracking, and mastery threshold at interval ≥ 30 days",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ft-takeaways-h",
+      "type": "header",
+      "data": {
+        "text": "AI Collaboration Takeaways",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-takeaways-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Building Focus Tab purely through AI taught me a few things about this style of development:"
+      }
+    },
+    {
+      "id": "ft-takeaways-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Describing behavior beats describing code:</b> the best results came from telling the AI what the feature should do and feel like, not how to implement it. \"When I collapse a widget, it should shrink into a small draggable icon that I can park in a corner\" produced better code than trying to spec the CSS and JS myself",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Using two AI tools gives you range:</b> Claude was better for generating large, structurally coherent modules from scratch, while ChatGPT was faster for iterating on specific behaviors and UI details. Switching between them depending on the task made the overall process smoother",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Testing is your job:</b> AI can't test its own UI. Every feature needed real testing in the browser — drag interactions that felt wrong, edge cases in the spaced repetition math, state persistence bugs after reloads. The feedback loop of test → describe the problem → get a fix was the actual development cycle",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Scope control matters more than ever:</b> it's easy to ask for everything at once and get a mess. The project worked because each feature was developed as a self-contained module with a clear interface, and I didn't try to build the whole extension in one conversation",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "ft-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "ft-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "JavaScript (vanilla ES6+), Chrome Extension (Manifest V3), Chrome Storage API, localStorage, Unsplash API, LeetCode GraphQL API, SM-2 spaced repetition algorithm, HTML5 Drag and Drop, Pointer Events, Canvas API, File System Access API, marked.js, DOMPurify, CSS glass-morphism, CSS custom properties, responsive design, AI-assisted development (Claude, ChatGPT), vibe coding"
+      }
+    }
+  ]
+}

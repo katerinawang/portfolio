@@ -1,0 +1,506 @@
+{
+  "id": "tog-puzzle-game",
+  "title": "TOG — Math Puzzle Game Built with AI Assistance",
+  "slug": "tog-math-puzzle-game",
+  "category": "project",
+  "tags": [
+    "GameMaker Studio 2",
+    "GML",
+    "Game Development",
+    "AI-Assisted Development",
+    "Group Project",
+    "Puzzle Game",
+    "Math",
+    "GAME 3720"
+  ],
+  "date": "2026-08-01",
+  "summary": "Grid-based math puzzle game built in GameMaker Studio 2 for GAME 3720, featuring equation building, conditional walls, graph plotting with a Conway's Game of Life river animation system, and a recursive descent expression parser — developed as a group project with AI-assisted programming",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "tog-intro",
+      "type": "paragraph",
+      "data": {
+        "text": "TOG is a grid-based math puzzle game built in GameMaker Studio 2 for GAME 3720. Players push blocks with numbers, operators, and variables into equation areas to build mathematical expressions, which then plot as curves on an in-game graph. The graph isn't just a static display — it uses a Conway's Game of Life cellular automaton to carve animated river channels along the plotted curves, with multi-phase water flooding, spark particles, and inlet waterfalls. Conditional walls with inequality conditions block or allow passage based on block values, and a key-and-door system gates progression through 7 puzzle levels plus a lobby hub. The project was a group effort with 262 commits across the team. My 123 commits (47%) covered the majority of the programming — systems integration, UI, dialogue, bug fixes, and expanding the core mechanics — with AI tools assisting throughout the development process."
+      }
+    },
+    {
+      "id": "tog-contribution-h",
+      "type": "header",
+      "data": {
+        "text": "My Contribution — By the Numbers",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-contribution-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The repository has 262 commits total across the team. I have 123 commits (47%) covering core systems, UI, dialogue, bug fixes, and integration. I handled merging team branches into main and making sure features integrated correctly. Here's how my 123 commits break down by category:"
+      }
+    },
+    {
+      "id": "tog-contribution-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Game flow and levels (15 commits):</b> lobby door system and progression logic, puzzle alignment mechanics, room ordering and transitions, prologue and epilogue scenes, credits screen, puzzle reveal animation with staggered delays, and the global.max_unlocked ranking system that gates level access",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Bug fixes (10 commits):</b> repeated fixes for conditional wall edge cases (the wall check logic needed multiple iterations to handle all six comparison operators correctly), block collision bugs where blocks could overlap or skip interior condition checks during chain pushes, room order issues, and puzzle alignment state bugs — the is_checking flag fix that prevented blocks from getting stuck in a checking state",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Dialogue and text (8 commits):</b> built two separate dialogue systems — obj_dialogue_bg for scene-level message queues with fade-in/hold timing and room transition commands, and obj_dialogue_box for in-level triggered dialogue with three firing modes (delay timer, player overlap proximity, and puzzle-complete condition). Text color adjustability and state-dependent triggering so dialogue could fire based on game conditions",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Infrastructure and integration (8 commits):</b> decorative elements and rocks for level aesthetics, merging team branches into main, managing unversioned files, and general project organization to keep the GameMaker project structure clean",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Core mechanics (4 commits):</b> conditional wall logic with six comparison operators and three visual states, arrow key support alongside WASD, and the shift-hold pull mechanic — designed so pulling is only possible when the player is directly adjacent to a block, which I chose for intuitive UX rather than allowing pulling from any distance",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Audio and SFX (4 commits):</b> around 20 sound assets wired into gameplay — block push, movement step, key pickup, door open, pull mode engage/disengage, blocked movement, wrong answer, equation validation, river flush loop, water-flows-into-hole, water-hitting-wall, key-flushed-out, stone-door-close, and ending puzzle sounds. Each action has a distinct sound for clear player feedback",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Equation system (2 commits):</b> the equation history object for tracking past equations with a formatted display function (eq_to_string) that renders quadratic equations as \"y = ax² + bx + c\" with proper sign handling, and the answer locking system that freezes an equation area once the correct expression is placed",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Visual effects (1 commit):</b> additive-blend glow rendering system — 8 directional copies of a sprite at 45-degree intervals with bm_add blending, plus shadow casting and the engraved text effect on UI elements",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-contribution-detail-h",
+      "type": "header",
+      "data": {
+        "text": "Specific Code I Wrote",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-contribution-detail-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Beyond the commit counts, here are the specific systems I built or significantly extended:"
+      }
+    },
+    {
+      "id": "tog-contribution-detail-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Conway's Game of Life river system (obj_graph Create_0.gml, ~565 lines):</b> the single largest and most complex file in the project. When a player builds an equation and it plots on the graph, the system doesn't just draw a line — it runs a cellular automaton to carve an animated river channel along the curve. The pipeline works in stages: first, it samples points along the mathematical curve and builds a \"band\" of cells within a configurable width using perpendicular distance calculations. Then it seeds Conway's Game of Life within the band and runs generations of the automaton, carving the river shape as cells come alive. After the carving phase, water floods from an inlet point (selected with a top-right corner heuristic) and flows along the channel with a 0-to-1 progress front, adding foam edge effects, white rushing spark particles, and a waterfall pour effect at the inlet. For parabolas that leave the visible surface and re-enter, the system splits arcs and handles each segment independently. The outlet (where the water drains) uses its own separate GoL instance with a growing radius to animate a drain hole. The whole thing renders on a GameMaker surface with phase-dependent cell coloring — GoL alive/dead states during carving, foam edges during flooding, and a water shimmer during the flowing phase. On top of all this, the graph has a zoom system that auto-fits to show key positions and a color palette system with dry channel, live cell, foam, deep water, light water, and outline colors",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Graph phase state machine (obj_graph Step_0.gml, ~85 lines):</b> the river animation runs through 5 distinct phases — Carving (runs GoL generations, grows the carve radius until the band is filled), Pause (brief delay before flooding), Flooding (water front advances 0→1 along the river, triggers different end sounds depending on whether the answer is correct: Water_Flows_Into_Hole vs. Water_Hitting_Wall), Flowing (continuous water animation, outlet drain hole steps if the answer is correct), and Closing (shrinks the river width back, de-carves outer cells, transitions to the next pending equation or Idle). The system manages a looping River_Flush sound effect that starts during flooding and stops during closing",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Key lifecycle state machine (obj_key, ~120 lines):</b> keys go through four states tied to the river animation. InGraph: the key sits at its mathematical coordinate on the graph, tracking graph coordinates with math-to-pixel conversion, and watches for the flood front to reach its parametric position along the river. Flowing: the key lerps from its graph position to the outlet following the curve shape of the parabola — it literally rides the water along the plotted curve. Dispensing: the key slides from the graph's gutter center to a front tile position with smooth interpolation, playing the Key_Flushed_Out sound. InWorld: the key waits on the game grid for the player to walk over and pick it up. The state transitions are driven by the river's flood progress — when the water reaches the key's position on the curve, it begins flowing",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Player controller (obj_player Step_0.gml, ~280 lines):</b> the full ~280-line step event — input handling with five blocking conditions (menu open, puzzle reveal, dialogue showing, spawn delay, block flash), WASD and arrow key movement, shift-hold pull mechanic, block chain detection that scans forward to find contiguous blocks, conditional wall checking against all overlapping walls, undo system with ds_stack storing movement direction and block references, door transitions, key pickup, and smooth interpolated movement between grid cells",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Menu system (obj_menu, ~430 lines total):</b> a full menu with three modes — Main (horizontal layout), Pause (vertical layout), and Level Select (4-column responsive grid). Supports both mouse hover/click and full keyboard navigation with WASD and arrow keys, including grid-aware navigation for the level select screen that wraps correctly across rows and columns. The menu also handles the lobby win condition: when all puzzle blocks are aligned in the lobby, it triggers the Ending_Puzzle sound, waits for dialogue to finish, delays 60 frames, then transitions to the epilogue scene. Includes a developer mode toggle (left bracket key), singleton pattern to prevent duplicate menu instances, and a first-time pause hint system",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Equation area parser (obj_equation_area Create_0.gml, ~150 lines):</b> the change_equation() function that collects all overlapping blocks, sorts them left-to-right by x position, classifies four block types (number, operator, variable, puzzle), validates syntax rules (no double operators, no trailing operators, no adjacent variables), extracts coefficients for x and x-squared terms, sums constants, and dispatches the resulting quadratic (y = ax² + bx + c) to the graph object",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Recursive descent parser (eval.gml, ~90 lines):</b> a complete expression evaluator with proper operator precedence — parse_expr handles addition/subtraction, parse_term handles multiplication/division, parse_factor handles parentheses and unary negation, parse_number handles integers and decimals. Returns a struct with an ok flag and computed value, with division-by-zero and malformed expression error handling",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Door progression system (obj_door, ~115 lines):</b> rank-based door progression with global.max_unlocked gating, a 3-state lock animation (not animated → animating → complete) with frame counting and Stone_Door_close sound, 7 pairs of open/close door sprites, lobby return position persistence across level transitions, and developer mode support for bypassing progression",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Two dialogue systems (~90 lines combined):</b> obj_dialogue_bg handles scene-level dialogue with a queue/dequeue system, fade-in alpha animation, hold timers, enter/space skip-ahead, and a special \"next level\" command that triggers room_goto_next() for scene transitions. obj_dialogue_box handles in-level triggered dialogue with three distinct firing modes: delay timer (fires after N frames), overlap (fires when the player physically touches the dialogue trigger via place_meeting), and puzzle-complete (fires after global.puzzle_complete is set and a delay timer expires). Both systems let the player skip ahead with enter or space",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Conditional wall system:</b> the check_condition(_block, _x, _y) function in the player object that tests all six comparison operators (<, <=, >, >=, ==, !=), plus the wall state machine with three visual states (yellow neutral, green pass, red reject), timed sprite swaps using reject_timer and pass_timer, and audio feedback on pass/fail. The wall code went through multiple bug-fix iterations — the pass_timer logic and sprite_index assignment for passing blocks were added in later fixes",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-ai-h",
+      "type": "header",
+      "data": {
+        "text": "AI in the Development Process",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-ai-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This project used AI as a development partner throughout the programming work. Unlike the portfolio site or Focus Tab where AI generated entire modules from scratch, TOG's AI usage was more of a collaborative assistance model — I was writing GameMaker Language code myself, but using AI to help architect systems, debug tricky interactions, and work through complex logic. The git history confirms that Codex (OpenAI's coding tool) was used alongside conversational AI — there are Codex checkpoint references in the repository's packed-refs, showing that AI-assisted editing sessions were part of the workflow. GameMaker's GML is a less common language for AI tools compared to JavaScript or Python, which made the collaboration different from typical vibe-coding. The AI couldn't always generate perfect drop-in GML code, so the workflow was more about discussing approaches, getting pseudocode or logic outlines, and then adapting them into working GML. When I ran into unfamiliar GML functions, I'd use a mix of GameMaker's documentation and AI assistance to understand the right approach."
+      }
+    },
+    {
+      "id": "tog-ai-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>System architecture:</b> AI helped design the overall structure of complex systems — the block chain-pushing algorithm that detects contiguous runs of blocks and moves them together, the conditional wall checking system with six comparison operators, the equation area parser that extracts coefficients, and the graph/river animation pipeline. The Conway's Game of Life river system in particular has a lot of moving parts — cellular automaton generations, curve sampling with perpendicular band construction, multi-phase water flooding, outlet drain holes — and talking through how these pieces should connect before coding helped avoid the kind of structural rewrites that would have eaten days",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Expression parser:</b> the recursive descent parser in eval.gml — which handles operator precedence, parentheses, unary negation, and decimal numbers — was developed with AI assistance. Writing a correct parser that handles all edge cases (division by zero, malformed expressions, nested parentheses) is the kind of task where AI excels at generating a solid first draft that you can then test and refine",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Debugging complex interactions:</b> puzzle games have cascading state changes — pushing a block triggers an equation update, which triggers a graph replot, which carves a new river channel via GoL, which floods with water, which may arm a key at its parametric position along the curve, which flows along the parabola to the outlet, which dispenses to the game world, which the player picks up to unlock a door. When bugs appeared in these chains, I'd describe the behavior to AI and work through the state flow together to find where the logic broke. The key lifecycle alone has four states with transitions driven by the river's flood progress — a lot of places for state to get out of sync",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>GML-specific patterns:</b> AI helped translate general programming concepts into GML idioms — using ds_stack for the undo history, ds_list for instance queries, instance_place_list for collision detection, layer_tilemap operations for conditional walls, surface_create and surface_set_target for the graph rendering pipeline. GML has its own patterns for things like grid-based movement and instance management that are different from typical game engines",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Codex for inline edits:</b> the Codex checkpoint references in the git history suggest that OpenAI's Codex was used for inline code editing sessions — likely for targeted code modifications, refactoring, and quick fixes within the GameMaker project files. This complemented the conversational AI workflow by handling smaller, more focused edits directly in the code",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-mechanics-h",
+      "type": "header",
+      "data": {
+        "text": "Core Mechanics",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-mechanics-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The game is built on a 32-pixel grid with smooth interpolated movement. The player moves with WASD or arrow keys, pushes blocks by walking into them, and can pull blocks while holding shift. Every move is recorded on a stack so the player can undo with the B key — including multi-block pushes and pull moves. The core puzzle loop is: arrange number and operator blocks in an equation area to form a valid expression, which plots a curve on a coordinate graph, which triggers the river animation system to carve and flood a water channel along the curve, which unlocks keys and doors to progress."
+      }
+    },
+    {
+      "id": "tog-mechanics-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Block chain pushing:</b> when the player pushes a block, the system scans forward in the push direction to find all contiguous blocks in a line. It checks every block in the chain for conditions (conditional walls, equation area locks, puzzle alignment), and either moves the entire chain one cell or rejects the push. This was one of the trickiest systems to get right — early versions would let blocks overlap or skip condition checks on interior blocks",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Equation building:</b> the equation area object collects all blocks overlapping it, sorts them left-to-right, and parses them into a mathematical expression. It handles four block types (number, operator, variable, puzzle), validates syntax rules (no double operators, no trailing operators, no adjacent variables), extracts coefficients for x and x-squared terms, sums constants, and sends the resulting quadratic equation (y = ax² + bx + c) to the graph object for plotting",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Expression evaluation:</b> a hand-rolled recursive descent parser with proper operator precedence — multiplication and division bind tighter than addition and subtraction, parentheses override everything, and unary negation is handled at the factor level. Returns a result struct with an ok flag and the computed value, used by the equation validation system to check player-constructed arithmetic",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Conditional walls:</b> barrier objects with inequality conditions (<, <=, >, >=, ==, !=) that check passing blocks' numeric values. Each wall has three visual states — yellow (neutral), green (pass), and red (reject) — with timed sprite swaps and sound effects. The check_condition function in the player object tests block positions against all overlapping walls before allowing movement",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Key-door system:</b> keys start inside the graph at mathematical coordinates and go through four lifecycle states. InGraph: the key tracks its position on the graph and watches for the river's flood front to reach its parametric position along the curve. Flowing: the key rides the water along the plotted parabola, lerping from its graph position to the outlet following the curve shape. Dispensing: the key slides out of the graph's gutter to a tile on the game grid. InWorld: the key sits on the grid waiting for the player to walk over it. Picking up a key destroys it and unlocks any door wired to that key's channel. The doors themselves have a rank-based system with lock animations and 7 pairs of open/close sprites",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Undo system:</b> every player move pushes a record onto a ds_stack containing the movement direction and references to any blocks that were pushed or pulled. The B key pops the stack and reverses both the player and all affected blocks. Multi-block chain pushes store the entire block array so every block in the chain undoes correctly",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-river-h",
+      "type": "header",
+      "data": {
+        "text": "The River Animation System",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-river-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The most technically complex and visually distinctive part of TOG is the graph's river animation system — roughly 760 lines of code across the graph object's Create, Step, and Draw events. When a player builds an equation, the plotted curve doesn't just appear as a line on the graph. Instead, a Conway's Game of Life cellular automaton carves a river channel along the mathematical curve, then water floods through the channel with particle effects, and keys ride the water to reach the player."
+      }
+    },
+    {
+      "id": "tog-river-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Curve sampling and band construction:</b> the system samples points along the mathematical curve (y = ax² + bx + c) and builds a \"band\" of cells around it. Each cell on the graph surface is tested using perpendicular distance from the curve — if it falls within the configurable river width, it becomes part of the band. For parabolas that leave the visible surface and re-enter, the system splits arcs and handles each segment independently so the river doesn't try to connect through off-screen space",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Conway's Game of Life carving:</b> once the band is defined, Conway's Game of Life seeds are planted within it and the automaton runs for multiple generations. As cells come alive through GoL rules, they \"carve\" the river channel — the organic, irregular edges that GoL produces give the river a natural-looking shape rather than a mathematically perfect corridor. The system grows a carve radius over time until the entire band is filled, then transitions to the flooding phase",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Multi-phase water flooding:</b> water enters from an inlet point selected using a top-right corner heuristic and advances with a 0-to-1 progress front along the channel. During flooding, foam appears at the water's leading edge, white rushing spark particles animate along the surface, and a waterfall pour effect (randomized foam and white cells) plays above the inlet. The flood progress is what triggers keys to begin their Flowing state — when the front reaches a key's parametric position on the curve, the key starts riding the water",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Outlet drain and answer feedback:</b> what happens at the outlet depends on whether the equation is correct. For a correct answer, the outlet uses its own separate Game of Life instance with a growing radius to animate a drain hole — cells die in an expanding circle, creating a visual \"draining\" effect, with the Water_Flows_Into_Hole sound. For a wrong answer, the water splashes inward toward the graph center with the Water_Hitting_Wall sound, and the equation is logged in a history of recent wrong attempts (last 5 valid-but-incorrect equations)",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Closing and cleanup:</b> after an equation is evaluated, the river doesn't just disappear — it shrinks. The closing phase gradually reduces the river width, de-carving outer cells and transitioning them back to the dry state. The looping River_Flush sound fades out, and the system checks for any pending equations to process next or returns to Idle. This graceful teardown means the player sees the river recede rather than blink out of existence",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Phase-dependent rendering:</b> the Draw event (~112 lines) colors every cell differently depending on the current phase. During carving, cells show GoL alive/dead states. During flooding, the water's edge gets foam coloring. During flowing, water cells shimmer between deep and light water colors. Riverbank outlines are drawn by checking N/S/E/W neighbors. The whole thing renders onto a GameMaker surface that gets baked to a floor layer, with a zoom system that auto-scales to show key positions when they're far from the graph center",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-game-h",
+      "type": "header",
+      "data": {
+        "text": "Game Structure",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-game-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The game has 13 rooms total: a start screen, a prologue scene, a lobby hub that serves as the overworld, 7 puzzle levels with increasing complexity, a parabola-focused level, an epilogue scene, and a credits screen. The lobby uses a door-and-rank system for progression — completing a level increments global.max_unlocked, which opens the next door in the lobby. The player's lobby position persists between level transitions so they return to where they entered. A puzzle reveal system in the lobby hides certain puzzle pieces until all levels are complete, then reveals them with staggered delays for a dramatic effect. Once all puzzle blocks align in the lobby, the menu system detects the win condition, triggers the Ending_Puzzle sound, waits for any dialogue to finish, pauses 60 frames for dramatic effect, then transitions to the epilogue scene."
+      }
+    },
+    {
+      "id": "tog-polish-h",
+      "type": "header",
+      "data": {
+        "text": "Polish and Systems",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-polish-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Two dialogue systems:</b> the game has two separate dialogue engines for different contexts. obj_dialogue_bg handles scene-level dialogue (prologue, epilogue) with a queue/dequeue system, fade-in alpha animation, configurable hold timers, and a special \"next level\" string command that triggers room transitions — so dialogue scripts can seamlessly chain into scene changes. obj_dialogue_box handles in-level triggered dialogue with three distinct firing modes: delay timer (fires after N frames), overlap detection (fires when the player touches the trigger via place_meeting), and puzzle-complete (waits for global.puzzle_complete then counts down a delay). Both systems let the player skip ahead with enter or space",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Menu system (~430 lines):</b> three menu modes — Main (horizontal layout), Pause (vertical layout), and Level Select (4-column responsive grid with dynamic positioning based on how many levels are unlocked). Full mouse and keyboard support with hover detection, click handling, and grid-aware keyboard navigation that wraps correctly across rows and columns using WASD or arrow keys. The menu manages global state initialization (lobby tutorial flag, puzzle completion, max unlocked level, developer mode, lobby return position), enforces a singleton pattern to prevent duplicates, and includes a first-time pause hint system",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Visual effects:</b> additive-blend glow rendering (8 directional copies of a sprite with bm_add blending), block flash animations for equation validation feedback, shadow casting, engraved text effects on UI elements, and screen transition fades between rooms",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Audio:</b> around 20 sound assets covering block pushes, movement steps, key pickups, door openings, pull mode engage/disengage, blocked movement, wrong answers, equation validation, river flush loop, water flowing into holes, water hitting walls, key dispensing, stone door closing, and the ending puzzle. Each action has its own distinct sound for clear player feedback, and the river system manages a looping sound that starts and stops with the water phases",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Equation history:</b> tracks the last 5 valid-but-incorrect equations the player has tried, with a formatting function (eq_to_string) that converts quadratic coefficients back into human-readable form — handling sign insertion, coefficient omission for ±1, and proper ordering of x², x, and constant terms",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Input blocking:</b> movement and undo are disabled during five conditions — menu open, puzzle reveal animation, dialogue showing, spawn delay, and block flash animation — preventing the player from breaking game state during transitions",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-dev-process-h",
+      "type": "header",
+      "data": {
+        "text": "Development Process and Team Dynamics",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-dev-process-p",
+      "type": "paragraph",
+      "data": {
+        "text": "My workflow on this project was mostly independent — I'd work on features and systems on my own, then coordinate with the team to make sure everything integrated correctly. The development spanned about a month (July 5 to August 3, 2026), with the heaviest commit activity in the middle weeks as core systems came together and the later weeks focused on polish, bug fixes, and the prologue/epilogue scenes."
+      }
+    },
+    {
+      "id": "tog-dev-process-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Independent then integrate:</b> I worked on features independently, then checked with the group to coordinate. This meant I could iterate quickly on complex systems (the conditional wall logic went through multiple fix iterations) without blocking anyone else's work",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Branch management:</b> the team used feature branches and I maintained the main branch, handling all merges and resolving conflicts. I also created several feature branches of my own (inequation-wall, plain-grid, river-grid) for experimental mechanics",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Learning GML on the job:</b> when I hit unfamiliar GML functions or patterns, I used GameMaker's documentation alongside AI tools to figure out the right approach. GML has its own quirks — instance_place_list for collision queries, layer_tilemap operations for tile-based barriers, ds_stack for data structures, surface_create for off-screen rendering — and combining documentation with AI assistance was faster than either alone",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>UX-driven design decisions:</b> I made deliberate design choices for player experience, like limiting the pull mechanic to only work when the player is directly adjacent to a block. Allowing pulling from any distance would have been simpler to code but worse for puzzle design — constraining it to adjacent blocks made puzzles more interesting and the mechanic more intuitive",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-ai-takeaway-h",
+      "type": "header",
+      "data": {
+        "text": "AI Takeaways for Game Development",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-ai-takeaway-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Using AI for game development in a less mainstream engine like GameMaker was a fundamentally different experience from web development projects like the portfolio site or Focus Tab. Those projects could lean heavily on AI-generated code because JavaScript is well-represented in training data and the web platform has predictable APIs. GameMaker's GML sits in a different spot — it's a real programming language with its own runtime model, but AI tools have less exposure to it, which changes the entire dynamic of the collaboration."
+      }
+    },
+    {
+      "id": "tog-ai-takeaway-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>AI as architecture partner, not code generator:</b> because GML is niche, AI-generated code often needed adaptation. The real value was in system design — talking through how the Conway's Game of Life river system should pipeline from curve sampling through band construction through cellular automaton generations through multi-phase flooding, or how the block chain detection should handle conditional walls on interior blocks, or how the key lifecycle should track flood-front progress to trigger state transitions. The AI's strength was thinking through complex state interactions, not writing syntactically perfect GML. This is the opposite of my Focus Tab experience, where AI generated syntactically perfect JavaScript modules that worked on the first try. With GML, I was the one turning architectural plans into working implementations",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Puzzle games amplify debugging complexity:</b> every mechanic interacts with every other mechanic. Pushing a block can trigger an equation update, which triggers a graph replot, which carves a GoL river channel, which floods with water, which arms a key at its parametric curve position, which flows along the parabola, which dispenses to the game grid, which the player picks up to unlock a door — all driven by cascading state changes. The 10 bug-fix commits in the history aren't a sign of sloppy code; they're inherent to puzzle game development where adding one mechanic (like the pull feature) creates new edge cases in every other system. AI was especially useful for tracing these chains and identifying where state could get out of sync, which was the source of most bugs. The key lifecycle alone has four states with transitions driven by the river's flood progress — a lot of places for timing to go wrong",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Domain-specific knowledge still matters:</b> AI could help with algorithms and logic, but understanding GameMaker's instance system, collision masks, layer management, surface rendering, and room transitions required hands-on experience. The graph system uses surface_create and surface_set_target for off-screen rendering, the key system uses math-to-pixel coordinate conversion to track positions across the graph and game world, and the menu system uses a singleton pattern with instance_number to prevent duplicates — these are GameMaker-specific patterns that AI could suggest in concept but couldn't always get right. The most productive workflow was combining AI's strength in algorithm design with my growing knowledge of how GameMaker actually executes things",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Multiple AI tools for different tasks:</b> the Codex checkpoint references in the repository show I used multiple AI tools for different parts of the workflow. Conversational AI (like ChatGPT or Claude) was better for system design discussions — especially for complex multi-phase systems like the river animation pipeline — while Codex was useful for inline code editing and targeted refactoring. Using different tools for their strengths — design conversations vs. code edits — made the overall process smoother than relying on any single AI tool",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Iterative refinement across 123 commits:</b> my 123 commits show a clear pattern of building a system, testing it in-game, finding edge cases, and refining. The conditional wall system alone went through multiple bug-fix iterations as I discovered edge cases with different comparison operators, block types, and chain-push scenarios. The is_checking flag bug — where blocks could get stuck in a perpetual checking state — is a perfect example: the fix was small (resetting the flag at the right point in the evaluation cycle), but finding it required understanding the full lifecycle of a block entering an equation area. AI accelerated each iteration by helping identify the root cause faster, but the test-fix cycle itself was still entirely human-driven. I was the one playing through levels, noticing when something felt wrong, and describing the symptoms to get AI help diagnosing the cause",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>The spectrum of AI collaboration:</b> comparing this project with my other AI-built projects reveals a spectrum. Focus Tab was pure vibe-coding — every line of code came from AI output, and my role was product design and testing. The portfolio site was AI-generated infrastructure with human-written content. TOG sits at the other end: across 123 commits I expanded the codebase from Dante's prototype into the full game — growing the graph system into a 565-line cellular automaton river pipeline, building the 430-line menu system and both dialogue engines from scratch, extending the player controller to 280 lines with pull, undo, and chain-push mechanics, and adding conditional walls, door progression, and the key lifecycle — using AI as a thinking partner and debugging assistant. The less training data an AI has for your language or framework, the more the collaboration shifts from \"generate code for me\" to \"help me think through this problem.\" All three approaches produced working software, but the human skill required was different each time — and for a niche engine like GameMaker, understanding the engine was non-negotiable",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "tog-skills-h",
+      "type": "header",
+      "data": {
+        "text": "Skills",
+        "level": 3
+      }
+    },
+    {
+      "id": "tog-skills-p",
+      "type": "paragraph",
+      "data": {
+        "text": "GameMaker Studio 2, GameMaker Language (GML), grid-based game design, recursive descent parsing, expression evaluation, Conway's Game of Life cellular automaton, surface-based rendering, state machine design, collision detection, undo/redo systems, queue-based dialogue, multi-phase animation systems, additive blend rendering, audio integration, level design, git branch management, group collaboration, AI-assisted development (Codex, conversational AI)"
+      }
+    }
+  ]
+}
