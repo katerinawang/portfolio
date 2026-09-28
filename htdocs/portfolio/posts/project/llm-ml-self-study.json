@@ -1,0 +1,220 @@
+{
+  "id": "llm-ml-self-study",
+  "title": "From Autograd to Transformers — AI-Guided Deep Learning Self-Study",
+  "slug": "llm-ml-self-study",
+  "category": "project",
+  "tags": [
+    "Python",
+    "PyTorch",
+    "Machine Learning",
+    "Deep Learning",
+    "NLP",
+    "Transformers",
+    "AI-Assisted Learning",
+    "Self-Study",
+    "Karpathy",
+    "HuggingFace"
+  ],
+  "date": "2025-05-15",
+  "summary": "A self-directed deep learning curriculum spanning 10+ practice notebooks — from building autograd engines and neural nets from scratch through RNNs, attention mechanisms, and transformer encoders to fine-tuning BERT — using AI-generated practice notebooks as the primary learning tool",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "intro-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This is a collection of 10+ Jupyter notebooks covering a self-directed path through deep learning fundamentals and NLP. The work splits into two tracks: Andrej Karpathy's neural-net-from-scratch series (micrograd, makemore) where I rebuilt autograd engines and language models by hand, and a Claude-generated practice curriculum (\"claude prep\") that walked from PyTorch basics through tokenization, word embeddings, RNNs, attention, transformers, and HuggingFace fine-tuning. The interesting part isn't just what I learned — it's how the learning itself was AI-driven. Claude generated the entire practice notebook series, designing exercises, structuring the progression, and using a \"Predict then Run then Observe then Explain\" methodology that forced me to reason about each concept before seeing results."
+      }
+    },
+    {
+      "id": "karpathy-h",
+      "type": "header",
+      "data": {
+        "text": "Track 1 — Karpathy's From-Scratch Series",
+        "level": 3
+      }
+    },
+    {
+      "id": "karpathy-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The starting point was Andrej Karpathy's \"Neural Networks: Zero to Hero\" series. These notebooks are about building things from nothing — no PyTorch nn.Module, no autograd, just raw math and Python classes. The goal is understanding what the frameworks actually do under the hood before using them."
+      }
+    },
+    {
+      "id": "karpathy-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>micrograd (p1):</b> built a complete autograd engine from scratch — a Value class that tracks computation graphs and propagates gradients through addition, multiplication, tanh, exp, and log operations. On top of that, built Neuron, Layer, and MLP classes to create a working multi-layer perceptron. Trained a 3-input, two-hidden-layer network with manual SGD (lr=0.9) and watched the loss converge to ~1.3e-5. Extended the Value class with topological-sort-based backward(), implemented softmax and negative log likelihood loss, and verified every gradient against PyTorch's autograd",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>makemore (p2):</b> built a character-level bigram language model from a dataset of names. Constructed a 27x27 frequency matrix (26 letters + boundary token), converted counts to probabilities, and sampled from the model to generate new names. Simple but foundational — this is the same statistical approach that scales up into GPT-style models, just at the character bigram level",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "claude-prep-h",
+      "type": "header",
+      "data": {
+        "text": "Track 2 — AI-Generated Practice Curriculum",
+        "level": 3
+      }
+    },
+    {
+      "id": "claude-prep-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This is the more unusual track. I used Claude to generate a structured series of practice notebooks, each covering a specific deep learning topic. Claude designed the exercises, wrote the scaffolding code, and structured each section around a \"Predict → Run → Observe → Explain\" loop — I'd read the setup, predict what would happen, run the code, then explain why the result matched or didn't match my expectation. The notebooks also included \"break the model\" experiments where I'd deliberately change hyperparameters, remove components, or swap architectures to see what fails and why. This turned out to be one of the most effective ways to learn — AI as curriculum designer rather than answer machine."
+      }
+    },
+    {
+      "id": "pytorch-h",
+      "type": "header",
+      "data": {
+        "text": "PyTorch Fundamentals and Neural Nets",
+        "level": 3
+      }
+    },
+    {
+      "id": "pytorch-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The first two Claude-generated notebooks covered the building blocks. The PyTorch fundamentals notebook had 8 parts — tensor creation, operations, broadcasting, autograd — culminating in a manual linear regression (y = 3x + 2) trained with hand-written SGD. The 7 \"break the model\" experiments were genuinely useful: cranking the learning rate to 100 and watching the loss explode to infinity, or setting it to 0.0001 and watching it barely move, builds intuition that reading documentation doesn't."
+      }
+    },
+    {
+      "id": "nn-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The neural nets notebook progressed through four models in 6 parts: manual logistic regression with raw tensors and BCE loss, then wrapping it in nn.Module, then multiclass classification with CrossEntropyLoss, then a two-layer neural net with ReLU on the make_moons dataset (1000 epochs, lr=0.1). The most revealing part was visualizing hidden layer activations — plotting how the first layer transforms the data into a space where it becomes linearly separable. The \"break it\" experiments included removing ReLU (decision boundary goes linear), setting hidden_size=1 (network can't separate moons), and comparing SGD vs Adam (Adam converges in ~200 epochs, SGD needs 800+). I skipped the backprop-by-hand exercises — already practiced that thoroughly in the Karpathy micrograd work."
+      }
+    },
+    {
+      "id": "nlp-h",
+      "type": "header",
+      "data": {
+        "text": "Tokenization and Word Embeddings",
+        "level": 3
+      }
+    },
+    {
+      "id": "token-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Tokenization was a full pipeline build: whitespace and regex tokenizers from scratch, comparison with nltk and spaCy tokenizers, training a BPE tokenizer (vocab_size=500), and end-to-end BERT tokenization on the Rotten Tomatoes dataset. The notebook's prediction questions were weak for this topic — tokenization is more mechanical than conceptual — but the BPE implementation was worth doing by hand to see how subword vocabularies get built through iterative merging."
+      }
+    },
+    {
+      "id": "embed-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Word embeddings was where things got interesting. Loaded Google's Word2Vec (3 million words, 300 dimensions) and ran similarity queries, analogies (king - man + woman = queen, actor - man + woman = actress), and odd-one-out detection. Then built a sentiment classifier on Rotten Tomatoes reviews by averaging word vectors per review and feeding them through nn.Linear(300, 2) — hit 73.36% accuracy. Compared against a random-embeddings baseline (62.48%) which showed the pre-trained vectors carry real semantic signal. Adding a hidden layer pushed accuracy to 74.86%. The most interesting part was analyzing which words the linear classifier weighted most positive and most negative — seeing the model's internal representation of sentiment."
+      }
+    },
+    {
+      "id": "rnn-h",
+      "type": "header",
+      "data": {
+        "text": "Character-Level RNN on Taylor Swift Lyrics",
+        "level": 3
+      }
+    },
+    {
+      "id": "rnn-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The RNN notebook trained character-level language models on Taylor Swift lyrics (264,959 characters, 80 unique characters). Built nn.Embedding(80, 128) → nn.RNN(128, 256) → nn.Linear(256, 80) with 129,616 parameters. Trained for 5000 iterations with batch_size=30, seq_len=100, Adam lr=0.001. The text generation was the fun part — at low temperature (0.3) the model gets stuck in loops like \"I'm sorry, I'm sorry, I'm sorry\", at high temperature (1.5) it produces gibberish. Temperature 0.8 hits the sweet spot where it generates plausible-sounding Taylor Swift lyrics. Then compared RNN vs LSTM — the LSTM with its gated cell state produced noticeably more coherent output. My observation from the experiments: higher hidden sizes help the model escape repetitive loops, which makes sense — more capacity to represent longer-range patterns."
+      }
+    },
+    {
+      "id": "transformer-h",
+      "type": "header",
+      "data": {
+        "text": "Attention and Transformer Encoder from Scratch",
+        "level": 3
+      }
+    },
+    {
+      "id": "transformer-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This was the most technically dense notebook — 7 parts building up to a full transformer encoder block. Started with implementing scaled dot-product attention from scratch: Q @ K^T / sqrt(d_k), then softmax, then multiply by V. Hand-traced through a toy example to verify the math. The scaling experiment was particularly illuminating — with d_k=512 and no scaling, the dot products get so large that softmax saturates to near-one-hot distributions, killing gradient flow. Scaling by 1/sqrt(d_k) keeps the logits in a range where softmax produces meaningful probability distributions."
+      }
+    },
+    {
+      "id": "transformer-p2",
+      "type": "paragraph",
+      "data": {
+        "text": "Built up through SelfAttention (with learned W_q, W_k, W_v projection matrices), MultiHeadAttention (reshape into heads, parallel attention, concatenate, W_o projection), FeedForward (linear → ReLU → linear with 4x expansion), and finally TransformerEncoderBlock with residual connections and LayerNorm. Stacked 3 blocks (149,952 parameters total) and verified the output matched PyTorch's nn.TransformerEncoder. The ablation experiments were the real learning: removing residual connections caused training loss to plateau immediately (gradients can't flow through deep stacks without skip connections), and removing LayerNorm made training unstable with loss spikes."
+      }
+    },
+    {
+      "id": "hf-h",
+      "type": "header",
+      "data": {
+        "text": "HuggingFace and BERT Fine-Tuning",
+        "level": 3
+      }
+    },
+    {
+      "id": "hf-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The final notebook moved from building transformers from scratch to using pre-trained ones. Started with HuggingFace pipelines — sentiment analysis, fill-mask (BERT predicted \"floor\", \"bed\", \"couch\" for \"the cat sat on the [MASK]\"), and text generation with GPT-2. Explored sentence embeddings with CLS token vs mean pooling and built a cosine similarity matrix. Zero-shot sentiment classification on Rotten Tomatoes hit 93% accuracy on 100 test reviews — no training at all, just BERT's pre-trained understanding of language."
+      }
+    },
+    {
+      "id": "hf-p2",
+      "type": "paragraph",
+      "data": {
+        "text": "Then fine-tuned BERT for sequence classification using AutoModelForSequenceClassification and the Trainer API (3 epochs, lr=2e-5, batch_size=16). Ran experiments with frozen BERT (only 1,538 trainable parameters out of 109 million — just the classification head), 1 vs 5 training epochs, and compared convergence behavior. The frozen-BERT experiment was interesting because it shows how much knowledge is already in the pre-trained weights — even with 99.999% of parameters locked, the model still learns decent sentiment classification just by training a linear layer on top of BERT's representations."
+      }
+    },
+    {
+      "id": "ai-role-h",
+      "type": "header",
+      "data": {
+        "text": "AI as Curriculum Designer",
+        "level": 3
+      }
+    },
+    {
+      "id": "ai-role-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The most interesting aspect of this project isn't any single notebook — it's the meta-level: using AI to design the learning experience itself. Claude generated the entire \"claude prep\" series, and the quality of the curriculum design was genuinely good. The progression from PyTorch tensors → manual logistic regression → nn.Module → multiclass → hidden layers → embeddings → RNNs → attention → transformers → fine-tuning follows a logical dependency chain where each notebook builds on concepts from the previous one. The \"Predict → Run → Observe → Explain\" structure forced active engagement instead of passive code execution. The \"break the model\" experiments were consistently the most valuable exercises — understanding what happens when you remove ReLU, or crank hidden size, or disable LayerNorm teaches you more about why architectures are designed the way they are than any amount of reading."
+      }
+    },
+    {
+      "id": "ai-role-p2",
+      "type": "paragraph",
+      "data": {
+        "text": "That said, AI-generated exercises aren't perfect. Some prediction questions were too obvious or poorly targeted — the tokenization notebook had questions that didn't really test understanding, just pattern matching. And the experiment designs occasionally missed the mark (one I noted as \"stupid experiment design\" in my notes). The best learning came from the combination: AI-structured progression with my own judgment about what to skip (backprop by hand when I'd already done it in micrograd), what to dig into (hidden layer activations, temperature sampling), and what to challenge (running experiments the notebooks didn't suggest). AI built the scaffolding; I decided how to climb it."
+      }
+    },
+    {
+      "id": "takeaway-h",
+      "type": "header",
+      "data": {
+        "text": "What Came Out of It",
+        "level": 3
+      }
+    },
+    {
+      "id": "takeaway-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Across all the notebooks, the progression went from \"I can build a gradient-tracking Value class from nothing\" to \"I can fine-tune a 109-million-parameter BERT model with the Trainer API.\" The Karpathy track gave me ground-truth understanding — when PyTorch computes gradients, I know what's actually happening because I built the machinery myself. The Claude-generated track gave me breadth — tokenization pipelines, embedding spaces, sequence models, attention mechanisms, the full transformer stack. The two tracks complement each other well: the from-scratch work prevents the framework-level work from becoming black-box button-pressing. When I stack 3 transformer encoder blocks and check that the output matches PyTorch's built-in version, I know what those blocks contain because I wrote each component — the multi-head attention, the feed-forward network, the residual connections, the layer normalization. That's the difference between using a tool and understanding it."
+      }
+    }
+  ]
+}
