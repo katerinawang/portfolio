@@ -143,6 +143,24 @@
       "thumbnail": "../img/get-the-joker.png"
     },
     {
+      "id": "gmtk-2026-game-jam",
+      "title": "GMTK 2026 Game Jam — Rhythm Dating Game",
+      "slug": "gmtk-2026-game-jam",
+      "category": "project",
+      "tags": [
+        "Unity",
+        "C#",
+        "Game Jam",
+        "GMTK 2026",
+        "Game Development",
+        "Group Project",
+        "UI Systems"
+      ],
+      "date": "2026-07-25",
+      "summary": "A rhythm-meets-dating sim built in Unity for GMTK Game Jam 2026 — I owned the UI controller, camera transitions, chart playback core, and settings wiring across a 5-person team over 4 days",
+      "thumbnail": ""
+    },
+    {
       "id": "logic-gate",
       "title": "[Group Project] - Logic Gate",
       "slug": "group-project-logic-gate",
@@ -313,7 +331,7 @@
     },
     {
       "id": "tog-puzzle-game",
-      "title": "TOG — Math Puzzle Game Built with AI Assistance",
+      "title": "TOG — Math Puzzle Game Built with AI",
       "slug": "tog-math-puzzle-game",
       "category": "project",
       "tags": [
@@ -321,13 +339,13 @@
         "GML",
         "Game Development",
         "AI-Assisted Development",
+        "Codex",
         "Group Project",
         "Puzzle Game",
-        "Math",
         "GAME 3720"
       ],
-      "date": "2026-08-01",
-      "summary": "Grid-based math puzzle game built in GameMaker Studio 2 for GAME 3720, featuring equation building, conditional walls, graph plotting with a Conway's Game of Life river animation system, and a recursive descent expression parser — developed as a group project with AI-assisted programming",
+      "date": "2026-08-02",
+      "summary": "Grid-based math puzzle game in GameMaker Studio 2 for GAME 3720 — I specified features for AI coding tools, then tested and fixed the results in-game, delivering the arithmetic evaluator, conditional walls, lobby progression, menus, dialogue and graph camera across 125 of 262 commits in a 6-person team",
       "thumbnail": ""
     },
     {
@@ -344,24 +362,6 @@
       "date": "2023-12-01",
       "summary": "Front-end web projects for CS 1430 using plain HTML, CSS, JS, and Bootstrap",
       "thumbnail": "../img/website-img.png"
-    },
-    {
-      "id": "gmtk-2026-game-jam",
-      "title": "GMTK 2026 Game Jam — Rhythm Dating Game",
-      "slug": "gmtk-2026-game-jam",
-      "category": "project",
-      "tags": [
-        "Unity",
-        "C#",
-        "Game Jam",
-        "GMTK 2026",
-        "Game Development",
-        "Group Project",
-        "UI Systems"
-      ],
-      "date": "2026-07-25",
-      "summary": "A rhythm-meets-dating sim built in Unity for GMTK Game Jam 2026 — I owned the UI controller, camera transitions, chart playback core, and settings wiring across a 5-person team over 4 days",
-      "thumbnail": ""
     }
   ]
 }
