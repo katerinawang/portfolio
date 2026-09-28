@@ -71,7 +71,7 @@ function rebuildIndex() {
     if (!fs.statSync(catDir).isDirectory()) continue;
 
     for (const file of fs.readdirSync(catDir)) {
-      if (!file.endsWith(".json")) continue;
+      if (!file.endsWith(".json") || file === "index.json") continue;
       try {
         const post = JSON.parse(fs.readFileSync(path.join(catDir, file), "utf-8"));
         posts.push({

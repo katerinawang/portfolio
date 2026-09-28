@@ -1,0 +1,147 @@
+{
+  "id": "gmtk-2026-game-jam",
+  "title": "GMTK 2026 Game Jam — Rhythm Dating Game",
+  "slug": "gmtk-2026-game-jam",
+  "category": "project",
+  "tags": [
+    "Unity",
+    "C#",
+    "Game Jam",
+    "GMTK 2026",
+    "Game Development",
+    "Group Project",
+    "UI Systems"
+  ],
+  "date": "2026-07-25",
+  "summary": "A rhythm-meets-dating sim built in Unity for GMTK Game Jam 2026 — I owned the UI controller, camera transitions, chart playback core, and settings wiring across a 5-person team over 4 days",
+  "thumbnail": "",
+  "content": [
+    {
+      "id": "intro-p",
+      "type": "paragraph",
+      "data": {
+        "text": "This was a 4-day game jam project for GMTK 2026 — a rhythm-meets-dating sim built in Unity 6 where players alternate between a \"Date\" camera view (cafe conversation) and a \"DS\" view (falling-note rhythm gameplay). The player hits arrow notes in rhythm sections, and their performance feeds into an affection system that determines the date outcome. Built as a team of 5 with 180 total commits over July 22–25, 2026. My role was the UI systems architect — I created the central controller that wired every menu, setting, and transition to the underlying game systems."
+      }
+    },
+    {
+      "id": "role-h",
+      "type": "header",
+      "data": {
+        "text": "What I Built",
+        "level": 3
+      }
+    },
+    {
+      "id": "role-p",
+      "type": "paragraph",
+      "data": {
+        "text": "My primary contribution was <code>UI_Controller.cs</code> — a ~280-line script I created from scratch that became the central nervous system connecting all the game's UI elements to its underlying systems. This wasn't a simple button-click handler; it was the wiring layer that made the game actually playable as a complete experience. The controller manages five panel states (start menu, options, pause, end screen, credits), handles scene transitions with slide-out animations, and connects player-facing controls to the game's internal systems."
+      }
+    },
+    {
+      "id": "wiring-h",
+      "type": "header",
+      "data": {
+        "text": "The UI Wiring in Detail",
+        "level": 3
+      }
+    },
+    {
+      "id": "wiring-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "<b>Pause system:</b> ESC key toggles pause, which freezes the RhythmClock (the game's central timing source), shows/hides the pause panel, and on restart calls both <code>SongSessionManager.RestartSession()</code> and <code>focusManager.ApplyFocusImmediately()</code> to reset the camera state cleanly — getting that restart flow right meant understanding how the rhythm clock, session manager, and camera system all interact",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Settings wiring:</b> music volume slider writes to <code>PlayerPrefs</code> and simultaneously applies to both the title screen music and the rhythm gameplay AudioSource. Note speed slider maps directly to <code>chartPlayback.SpawnAheadTime</code>, controlling how far ahead notes appear. Difficulty dropdown persists through <code>PlayerPrefs</code>. Each control needed to find and affect the right game system reference",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>End screen logic:</b> pulls max combo, score, and affection values from their respective systems, then switches the character sprite between happy and sad based on whether <code>affectionSystem.AverageAffection >= .6f</code> — a small detail but it ties the rhythm gameplay result to the dating narrative",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "<b>Audio interaction registration:</b> added browser autoplay policy handling so audio wouldn't silently fail in WebGL builds — the kind of platform-specific edge case you only discover during testing",
+            "meta": {},
+            "items": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "camera-h",
+      "type": "header",
+      "data": {
+        "text": "Camera Transition System",
+        "level": 3
+      }
+    },
+    {
+      "id": "camera-p",
+      "type": "paragraph",
+      "data": {
+        "text": "The game's core visual mechanic is switching between two views — the \"Date\" perspective (cafe conversation) and the \"DS\" view (top-down falling notes). I implemented the initial camera transition system in <code>DateFocusSystem.cs</code>: lerping between two camera poses with AnimationCurve easing, handling the orthographic-to-perspective switch that makes the two views feel like different games living in the same scene. My teammate Misha later expanded this significantly with Cinemachine integration, FOV interpolation, particle position transitions, and material swapping (switching the top screen between falling note and timer materials depending on the current view). The final version was ~230 lines — I wrote the foundation, and it grew into something more sophisticated as the game's visual needs evolved."
+      }
+    },
+    {
+      "id": "playback-h",
+      "type": "header",
+      "data": {
+        "text": "Chart Playback Core",
+        "level": 3
+      }
+    },
+    {
+      "id": "playback-p",
+      "type": "paragraph",
+      "data": {
+        "text": "I also implemented the core rhythm playback logic in <code>ChartPlayback.cs</code> — the spawn-ahead window that determines when notes appear, miss detection with a configurable <code>missWindow</code>, note lifecycle tracking through <code>validNotes</code> and <code>hitNotes</code> HashSets, and <code>TryGetHittableNote()</code> which the input system calls to check if a player's keypress matches an active note. This was +70 lines of the timing-critical code that makes the rhythm gameplay actually work. Later, teammates added call/response sections, date calls, and sound byte triggers on top of this foundation."
+      }
+    },
+    {
+      "id": "board-h",
+      "type": "header",
+      "data": {
+        "text": "Rhythm Board and Note Scripts",
+        "level": 3
+      }
+    },
+    {
+      "id": "board-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Created the initial <code>RhythmBoard.cs</code> (the board controller that manages spawning and tracking active notes) and renamed/restructured <code>NoteScript.cs</code> (individual note visuals) to fit the architecture. Both were later heavily expanded — RhythmBoard grew from my 32-line initial version to ~160 lines with hit effect instantiation, lane X-position mapping, and event subscriptions. NoteScript grew to ~180 lines with beat-snapping movement, sprite animation for hit/miss feedback, and offscreen detection. The pattern across most of my contributions was the same: I built the initial working version that established the interface, and teammates built the polish on top."
+      }
+    },
+    {
+      "id": "bugs-p",
+      "type": "paragraph",
+      "data": {
+        "text": "Also handled bug fixes throughout — fixing the initial fault-miss display in the input judge, cleaning up debug logs, resolving syntax errors from merge conflicts, and fixing a missing note speed slider binding. Game jam pace means you're constantly context-switching between building new features and putting out fires."
+      }
+    },
+    {
+      "id": "contribution-h",
+      "type": "header",
+      "data": {
+        "text": "Contribution Breakdown",
+        "level": 3
+      }
+    },
+    {
+      "id": "contribution-p",
+      "type": "paragraph",
+      "data": {
+        "text": "19 commits (14 non-merge) over 4 days in a team of 5. The project lead (Misha, 69 commits) built the core architecture and expanded most systems after initial implementation. DrLemonade (47 commits) handled the chart parser, input judge, and end/title screens. Other teammates covered title screen art, SFX integration, and pause menu visuals. My lane was the system integration layer — creating the UI controller that tied everything together, building the initial versions of camera transitions and chart playback, and wiring settings to game systems. In a jam, someone has to be the person who makes all the separate pieces work as one game. That was my role."
+      }
+    }
+  ]
+}

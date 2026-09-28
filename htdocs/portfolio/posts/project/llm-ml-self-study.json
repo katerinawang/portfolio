@@ -15,7 +15,7 @@
     "Karpathy",
     "HuggingFace"
   ],
-  "date": "2025-05-15",
+  "date": "2026-07-15",
   "summary": "A self-directed deep learning curriculum spanning 10+ practice notebooks — from building autograd engines and neural nets from scratch through RNNs, attention mechanisms, and transformer encoders to fine-tuning BERT — using AI-generated practice notebooks as the primary learning tool",
   "thumbnail": "",
   "content": [
@@ -198,7 +198,7 @@
       "id": "ai-role-p2",
       "type": "paragraph",
       "data": {
-        "text": "That said, AI-generated exercises aren't perfect. Some prediction questions were too obvious or poorly targeted — the tokenization notebook had questions that didn't really test understanding, just pattern matching. And the experiment designs occasionally missed the mark (one I noted as \"stupid experiment design\" in my notes). The best learning came from the combination: AI-structured progression with my own judgment about what to skip (backprop by hand when I'd already done it in micrograd), what to dig into (hidden layer activations, temperature sampling), and what to challenge (running experiments the notebooks didn't suggest). AI built the scaffolding; I decided how to climb it."
+        "text": "That said, AI-generated exercises aren't perfect. Some prediction questions were too obvious or poorly targeted — the tokenization notebook had questions that didn't really test understanding, just pattern matching. And the experiment designs occasionally missed the mark. The best learning came from the combination: AI-structured progression with my own judgment about what to skip (backprop by hand when I'd already done it in micrograd), what to dig into (hidden layer activations, temperature sampling), and what to challenge (running experiments the notebooks didn't suggest). AI built the scaffolding; I decided how to climb it."
       }
     },
     {

@@ -222,14 +222,6 @@
       "thumbnail": ""
     },
     {
-      "slug": "index",
-      "category": "project",
-      "tags": [],
-      "date": "",
-      "summary": "",
-      "thumbnail": ""
-    },
-    {
       "id": "dishbook",
       "title": "[Individual Project] - Django Recipe Platform",
       "slug": "individual-project-django-recipe-platform",
@@ -258,6 +250,27 @@
       "date": "2025-10-28",
       "summary": "Two-color Simon game with progressive difficulty and a Fun Mode that swaps button positions",
       "thumbnail": "../img/simon-game.png"
+    },
+    {
+      "id": "llm-ml-self-study",
+      "title": "From Autograd to Transformers — AI-Guided Deep Learning Self-Study",
+      "slug": "llm-ml-self-study",
+      "category": "project",
+      "tags": [
+        "Python",
+        "PyTorch",
+        "Machine Learning",
+        "Deep Learning",
+        "NLP",
+        "Transformers",
+        "AI-Assisted Learning",
+        "Self-Study",
+        "Karpathy",
+        "HuggingFace"
+      ],
+      "date": "2026-07-15",
+      "summary": "A self-directed deep learning curriculum spanning 10+ practice notebooks — from building autograd engines and neural nets from scratch through RNNs, attention mechanisms, and transformer encoders to fine-tuning BERT — using AI-generated practice notebooks as the primary learning tool",
+      "thumbnail": ""
     },
     {
       "id": "newtab-dashboard",
@@ -331,6 +344,24 @@
       "date": "2023-12-01",
       "summary": "Front-end web projects for CS 1430 using plain HTML, CSS, JS, and Bootstrap",
       "thumbnail": "../img/website-img.png"
+    },
+    {
+      "id": "gmtk-2026-game-jam",
+      "title": "GMTK 2026 Game Jam — Rhythm Dating Game",
+      "slug": "gmtk-2026-game-jam",
+      "category": "project",
+      "tags": [
+        "Unity",
+        "C#",
+        "Game Jam",
+        "GMTK 2026",
+        "Game Development",
+        "Group Project",
+        "UI Systems"
+      ],
+      "date": "2026-07-25",
+      "summary": "A rhythm-meets-dating sim built in Unity for GMTK Game Jam 2026 — I owned the UI controller, camera transitions, chart playback core, and settings wiring across a 5-person team over 4 days",
+      "thumbnail": ""
     }
   ]
 }
