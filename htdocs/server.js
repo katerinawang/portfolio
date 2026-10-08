@@ -262,6 +262,11 @@ const server = http.createServer(async (req, res) => {
     return sendJSON(res, 404, { error: "Unknown API route" });
   }
 
+  if (pathname === "/capstone") {
+    res.writeHead(302, { Location: "/capstone/" });
+    return res.end();
+  }
+
   // ===== Static file serving =====
 
   let filePath = path.join(ROOT, pathname);
